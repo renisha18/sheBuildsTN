@@ -6,7 +6,7 @@ function Journey() {
       aria-labelledby="journey-heading"
       className="flex flex-col gap-8 border border-dashed m-4 p-8"
     >
-      <h2 id="journey-heading">Journey</h2>
+      <h2 id="journey-heading" className="font-display">Journey</h2>
 
       {/* Mobile: vertical list, left border is the axis.
           lg+: one column per year, cards alternate above/below a center axis. */}

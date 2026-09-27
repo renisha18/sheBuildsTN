@@ -5,7 +5,7 @@ function Hero() {
       className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center border border-dashed m-4 p-8"
     >
       <div className="flex flex-col items-start gap-4">
-        <h1 id="hero-heading">Headline goes here</h1>
+        <h1 id="hero-heading" className="font-display">Headline goes here</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
