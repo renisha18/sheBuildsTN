@@ -10,7 +10,7 @@ const links = [
 
 function Navbar() {
   return (
-    <nav className="flex items-center justify-between border-b p-4">
+    <nav className="flex items-center justify-between border-b border-ink p-4">
       <Link to="/" className="shrink-0">
         {/* Logo PNG has a white background; multiply blends it into the page color */}
         <img src={logo} alt="SheBuilds home" className="h-12 md:h-16 w-auto mix-blend-multiply" />

@@ -1,9 +1,48 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #F8F0E0;
+  /* Brand — sampled from the SheBuilds logo */
+  --color-primary: #981020;       /* maroon */
+  --color-primary-dark: #720C18;  /* maroon at 75% lightness — hover/press states */
+  --color-accent: #F87868;        /* coral — secondary/CTA accent (2.35:1 on cream: not for text) */
+  --color-accent-alt: #50C8C8;    /* teal — tertiary accent, used sparingly */
+  --color-danger: #E03040;        /* deep red — alerts/errors only, not decoration */
+
+  /* Neutrals */
   --color-ink: #14100E;
+  --color-background: #F8F0E0;    /* cream */
+  --color-surface: #FFFFFF;
+  --color-muted: #68635C;         /* warm gray, ink mixed toward cream — 5.25:1 on cream, 5.95:1 on white */
+
+  --shadow-brutal-sm: 2px 2px 0 0 var(--color-ink);
+  --shadow-brutal: 4px 4px 0 0 var(--color-ink);
+  --shadow-brutal-lg: 6px 6px 0 0 var(--color-ink);
+
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-ink);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+  }
 }
