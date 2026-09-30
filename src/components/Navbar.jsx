@@ -9,14 +9,11 @@ const links = [
   { to: '/blogs', label: 'Blogs' },
 ]
 
-// 2px primary underline drawn by ::after, scaled in from the left on hover/focus; always shown when active
+// Pill: solid primary when active, faint teal tint on hover/focus otherwise
 const linkClass = ({ isActive }) =>
   [
-    'relative font-body transition-colors hover:text-primary focus-visible:text-primary',
-    'after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:bg-primary',
-    'after:origin-left after:transition-transform motion-reduce:after:transition-none',
-    'hover:after:scale-x-100 focus-visible:after:scale-x-100',
-    isActive ? 'text-primary after:scale-x-100' : 'text-ink after:scale-x-0',
+    'inline-block rounded-full px-4 py-1.5 font-body transition-colors motion-reduce:transition-none',
+    isActive ? 'bg-primary text-background' : 'text-ink hover:bg-accent-alt/15 focus-visible:bg-accent-alt/15',
   ].join(' ')
 
 function Navbar() {
@@ -31,7 +28,7 @@ function Navbar() {
           <img src={logo} alt="SheBuilds home" className="h-10 md:h-12 w-auto mix-blend-multiply" />
         </Link>
 
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden md:flex items-center gap-1 p-1 bg-surface border-2 border-ink rounded-full shadow-brutal-sm">
           {links.map(({ to, label }) => (
             <li key={to}>
               <NavLink to={to} className={linkClass}>

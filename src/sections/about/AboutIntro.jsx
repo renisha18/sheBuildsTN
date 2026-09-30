@@ -2,7 +2,7 @@ function AboutIntro() {
   return (
     <section
       aria-labelledby="about-heading"
-      className="flex flex-col gap-4 border border-dashed m-4 p-8"
+      className="flex flex-col gap-4 m-4 p-8"
     >
       <h1 id="about-heading">About heading goes here</h1>
       <p>

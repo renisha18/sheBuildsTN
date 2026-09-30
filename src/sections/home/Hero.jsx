@@ -2,7 +2,7 @@ function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center border border-dashed m-4 p-8"
+      className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center m-4 p-8"
     >
       <div className="flex flex-col items-start gap-4">
         <h1 id="hero-heading" className="flex flex-col gap-1">
@@ -17,8 +17,11 @@ function Hero() {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
-        <button type="button" className="border px-4 py-2">
-          Button
+        <button
+          type="button"
+          className="font-body font-semibold text-ink bg-accent border-2 border-ink rounded-full px-6 py-3 shadow-brutal transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-brutal-sm"
+        >
+          Join the community <span aria-hidden="true">→</span>
         </button>
       </div>
       <div

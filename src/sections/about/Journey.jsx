@@ -4,7 +4,7 @@ function Journey() {
   return (
     <section
       aria-labelledby="journey-heading"
-      className="flex flex-col gap-8 border border-dashed m-4 p-8"
+      className="flex flex-col gap-8 m-4 p-8"
     >
       <h2 id="journey-heading">Journey</h2>
 
