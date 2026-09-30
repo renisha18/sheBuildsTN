@@ -1,0 +1,69 @@
+/* Font must stay first */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+
+/* Root container for About page */
+.about {
+  --about-container: 1400px;
+
+  /* Typography tokens (scoped only to About page) */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+}
+
+/* ---------- Intro Section ---------- */
+
+.about__intro {
+  max-width: var(--about-container);
+  margin: 0 auto;
+  padding: 3rem 2rem 0;
+}
+
+/* Headings (shared style with Journey) */
+.about__heading,
+.about .journey__heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-primary);
+}
+
+/* Main heading */
+.about__heading {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 4vw, 3rem); /* reduced slightly */
+}
+
+/* Journey heading */
+.about .journey__heading {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+}
+
+/* Paragraph text (FIXED — smaller & cleaner) */
+.about__intro p {
+  max-width: 65ch;
+  margin: 0 0 0.75rem;
+
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem); /* reduced */
+  font-weight: 400; /* lighter */
+  line-height: 1.5;
+
+  color: var(--color-ink);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+  .about__intro {
+    padding: 2rem 1rem 0;
+  }
+
+  .about__heading {
+    font-size: 1.8rem;
+  }
+
+  .about__intro p {
+    font-size: 0.95rem;
+  }
+}

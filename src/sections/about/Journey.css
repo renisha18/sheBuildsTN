@@ -1,0 +1,345 @@
+/* Horizontal timeline. Cards alternate above/below a centre axis on desktop and
+   collapse to a single left-hand rail below 1000px.
+   Colours, fonts, radii and shadows all come from the @theme tokens in index.css. */
+
+.journey {
+  --area: 250px;       /* height of the card area above the axis */
+  --axis: 60px;        /* height of the axis row */
+  --gap: 16px;         /* dashed-connector gap between card and axis */
+  --card-w: 155%;      /* card width as a share of one column. Try 140%-165% */
+  --card-h: 220px;     /* every card is this tall. Must be <= --area - --gap */
+  --year-clear: 2.25rem; /* strip under the axis reserved for the up-item year labels */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* --step is set inline by Journey.jsx so STEP_MS stays the single source of truth */
+
+  max-width: var(--about-container, 1400px);
+  margin: 0 auto;
+  padding: 3rem 2rem 1.5rem;
+}
+
+/* Global h2 already supplies --font-display */
+.journey__heading {
+  margin: 0 0 2rem;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  color: var(--color-primary);
+}
+
+.journey__timeline {
+  position: relative;
+}
+
+.journey__list {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr)); /* stops wide cards stretching the tracks */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- Item ---------- */
+/* Rows 1 and 2 are fixed so the axis lands at exactly the same offset in every
+   item; rows 3-4 are auto so a card can never overflow its track. */
+.journey__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: var(--area) var(--axis) auto auto;
+  grid-template-areas: 'upper' 'axis' 'lower' 'footer';
+  justify-items: center;
+}
+
+.journey__item--up .journey__card {
+  grid-area: upper;
+  align-self: end;
+  margin-bottom: var(--gap);
+}
+.journey__item--up .journey__year {
+  grid-area: lower;
+  align-self: start;
+  padding-top: 0.625rem; /* year sits right under the axis */
+}
+/* Down cards start below the year-label strip, so a wide card can never cover
+   the neighbouring up-item's year (e.g. 2026 card over the 2025 label). */
+.journey__item--down .journey__card {
+  grid-area: lower;
+  align-self: start;
+  margin-top: calc(var(--gap) + var(--year-clear));
+}
+.journey__item--down .journey__year {
+  grid-area: footer;
+  align-self: start;
+  padding-top: 0.625rem; /* year sits under the card */
+}
+
+/* ---------- Card ---------- */
+.journey__card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: var(--card-w);
+  height: var(--card-h); /* same size for every card */
+  padding: 0.75rem;
+  background: var(--card-color);
+  color: var(--color-ink);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-brutal);
+  overflow-wrap: break-word;
+}
+
+/* First and last cards stay inside the container instead of overflowing it */
+.journey__item:first-child .journey__card {
+  justify-self: start;
+}
+.journey__item:last-child .journey__card {
+  justify-self: end;
+}
+
+.journey__card-year {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.journey__card-title {
+  margin: 0 0 0.375rem;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+.journey__card-text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+.journey__card-image {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.25rem;
+  margin: auto 0 0 auto; /* pinned to the bottom-right of the card */
+  background: var(--color-background);
+  border: 1.5px solid var(--color-ink);
+  border-radius: 0.375rem;
+  font-family: var(--font-body);
+  font-size: 0.5rem;
+  line-height: 1.1;
+  text-align: center;
+}
+
+/* ---------- Diamond marker + dashed connector ---------- */
+.journey__node {
+  grid-area: axis;
+  position: relative;
+  z-index: 1; /* keep the diamond above the axis rail */
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+.journey__diamond {
+  width: 14px;
+  height: 14px;
+  background: var(--card-color);
+  border: 2px solid var(--color-ink);
+  transform: rotate(45deg);
+}
+.journey__stem {
+  position: absolute;
+  left: 50%;
+  width: 0;
+  margin-left: -1px;
+  border-left: 2px dashed var(--color-ink);
+}
+/* up: from the card's bottom edge to the diamond tip */
+.journey__item--up .journey__stem {
+  top: calc(-1 * var(--gap));
+  height: calc(var(--gap) + var(--axis) / 2 - 7px);
+}
+/* down: longer, because the card starts below the year-label strip */
+.journey__item--down .journey__stem {
+  bottom: calc(-1 * (var(--gap) + var(--year-clear)));
+  height: calc(var(--gap) + var(--year-clear) + var(--axis) / 2 - 7px);
+}
+
+.journey__year {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+/* ---------- Axis: one segment per item, reaching the next diamond ---------- */
+.journey__rail {
+  position: absolute;
+  left: 50%;
+  width: 100%;
+  top: calc(var(--area) + var(--axis) / 2 - 1.5px);
+  height: 3px;
+  background: var(--color-ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.journey__item:last-child .journey__rail {
+  display: none; /* nothing left to connect to */
+}
+/* Grows over one full step, so it arrives just as the next year fades in. */
+.journey__item.is-revealed .journey__rail {
+  transform: scaleX(1);
+  transition: transform var(--step, 1000ms) linear;
+}
+
+/* ---------- Reveal: fade + small translateY, nothing else ---------- */
+.journey__card,
+.journey__node,
+.journey__year {
+  opacity: 0;
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.journey__item--up .journey__card {
+  transform: translateY(14px);
+}
+.journey__item--down .journey__card {
+  transform: translateY(-14px);
+}
+.journey__year {
+  transform: translateY(8px);
+}
+/* diamond lands first, card and year follow */
+.journey__card,
+.journey__year {
+  transition-delay: 0.2s;
+}
+
+.journey__item.is-revealed .journey__card,
+.journey__item.is-revealed .journey__node,
+.journey__item.is-revealed .journey__year {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Reserved space for the character illustration ---------- */
+.journey__character {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  min-height: 260px; /* hold the space even while it is empty */
+}
+
+/* ---------- Narrow desktop: columns get tight, so give cards more height ---------- */
+@media (max-width: 1200px) {
+  .journey {
+    --area: 290px;
+    --card-w: 150%;
+    --card-h: 250px;
+    padding: 3rem 1rem 1.5rem;
+  }
+  .journey__card {
+    padding: 0.5rem;
+  }
+  .journey__year {
+    font-size: 1rem;
+  }
+}
+
+/* ---------- Tablet / mobile: vertical timeline, rail on the left ---------- */
+@media (max-width: 1000px) {
+  .journey {
+    padding: 2rem 1rem 1rem;
+  }
+  .journey__heading {
+    margin-bottom: 1.5rem;
+  }
+
+  .journey__list {
+    display: block;
+  }
+
+  .journey__item,
+  .journey__item--up,
+  .journey__item--down {
+    grid-template-columns: 2.75rem 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: 'node year' 'node card';
+    justify-items: start;
+    padding: 0 0 1.75rem;
+  }
+
+  .journey__item--up .journey__year,
+  .journey__item--down .journey__year {
+    grid-area: year;
+    align-self: center;
+    padding: 0 0 0.5rem;
+    font-size: 1.15rem;
+  }
+
+  .journey__item--up .journey__card,
+  .journey__item--down .journey__card,
+  .journey__item:first-child .journey__card,
+  .journey__item:last-child .journey__card {
+    grid-area: card;
+    align-self: start;
+    justify-self: start;
+    width: 100%;
+    max-width: 26rem;
+    height: auto; /* on mobile the cards size to their content */
+    margin: 0;
+    padding: 0.875rem;
+    transform: translateY(14px);
+  }
+
+  .journey__node {
+    grid-area: node; /* the desktop 'axis' area does not exist in this grid */
+    align-self: start;
+    width: 100%;
+    height: 1.75rem; /* diamond centre sits 14px from the item top */
+  }
+
+  .journey__stem {
+    display: none;
+  }
+
+  .journey__card-title {
+    font-size: 1.05rem;
+  }
+  .journey__card-text {
+    font-size: 0.9rem;
+  }
+  .journey__card-image {
+    width: 3.5rem;
+    height: 2.75rem;
+    margin-top: 0.5rem; /* auto would do nothing here, so use a fixed gap */
+    font-size: 0.55rem;
+  }
+
+  /* Rail runs down the node column, from this diamond to the next one. */
+  .journey__rail {
+    top: 0.875rem;
+    bottom: -0.875rem;
+    left: 1.375rem;
+    margin-left: -1.5px;
+    width: 3px;
+    height: auto;
+    transform: scaleY(0);
+    transform-origin: top center;
+  }
+  .journey__item.is-revealed .journey__rail {
+    transform: scaleY(1);
+  }
+
+  .journey__character {
+    min-height: 200px;
+    justify-content: center;
+  }
+}
+
+/* ---------- Reduced motion: everything visible, nothing animated ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .journey__card,
+  .journey__node,
+  .journey__year,
+  .journey__rail,
+  .journey__item.is-revealed .journey__rail {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
