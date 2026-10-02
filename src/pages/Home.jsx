@@ -4,6 +4,7 @@ import Hero from '../sections/home/Hero.jsx'
 import About from './About.jsx'
 import PlaceholderSection from '../sections/PlaceholderSection.jsx'
 import { sections, scrollToSection } from '../siteSections.js'
+import JoinUs from './joinus.jsx'
 
 // The whole site: one scrolling page, sections in nav order.
 function Home() {
@@ -22,7 +23,7 @@ function Home() {
         <About />
       </PageSection>
       <PageSection id="join">
-        <PlaceholderSection id="join" title="Join us" text="Membership details and ways to get involved are coming soon." />
+        <JoinUs/>
       </PageSection>
       <PageSection id="events">
         <PlaceholderSection id="events" title="Events" text="Upcoming workshops, meetups and hackathons will be listed here." />

@@ -1,10 +1,11 @@
 import JoinUsContent from "../sections/joinus/JoinUsContent";
 
-// The Navbar comes from your existing layout / App, same as the About page.
+// One section of the single-page layout. The id matches siteSections.js;
+// tabIndex={-1} lets scrollToSection() move keyboard focus here.
 export default function JoinUs() {
   return (
-    <main className="join-us">
+    <section id="join" tabIndex={-1} className="join-us">
       <JoinUsContent />
-    </main>
+    </section>
   );
 }
