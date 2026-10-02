@@ -46,3 +46,137 @@
     font-family: var(--font-display);
   }
 }
+
+/* ---------- Hero frame + badges ---------- */
+/* Tune the frame and badges here */
+:root {
+  --hero-frame-radius: 48px;
+  --hero-frame-border: 2px;
+  --badge-size: 60px;
+  --badge-outline: 2.5px;
+  --badge-stroke: 2.2;
+  --badge-shadow: 3px 3px 0 var(--color-ink);
+  --badge-bob: 6px;
+}
+
+@media (width < 64rem) {
+  :root {
+    --hero-frame-radius: 40px;
+    --badge-size: 48px;
+  }
+}
+
+@media (width < 48rem) {
+  :root {
+    --hero-frame-radius: 28px;
+    --badge-size: 40px;
+  }
+}
+
+@layer components {
+  .hero-frame {
+    position: relative;
+    border: var(--hero-frame-border) solid var(--color-ink);
+    border-radius: var(--hero-frame-radius);
+  }
+
+  .hero-badges {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Outer span: positions the badge centered on the frame edge, carries the bob + hard shadow.
+     drop-shadow here (not on the rotated shape) keeps every shadow pointing down-right. */
+  .hero-badge {
+    position: absolute;
+    translate: -50% -50%;
+    filter: drop-shadow(var(--badge-shadow));
+    pointer-events: none;
+  }
+
+  .hero-badge--maroon { --badge-fill: var(--color-primary); --badge-ink: var(--color-background); }
+  .hero-badge--red { --badge-fill: var(--color-danger); --badge-ink: var(--color-background); }
+  .hero-badge--teal { --badge-fill: var(--color-accent-alt); --badge-ink: var(--color-ink); }
+  .hero-badge--coral { --badge-fill: var(--color-accent); --badge-ink: var(--color-ink); }
+  .hero-badge--cream { --badge-fill: var(--color-background); --badge-ink: var(--color-primary); }
+
+  .hero-badge__shape {
+    display: grid;
+    place-items: center;
+    width: var(--badge-size);
+    height: var(--badge-size);
+    background: var(--badge-fill);
+    border: var(--badge-outline) solid var(--color-ink);
+    color: var(--badge-ink);
+  }
+
+  .hero-badge__icon {
+    width: 50%;
+    height: 50%;
+    stroke-width: var(--badge-stroke);
+  }
+
+  .hero-badge__shape--square { border-radius: 12px; }
+  .hero-badge__shape--circle { border-radius: 50%; }
+  .hero-badge__shape--squircle { border-radius: 30%; }
+
+  .hero-badge__shape--pill {
+    width: calc(var(--badge-size) * 1.6);
+    height: calc(var(--badge-size) * 0.85);
+    border-radius: 9999px;
+  }
+
+  /* Rotated square; shrunk so its diagonal roughly matches the other badges */
+  .hero-badge__shape--diamond {
+    width: calc(var(--badge-size) * 0.8);
+    height: calc(var(--badge-size) * 0.8);
+    border-radius: 10px;
+    rotate: 45deg;
+  }
+  .hero-badge__shape--diamond .hero-badge__icon {
+    rotate: -45deg;
+    width: 60%;
+    height: 60%;
+  }
+
+  /* CSS borders don't follow clip-path, so the hexagon's fill + outline is an SVG polygon */
+  .hero-badge__shape--hexagon {
+    position: relative;
+    width: calc(var(--badge-size) * 1.1);
+    background: none;
+    border: 0;
+  }
+  .hero-badge__hex {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .hero-badge__hex polygon {
+    fill: var(--badge-fill);
+    stroke: var(--color-ink);
+    stroke-width: var(--badge-outline);
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .hero-badge__shape--hexagon .hero-badge__icon {
+    position: relative;
+  }
+
+  @media (width < 48rem) {
+    .hero-badge--hide-sm { display: none; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-badge {
+      animation: hero-badge-bob 4s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes hero-badge-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(calc(-1 * var(--badge-bob))); }
+}
