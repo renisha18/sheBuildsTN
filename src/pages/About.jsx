@@ -1,15 +1,28 @@
-import AboutIntro from '../sections/about/AboutIntro.jsx'
 import Journey from '../sections/about/Journey.jsx'
-import AboutImage from '../sections/about/AboutImage.jsx'
+import './About.css'
+// import characterImg from '../assets/character.png' // add this later
 
-function About() {
+export default function About() {
+  // Layout.jsx already renders the page inside <main>, so this is a plain div.
   return (
-    <>
-      <AboutIntro />
+    <div className="about">
+      <section className="about__intro" aria-labelledby="about-heading">
+        <h1 id="about-heading" className="about__heading">About us</h1>
+        <p>
+          SheBuilds Chennai started as a small WhatsApp group of five women who
+          wanted a space to talk code, career, and life without the noise.
+          Today we&apos;re 300+ engineers, designers, founders, and students — every
+          stage, every stack — who show up for each other online and off.
+        </p>
+        <p>
+          We run workshops, host speaker nights, organise hackathons, and keep
+          online groups where questions never go unanswered.
+        </p>
+      </section>
+
       <Journey />
-      <AboutImage />
-    </>
+      {/* Later, when the character is ready:
+          <Journey character={<img src={characterImg} alt="" />} /> */}
+    </div>
   )
 }
-
-export default About
