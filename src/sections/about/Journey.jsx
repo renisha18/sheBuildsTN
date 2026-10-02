@@ -71,7 +71,7 @@ export default function Journey({ character = null }) {
       aria-labelledby="journey-heading"
       style={{ '--step': `${STEP_MS}ms` }}
     >
-      <h2 id="journey-heading" className="journey__heading">Journey</h2>
+      <h2 id="journey-heading" className="journey__heading" data-reveal>Journey</h2>
 
       <div className="journey__timeline" ref={timelineRef}>
         <ol className="journey__list">

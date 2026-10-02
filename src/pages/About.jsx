@@ -7,14 +7,14 @@ export default function About() {
   return (
     <div className="about">
       <section className="about__intro" aria-labelledby="about-heading">
-        <h1 id="about-heading" className="about__heading">About us</h1>
-        <p>
+        <h2 id="about-heading" className="about__heading" data-reveal>About us</h2>
+        <p data-reveal>
           SheBuilds Chennai started as a small WhatsApp group of five women who
           wanted a space to talk code, career, and life without the noise.
           Today we&apos;re 300+ engineers, designers, founders, and students — every
           stage, every stack — who show up for each other online and off.
         </p>
-        <p>
+        <p data-reveal>
           We run workshops, host speaker nights, organise hackathons, and keep
           online groups where questions never go unanswered.
         </p>

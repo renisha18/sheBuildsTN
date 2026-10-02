@@ -1,17 +1,21 @@
-import { Routes, Route } from 'react-router'
+import { Routes, Route, Navigate } from 'react-router'
 import Layout from './components/Layout.jsx'
 import Home from './pages/Home.jsx'
-import About from './pages/About.jsx'
-import ComingSoon from './pages/ComingSoon.jsx'
+import { sections } from './siteSections.js'
 
+// Single scrolling page at "/". The old routed URLs (/about, /join, ...) redirect
+// to their anchor section so existing links and bookmarks still land correctly.
 function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        {/* Join us / Events / Blogs don't have pages yet */}
-        <Route path="*" element={<ComingSoon />} />
+        <Route index element={<Home />} />
+        {sections
+          .filter((s) => s.id !== 'home')
+          .map((s) => (
+            <Route key={s.id} path={s.id} element={<Navigate to={{ pathname: '/', hash: `#${s.id}` }} replace />} />
+          ))}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
   )

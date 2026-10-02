@@ -40,7 +40,7 @@ const badges = [
 
 function HeroBadges() {
   return (
-    <div aria-hidden="true" className="hero-badges">
+    <div aria-hidden="true" className="hero-badges" data-reveal>
       {badges.map(({ shape, color, icon, top, left, delay, hideSm }, i) => (
         <span
           key={i}
