@@ -1,0 +1,194 @@
+/* Join Us page. Reuses the site's tokens from index.css where they exist;
+   the fallbacks after each comma are the colours sampled from the Figma. */
+
+.join-us {
+  --join-container: var(--about-container, 1400px);
+  --stagger: clamp(2.5rem, 4.2vw, 4rem); /* how far the right-hand cards drop */
+  --join-gap: clamp(1.25rem, 2.4vw, 2.25rem);
+  --ink: var(--color-ink, #111);
+}
+
+.join-us__inner {
+  max-width: var(--join-container);
+  margin: 0 auto;
+  padding: 3rem 2rem 3rem;
+}
+
+.join-us__heading {
+  margin: 0 0 clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(1.4rem, 2.6vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+/* ---------- Desktop: two staggered card columns + character column ---------- */
+.join-us__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr);
+  grid-template-rows: auto auto;
+  column-gap: var(--join-gap);
+  row-gap: var(--join-gap);
+  align-items: start;
+}
+
+/* Explicit placement keeps DOM order 1-2-3-4 for mobile and screen readers */
+.join-card--speak     { grid-column: 1; grid-row: 1; }
+.join-card--volunteer { grid-column: 2; grid-row: 1; }
+.join-card--sponsor   { grid-column: 1; grid-row: 2; }
+.join-card--chapter   { grid-column: 2; grid-row: 2; }
+
+/* Right-hand cards sit lower. The negative bottom margin cancels the push in the
+   row height, so row 2 on the left doesn't get pulled down with it. */
+.join-card--volunteer,
+.join-card--chapter {
+  margin-top: var(--stagger);
+  margin-bottom: calc(-1 * var(--stagger));
+}
+
+/* ---------- Card ---------- */
+.join-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+  box-sizing: border-box;
+  min-height: clamp(9.5rem, 14vw, 14rem);
+  padding: clamp(1.1rem, 2vw, 1.75rem);
+  background: var(--card-color);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.join-card__title {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.5vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: pre-line;
+  color: var(--ink);
+}
+
+/* ---------- Button ---------- */
+.join-card__button {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  background: var(--join-button, #d9d9d9);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 1rem;
+  box-shadow: 3px 3px 0 var(--ink);
+  font-size: clamp(0.9rem, 1.3vw, 1.15rem);
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+  white-space: pre-line; /* lets "CREATE A / CHAPTER" wrap on two lines */
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* ---------- Subtle hover / focus ---------- */
+.join-card:hover,
+.join-card:focus-within {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--ink);
+}
+.join-card__button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.join-card__button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.join-card__button:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ---------- Character space ---------- */
+.join-us-character {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  align-self: end;
+  justify-self: center;
+  width: 100%;
+  max-width: 420px;
+  height: clamp(20rem, 42vw, 37rem);
+}
+.join-us-character img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+}
+/* Delete this block (and the placeholder div) once the real image is in */
+.join-us-character__placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed var(--ink);
+  font-size: 0.85rem;
+  text-align: center;
+  opacity: 0.45;
+}
+
+/* ---------- Mobile: single column, slight stagger, character below ---------- */
+@media (max-width: 800px) {
+  .join-us {
+    --stagger: 0px;
+  }
+  .join-us__inner {
+    padding: 2rem 1rem 2.5rem;
+  }
+
+  .join-us__layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    row-gap: 1.5rem;
+  }
+
+  .join-card--speak,
+  .join-card--volunteer,
+  .join-card--sponsor,
+  .join-card--chapter {
+    grid-column: 1;
+    grid-row: auto;
+    margin: 0;
+    min-height: 9rem;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+
+  /* keeps a hint of the desktop stagger without causing overflow */
+  .join-card--volunteer,
+  .join-card--chapter {
+    margin-left: 1.5rem;
+  }
+  .join-card--speak,
+  .join-card--sponsor {
+    margin-right: 1.5rem;
+  }
+
+  .join-card__title  { font-size: 1.1rem; }
+  .join-card__button { font-size: 1rem; }
+
+  .join-us-character {
+    grid-column: 1;
+    grid-row: auto;
+    max-width: 320px;
+    height: 22rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .join-card,
+  .join-card__button { transition: none; }
+  .join-card:hover,
+  .join-card:focus-within,
+  .join-card__button:hover { transform: none; }
+}
