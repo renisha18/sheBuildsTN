@@ -4,7 +4,7 @@ import Hero from '../sections/home/Hero.jsx'
 import About from './About.jsx'
 import PlaceholderSection from '../sections/PlaceholderSection.jsx'
 import { sections, scrollToSection } from '../siteSections.js'
-import JoinUs from './joinus.jsx'
+import JoinUs from './JoinUs.jsx'
 
 // The whole site: one scrolling page, sections in nav order.
 function Home() {
