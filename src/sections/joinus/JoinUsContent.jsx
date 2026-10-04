@@ -11,7 +11,7 @@ const actions = [
 
 export default function JoinUsContent() {
   return (
-    <section className="join-us__inner" aria-labelledby="join-us-heading">
+    <section className="about__intro" aria-labelledby="join-us-heading">
       <h2 id="join-us-heading" className="about__heading">
         Join Us
       </h2>
@@ -33,11 +33,11 @@ export default function JoinUsContent() {
           ))}
         </div>
 
-        {/* Reserved space for the character.
+        {/* Character slot: the wrapper has a fixed size, so the image can't shift the layout.
             To add it: replace the placeholder <div> with
             <img src={character} alt="" />  (keep the wrapper) */}
         <div className="join-us-character" aria-hidden="true">
-          <div className="join-us-character__placeholder">Character goes here</div>
+          <div className="join-us-character__placeholder">Character image (placeholder)</div>
         </div>
       </div>
     </section>

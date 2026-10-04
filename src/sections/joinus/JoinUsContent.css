@@ -2,15 +2,8 @@
    the fallbacks after each comma are the colours sampled from the Figma. */
 
 .join-us {
-  --join-container: 1100px;
   --join-gap: clamp(0.6rem, 1vw, 0.875rem);
   --ink: var(--color-ink, #111);
-}
-
-.join-us__inner {
-  max-width: var(--join-container);
-  margin: 0 auto;
-  padding: 1.5rem 2rem 1.5rem;
 }
 
 .join-us__heading {
@@ -21,12 +14,21 @@
   color: var(--ink);
 }
 
-/* ---------- Desktop: 2x2 cards on the left, character on the right ---------- */
+/* ---------- Layout ----------
+   Width, padding and centring come from the About wrapper (.about__intro in About.css).
+   Below lg: content, then the character underneath. */
 .join-us__layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
-  column-gap: clamp(1rem, 2.5vw, 2rem);
-  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 1.5rem;
+}
+
+/* lg and up: cards take the available width, character column on the right */
+@media (min-width: 64rem) {
+  .join-us__layout {
+    grid-template-columns: minmax(0, 1fr) 21.25rem;
+    column-gap: clamp(1.5rem, 3vw, 3rem);
+  }
 }
 
 .join-us__cards {
@@ -110,14 +112,21 @@
 }
 
 /* ---------- Character space ----------
-   Height follows the card grid beside it (it never makes the section taller). */
+   Fixed width + aspect ratio, so swapping the placeholder for the real <img> can't shift
+   the layout. No border/background/shadow here: the real image sits on the page as-is. */
 .join-us-character {
   position: relative;
-  align-self: stretch;
-  justify-self: end;
+  justify-self: center;
   width: 100%;
-  max-width: 340px;
-  min-height: 0;
+  max-width: 16.25rem;
+  aspect-ratio: 3 / 4;
+}
+@media (min-width: 64rem) {
+  .join-us-character {
+    align-self: center;   /* vertically centred beside the cards */
+    justify-self: end;
+    max-width: none;      /* fills the 21.25rem column */
+  }
 }
 .join-us-character > * {
   position: absolute;
@@ -128,30 +137,21 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: bottom right;
 }
-/* Delete this block (and the placeholder div) once the real image is in */
+/* PLACEHOLDER — delete this block (and the placeholder div) once the real image is in.
+   Plain gray box, same gray as the event image placeholders (bg-muted/30). */
 .join-us-character__placeholder {
   display: grid;
   place-items: center;
-  border: 2px dashed var(--ink);
-  border-radius: 0.875rem;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--color-muted) 30%, transparent);
+  color: var(--color-ink);
   font-size: 0.85rem;
   text-align: center;
-  opacity: 0.45;
 }
 
-/* ---------- Mobile: single column, character below ---------- */
+/* ---------- Mobile: cards in a single column ---------- */
 @media (max-width: 800px) {
-  .join-us__inner {
-    padding: 1.25rem 1rem 1.5rem;
-  }
-
-  .join-us__layout {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 1rem;
-  }
-
   .join-us__cards {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -161,13 +161,6 @@
   }
   .join-card__title  { font-size: 1rem; }
   .join-card__button { font-size: 0.85rem; }
-
-  /* No cards beside it on mobile, so it needs its own height */
-  .join-us-character {
-    justify-self: center;
-    max-width: 260px;
-    height: 15rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
