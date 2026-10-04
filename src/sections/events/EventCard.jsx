@@ -13,7 +13,7 @@ export default function EventCard({ event }) {
   const { category, title, description, attendees, date, location, image, featured } = event
 
   return (
-    <article className="relative flex h-full w-full flex-col overflow-hidden rounded-xs border-4 border-ink bg-surface shadow-brutal-lg">
+    <article className="relative flex h-full w-full flex-col overflow-hidden rounded-xs border-4 border-ink bg-surface shadow-brutal">
       {/* Image area — gray placeholder until a real photo is added in eventsData.js */}
       <div className="relative aspect-5/2 w-full border-b-2 border-ink bg-muted/30">
         {image ? (
