@@ -12,8 +12,8 @@ const actions = [
 export default function JoinUsContent() {
   return (
     <section className="join-us__inner" aria-labelledby="join-us-heading">
-      <h2 id="join-us-heading" className="join-us__heading">
-        HOW DO YOU WANT TO BUILD?
+      <h2 id="join-us-heading" className="about__heading">
+        Join Us
       </h2>
 
       <div className="join-us__layout">

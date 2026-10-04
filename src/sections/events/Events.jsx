@@ -81,13 +81,13 @@ export default function Events() {
       aria-labelledby="events-heading"
       className="min-h-screen scroll-mt-24 px-6 py-24 md:px-12"
     >
-      <h2 id="events-heading" className="sr-only">
+      <h2 id="events-heading" className="about__heading">
         Events
       </h2>
 
       {/* Search + category filters */}
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
-        <div className="relative flex-1 lg:max-w-sm">
+      <div className="flex flex-col gap-4 xl:flex-row xl:items-center">
+        <div className="relative w-full max-w-sm xl:flex-1">
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"

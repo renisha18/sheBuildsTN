@@ -13,7 +13,7 @@ export default function EventCard({ event }) {
   const { category, title, description, attendees, date, location, image, featured } = event
 
   return (
-    <article className="flex h-full w-full flex-col overflow-hidden rounded-xs border-4 border-ink bg-surface shadow-brutal-lg">
+    <article className="relative flex h-full w-full flex-col overflow-hidden rounded-xs border-4 border-ink bg-surface shadow-brutal-lg">
       {/* Image area — gray placeholder until a real photo is added in eventsData.js */}
       <div className="relative aspect-5/2 w-full border-b-2 border-ink bg-muted/30">
         {image ? (
@@ -23,13 +23,13 @@ export default function EventCard({ event }) {
             <div aria-hidden="true" className="absolute inset-0 bg-background/30" />
           </>
         ) : (
-          <span className="absolute bottom-2 right-3 font-body text-xs text-muted">Image placeholder</span>
+          <span className="absolute bottom-2 left-4 font-body text-xs text-ink">Image placeholder</span>
         )}
 
         {/* Decorative repeat of the title; the real heading is the h3 below */}
         <p
           aria-hidden="true"
-          className="absolute left-4 top-3 pr-28 font-display text-2xl font-bold leading-tight text-ink line-clamp-3"
+          className="absolute left-4 right-28 top-3 font-display text-xl font-bold leading-tight text-ink line-clamp-2 md:text-2xl"
         >
           {title}
         </p>
