@@ -1,22 +1,24 @@
-# SheBuilds Tamil Nadu — Skeleton Phase
+# SheBuilds Tamil Nadu
 
-We are building the STRUCTURAL SKELETON only. No final colors, no final
-typography, no final content styling. Use plain, minimal Tailwind (borders
-and background colors only where needed to see layout regions) so the
-structure is visible and reviewable.
+Community website for SheBuilds Tamil Nadu. Vite + React + Tailwind v4
+(tokens live in src/index.css @theme; there is no tailwind.config.js).
 
-## Rules for this phase
-- Every section should be a clearly separated, clearly named component.
-- Use semantic HTML (nav, header, main, section, footer).
-- Layout structure (grid/flex, columns, spacing regions) matters — visual
-  polish does not, yet.
-- Placeholder content is fine: "Headline goes here", gray boxes for images,
-  lorem ipsum for paragraphs.
-- Do not invent final button styles, shadows, or decorative elements —
-  a plain visible-outline box standing in for a button is fine.
-- Routing: Home at "/", About at "/about", shared Navbar across both.
+## Design rules
+- Neobrutalist: border-2 border-ink, hard offset shadows (shadow-brutal,
+  shadow-brutal-sm), flat colors, no blur, no gradients.
+- Colors only through tokens: primary (maroon), accent (coral),
+  accent-alt (teal), danger (deep red), background (cream), surface,
+  ink, muted. No raw hex and no arbitrary [..] values.
+- Buttons are pills (rounded-full) with a press effect:
+  active:translate-x-0.5 active:translate-y-0.5 and a smaller shadow.
+- The logo and mascot illustration are never boxed.
+- font-display (Space Grotesk) for headings, font-body (Inter) for text.
 
-## Pages required
-1. Home: Navbar, Hero (two-column: text block left, image placeholder right)
-2. About: Navbar, About-intro block, Journey/timeline block (placeholder
-   cards in a horizontal sequence), image placeholder near the bottom
+## Structure
+- Sections live in src/sections/<name>/ and share one sticky Navbar.
+
+## Workflow
+- One small change at a time. Don't restyle unrelated components.
+- Don't take screenshots or run headless browser checks unless I ask;
+  I'll check in my browser. Run `npm run build` and `npm run lint` at the end.
+- Placeholder content must be clearly placeholder. Don't invent facts.

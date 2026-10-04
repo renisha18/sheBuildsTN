@@ -215,3 +215,11 @@
     transform: none;
   }
 }
+
+/* Hides the scrollbar on swipeable tracks (e.g. the events carousel) without disabling scrolling */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
