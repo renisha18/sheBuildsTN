@@ -37,7 +37,22 @@ export default function JoinUsContent() {
             To add it: replace the placeholder <div> with
             <img src={character} alt="" />  (keep the wrapper) */}
         <div className="join-us-character" aria-hidden="true">
-          <div className="join-us-character__placeholder">Character image (placeholder)</div>
+          <div
+  data-reveal
+  className="aspect-square w-full flex items-center justify-center overflow-hidden"
+>
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="Illustrated SheBuilds character working at her desk"
+    className="w-full h-full object-cover scale-[1.2] object-[40%_30%]"
+  >
+    <source src="/videos/JoinUs.mp4" type="video/mp4" />
+  </video>
+</div>
         </div>
       </div>
     </section>

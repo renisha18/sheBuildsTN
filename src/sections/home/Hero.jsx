@@ -27,12 +27,23 @@ function Hero() {
             </button>
           </div>
         </div>
-        <div
-          role="img"
-          data-reveal
-          aria-label="Character image placeholder"
-          className="bg-gray-200 aspect-square w-full"
-        />
+    <div
+      data-reveal
+      className="aspect-square w-full flex items-center justify-center overflow-hidden"
+    >
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        aria-label="Illustrated SheBuilds character working at her desk"
+        className="w-full h-full object-contain"
+      >
+        <source src="/videos/test.mp4" type="video/mp4" />
+        Your browser does not support the video element.
+      </video>
+    </div>
         <HeroBadges />
       </div>
     </section>
