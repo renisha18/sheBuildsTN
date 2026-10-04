@@ -12,8 +12,9 @@ const iconProps = {
 export default function EventCard({ event }) {
   const { category, title, description, attendees, date, location, image, featured } = event
 
+  // Border, radius and shadow match .journey__card (Journey.css); overflow-hidden clips the image to the rounded top
   return (
-    <article className="relative flex h-full w-full flex-col overflow-hidden rounded-xs border-4 border-ink bg-surface shadow-brutal">
+    <article className="relative flex h-full w-full flex-col overflow-hidden rounded-md border-2 border-ink bg-surface shadow-brutal">
       {/* Image area — gray placeholder until a real photo is added in eventsData.js */}
       <div className="relative aspect-5/2 w-full border-b-2 border-ink bg-muted/30">
         {image ? (
@@ -42,7 +43,7 @@ export default function EventCard({ event }) {
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5">
-        <span className="self-start border-2 border-ink bg-accent-alt px-2 py-0.5 font-body text-xs font-semibold text-ink">
+        <span className="self-start rounded-full border-2 border-ink bg-accent-alt px-2 py-0.5 font-body text-xs font-semibold text-ink">
           {category}
         </span>
 
@@ -80,7 +81,7 @@ export default function EventCard({ event }) {
         {/* No destination yet — swap for an <a href> once event pages exist */}
         <button
           type="button"
-          className="mt-auto inline-flex w-full items-center justify-center gap-2 rounded-xs border-2 border-ink bg-accent px-5 py-2.5 font-body font-bold text-ink shadow-brutal-sm transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+          className="mt-auto inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-ink bg-accent px-5 py-2.5 font-body font-bold text-ink shadow-brutal-sm transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
         >
           View Event<span className="sr-only">: {title}</span>
           <span aria-hidden="true">→</span>
