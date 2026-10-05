@@ -12,7 +12,7 @@ Community website for SheBuilds Tamil Nadu. Vite + React + Tailwind v4
 - Buttons are pills (rounded-full) with a press effect:
   active:translate-x-0.5 active:translate-y-0.5 and a smaller shadow.
 - The logo and mascot illustration are never boxed.
-- font-display (Space Grotesk) for headings, font-body (Inter) for text.
+- Space Grotesk for both headings (font-display) and body text (font-body).
 
 ## Structure
 - Sections live in src/sections/<name>/ and share one sticky Navbar.

@@ -23,7 +23,7 @@
   --radius-xl: 1.25rem;
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 
   --breakpoint-navbar: 50rem;     /* 800px — nav links collapse into the menu toggle below this */
 }
