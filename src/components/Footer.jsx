@@ -1,5 +1,6 @@
 import logo from '../assets/logo.png'
 import { sections, scrollToSection } from '../siteSections.js'
+import BlockToy from './BlockToy.jsx'
 
 // ⚠️ PLACEHOLDER social links — the networks and URLs are not real yet.
 // Add the real `href` for each one (and remove any that don't apply). With href: null the
@@ -27,6 +28,8 @@ function Footer() {
   return (
     <footer className="border-t-2 border-ink bg-background">
       <div className="flex flex-col gap-8 px-6 py-10 md:px-12">
+        <BlockToy />
+
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <a
             href="#home"
