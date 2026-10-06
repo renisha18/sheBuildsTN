@@ -3,10 +3,10 @@ import "./JoinUsContent.css";
 
 // Change `href` to real routes when those pages exist.
 const actions = [
-  { id: "speak",     color: "var(--join-green, #aecc9d)",  tag: "SPEAKER",         title: "WANT TO SHARE YOUR KNOWLEDGE?", cta: "SPEAK",            href: "#join" },
-  { id: "volunteer", color: "var(--join-coral, #fa7b6b)",  tag: "VOLUNTEER",       title: "WANT TO CONTRIBUTE?",           cta: "VOLUNTEER",        href: "#join" },
-  { id: "sponsor",   color: "var(--join-yellow, #f2bf5a)", tag: "SPONSOR",         title: "WANT TO HELP US GROW?",         cta: "SPONSOR",          href: "#join" },
-  { id: "chapter",   color: "var(--join-teal, #4fc4c0)",   tag: "CHAPTER BUILDER", title: "WANT TO BUILD?",                cta: "CREATE A CHAPTER", href: "#join" },
+  { id: "speak",     color: "var(--join-green, #aecc9d)",  tag: "Speaker",         title: "Want to share knowledge?", cta: "Speak",            href: "#join" },
+  { id: "volunteer", color: "var(--join-coral, #fa7b6b)",  tag: "Volunteer",       title: "Want to contribute?",           cta: "Volunteer",        href: "#join" },
+  { id: "sponsor",   color: "var(--join-yellow, #f2bf5a)", tag: "Sponsor",         title: "Want to help us grow?",         cta: "Sponsor",          href: "#join" },
+  { id: "chapter",   color: "var(--join-teal, #4fc4c0)",   tag: "Chapter Builder", title: "Want to build?",                cta: "Create a chapter", href: "#join" },
 ];
 
 export default function JoinUsContent() {
