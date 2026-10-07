@@ -1,0 +1,113 @@
+/* Footer falling-block Easter egg. Fixed px sizes so the board never grows with the viewport. */
+.block-game {
+  --cell: 22px;
+  --gap: 2px;
+  --step: calc(var(--cell) + var(--gap));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+}
+
+@media (width < 48rem) {
+  .block-game {
+    --cell: 20px;
+  }
+}
+
+.block-game__board {
+  padding: 6px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-lg);
+  background: var(--color-background);
+  box-shadow: var(--shadow-brutal);
+  cursor: pointer;
+}
+
+.block-game__board:focus {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.block-game__well {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--cell));
+  grid-auto-rows: var(--cell);
+  gap: var(--gap);
+}
+
+/* Empty cells are a faint grid; filled cells (data-shape) are chunky blocks */
+.block-game__cell {
+  border-radius: calc(var(--radius-md) / 3);
+  background: color-mix(in srgb, var(--color-ink) 6%, transparent);
+}
+
+.block-game__cell[data-shape] {
+  background: var(--fill);
+  border: 2px solid var(--color-ink);
+}
+
+.block-game__cell[data-shape='I'] { --fill: var(--color-accent-alt); }
+.block-game__cell[data-shape='O'] { --fill: var(--color-accent); }
+.block-game__cell[data-shape='L'] { --fill: var(--color-primary); }
+.block-game__cell[data-shape='T'] { --fill: var(--color-danger); }
+.block-game__cell[data-shape='S'] { --fill: color-mix(in srgb, var(--color-accent-alt) 40%, var(--color-surface)); }
+.block-game__cell[data-shape='Z'] { --fill: color-mix(in srgb, var(--color-accent) 40%, var(--color-surface)); }
+
+/* The falling block sits over the grid and slides between rows/columns */
+.block-game__piece {
+  position: absolute;
+  inset: 0 auto auto 0;
+  transform: translate(calc(var(--col) * var(--step)), calc(var(--row) * var(--step)));
+}
+
+.block-game__piece .block-game__cell {
+  position: absolute;
+  width: var(--cell);
+  height: var(--cell);
+  transform: translate(calc(var(--c) * var(--step)), calc(var(--r) * var(--step)));
+}
+
+.block-game__controls {
+  display: none;
+  gap: 8px;
+  width: 100%;
+}
+
+.block-game__controls button {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Touch devices get buttons instead of the keyboard hint */
+@media (pointer: coarse) {
+  .block-game__controls { display: flex; }
+  .block-game__hint { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .block-game__piece {
+    transition: transform 110ms linear;
+  }
+
+  .block-game__cell.is-clearing {
+    animation: block-game-clear 260ms ease-in forwards;
+  }
+
+  .block-game__board.is-resetting .block-game__cell[data-shape] {
+    animation: block-game-reset 420ms ease-in forwards;
+  }
+}
+
+@keyframes block-game-clear {
+  35% { background: var(--color-surface); transform: scale(1.08); }
+  100% { background: var(--color-surface); transform: scaleY(0.15); opacity: 0; }
+}
+
+@keyframes block-game-reset {
+  to { opacity: 0; transform: translateY(4px); }
+}
