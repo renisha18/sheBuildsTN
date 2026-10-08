@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 import PageSection from '../components/PageSection.jsx'
 import Hero from '../sections/home/Hero.jsx'
 import About from './About.jsx'
-import PlaceholderSection from '../sections/PlaceholderSection.jsx'
 import { sections, scrollToSection } from '../siteSections.js'
 import JoinUs from './JoinUs.jsx'
 import Events from '../sections/events/Events.jsx'
+import Blogs from '../sections/blogs/Blogs.jsx'
 
 // The whole site: one scrolling page, sections in nav order.
 function Home() {
@@ -30,7 +30,7 @@ function Home() {
         <Events />
       </PageSection>
       <PageSection id="blogs">
-        <PlaceholderSection id="blogs" title="Blogs" text="Stories and write-ups from the community will appear here." />
+        <Blogs />
       </PageSection>
     </>
   )

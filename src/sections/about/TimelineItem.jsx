@@ -12,8 +12,7 @@ export default function TimelineItem({ data, isRevealed, position }) {
         <p className="journey__card-year">{year} —</p>
         <h3 className="journey__card-title">{title}</h3>
         <p className="journey__card-text">{description}</p>
-        {/* Swap for <img src=... alt="" /> when photos are ready */}
-        <div className="journey__card-image" aria-hidden="true">Event image</div>
+       
       </article>
 
       <span className="journey__node" aria-hidden="true">
