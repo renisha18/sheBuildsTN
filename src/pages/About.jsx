@@ -22,11 +22,14 @@ export default function About() {
           </p>
         </div>
 
-        {/* Character slot: fixed width + aspect ratio, so the real image can't shift the layout.
-            To add it: replace the placeholder <div> with
-            <img src={characterImg} alt="" />  (keep the wrapper) */}
-        <div className="about__character" aria-hidden="true">
-          <div className="about__character-placeholder">Character image (placeholder)</div>
+        {/* Character slot: fixed width + aspect ratio, so the image can't shift the layout */}
+        <div className="about__character">
+          <img
+            src="/character/teach-720.webp"
+            alt="Illustration of a woman teaching with a pointer"
+            loading="lazy"
+            className="h-full w-full object-contain object-bottom"
+          />
         </div>
       </section>
 

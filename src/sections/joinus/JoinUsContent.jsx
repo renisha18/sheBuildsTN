@@ -33,26 +33,15 @@ export default function JoinUsContent() {
           ))}
         </div>
 
-        {/* Character slot: the wrapper has a fixed size, so the image can't shift the layout.
-            To add it: replace the placeholder <div> with
-            <img src={character} alt="" />  (keep the wrapper) */}
-        <div className="join-us-character" aria-hidden="true">
-          <div
-  data-reveal
-  className="aspect-square w-full flex items-center justify-center overflow-hidden"
->
-  <video
-    autoPlay
-    loop
-    muted
-    playsInline
-    preload="metadata"
-    aria-label="Illustrated SheBuilds character working at her desk"
-    className="w-full h-full object-cover scale-[1.2] object-[40%_30%]"
-  >
-    <source src="/videos/JoinUs.mp4" type="video/mp4" />
-  </video>
-</div>
+        {/* Character slot: the wrapper has a fixed size, so the image can't shift the layout */}
+        <div className="join-us-character">
+          <img
+            data-reveal
+            src="/character/podium-720.webp"
+            alt="Illustration of a woman speaking at a podium"
+            loading="lazy"
+            className="h-full w-full object-contain object-bottom"
+          />
         </div>
       </div>
     </section>

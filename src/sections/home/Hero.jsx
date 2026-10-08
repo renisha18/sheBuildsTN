@@ -31,18 +31,11 @@ function Hero() {
       data-reveal
       className="aspect-square w-full flex items-center justify-center overflow-hidden"
     >
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        aria-label="Illustrated SheBuilds character working at her desk"
-        className="w-full h-full object-contain"
-      >
-        <source src="/videos/test.mp4" type="video/mp4" />
-        Your browser does not support the video element.
-      </video>
+      <img
+        src="/character/sit-1200.webp"
+        alt="Illustration of a woman typing at a laptop"
+        className="h-full w-full object-contain object-bottom"
+      />
     </div>
         <HeroBadges />
       </div>
