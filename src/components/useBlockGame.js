@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useReducer, useState } from 'react'
 
 // Board size: change freely (COLS must be at least 4 so the I block fits)
-export const COLS = 8
+export const COLS = 10
 export const ROWS = 8
 
 const GRAVITY_MS = 650
@@ -49,6 +49,7 @@ export function clearRows(board, rows) {
 
 // ---------- State ----------
 
+// Spawns centred on row 0: every shape is at most 4 wide and 3 tall, so it starts fully inside the grid.
 // If the new block doesn't fit, the board is cleared: instantly, or after a fade (clearing.kind 'reset')
 function spawn(state, board, shape, instant) {
   const width = Math.max(...SHAPES[shape].map(([, c]) => c)) + 1
