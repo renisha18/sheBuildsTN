@@ -1,33 +1,58 @@
-/* Footer falling-block Easter egg. Fixed px sizes so the board never grows with the viewport. */
+/* Footer falling-block Easter egg. --cols/--rows come from useBlockGame.js via inline style.
+   Cells are 30px max and shrink with the viewport so the board never overflows (fits at 320px:
+   footer padding 3rem + window border/padding 16px + gaps + a little slack). */
 .block-game {
-  --cell: 22px;
   --gap: 2px;
+  --cell: min(30px, calc((100vw - 3rem - 24px - (var(--cols) - 1) * var(--gap)) / var(--cols)));
   --step: calc(var(--cell) + var(--gap));
+
+  /* Block palette (not theme tokens yet, so scoped here) */
+  --block-green: #aecc9d;
+  --block-coral: #fa7b6b;
+  --block-yellow: #f2bf5a;
+  --block-teal: #4fc4c0;
+  --block-lavender: #b9a6e0;
+  --block-orange: #f79a55;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   width: max-content;
+  max-width: 100%;
 }
 
-@media (width < 48rem) {
-  .block-game {
-    --cell: 20px;
-  }
-}
-
-.block-game__board {
-  padding: 6px;
+/* Neo-brutalist window: ink title bar over a cream board */
+.block-game__window {
+  width: 100%;
   border: 2px solid var(--color-ink);
   border-radius: var(--radius-lg);
   background: var(--color-background);
   box-shadow: var(--shadow-brutal);
+  overflow: hidden;
+}
+
+.block-game__titlebar {
+  margin: 0;
+  padding: 3px 10px;
+  background: var(--color-ink);
+  color: var(--color-background);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.block-game__board {
+  padding: 6px;
   cursor: pointer;
 }
 
+/* Drawn inside the board, since the window clips anything outside it */
 .block-game__board:focus {
   outline: 2px solid var(--color-ink);
-  outline-offset: 3px;
+  outline-offset: -4px;
 }
 
 .block-game__well {
@@ -38,23 +63,24 @@
   gap: var(--gap);
 }
 
-/* Empty cells are a faint grid; filled cells (data-shape) are chunky blocks */
+/* Empty cells: faint ink hairline. Filled cells (data-shape): chunky flat blocks with an inner highlight. */
 .block-game__cell {
-  border-radius: calc(var(--radius-md) / 3);
-  background: color-mix(in srgb, var(--color-ink) 6%, transparent);
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 9%, transparent);
 }
 
 .block-game__cell[data-shape] {
   background: var(--fill);
   border: 2px solid var(--color-ink);
+  box-shadow: inset 3px 3px 0 rgb(255 255 255 / 0.35);
 }
 
-.block-game__cell[data-shape='I'] { --fill: var(--color-accent-alt); }
-.block-game__cell[data-shape='O'] { --fill: var(--color-accent); }
-.block-game__cell[data-shape='L'] { --fill: var(--color-primary); }
-.block-game__cell[data-shape='T'] { --fill: var(--color-danger); }
-.block-game__cell[data-shape='S'] { --fill: color-mix(in srgb, var(--color-accent-alt) 40%, var(--color-surface)); }
-.block-game__cell[data-shape='Z'] { --fill: color-mix(in srgb, var(--color-accent) 40%, var(--color-surface)); }
+.block-game__cell[data-shape='I'] { --fill: var(--block-teal); }
+.block-game__cell[data-shape='O'] { --fill: var(--block-yellow); }
+.block-game__cell[data-shape='L'] { --fill: var(--block-orange); }
+.block-game__cell[data-shape='T'] { --fill: var(--block-lavender); }
+.block-game__cell[data-shape='S'] { --fill: var(--block-green); }
+.block-game__cell[data-shape='Z'] { --fill: var(--block-coral); }
 
 /* The falling block sits over the grid and slides between rows/columns */
 .block-game__piece {
@@ -70,6 +96,7 @@
   transform: translate(calc(var(--c) * var(--step)), calc(var(--r) * var(--step)));
 }
 
+/* Controls: touch devices only (desktop uses the keyboard), full board width */
 .block-game__controls {
   display: none;
   gap: 8px;
@@ -83,8 +110,8 @@
   -webkit-touch-callout: none;
 }
 
-/* Touch devices get buttons instead of the keyboard hint */
-@media (pointer: coarse) {
+/* Touch devices: buttons instead of the keyboard hint */
+@media (hover: none) and (pointer: coarse) {
   .block-game__controls { display: flex; }
   .block-game__hint { display: none; }
 }
@@ -103,9 +130,12 @@
   }
 }
 
+/* Flash white, then squish flat and vanish */
 @keyframes block-game-clear {
-  35% { background: var(--color-surface); transform: scale(1.08); }
-  100% { background: var(--color-surface); transform: scaleY(0.15); opacity: 0; }
+  0% { transform: scale(1); }
+  20% { background: var(--color-surface); transform: scale(1.12); }
+  45% { background: var(--color-surface); transform: scale(1.12); opacity: 1; }
+  100% { background: var(--color-surface); transform: scale(1.25, 0.05); opacity: 0; }
 }
 
 @keyframes block-game-reset {

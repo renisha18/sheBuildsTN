@@ -50,37 +50,39 @@ function BlockGame() {
   const clearingRows = clearing?.kind === 'rows' ? clearing.rows : []
 
   return (
-    <div className="block-game">
-      <div
-        ref={boardRef}
-        tabIndex={0}
-        role="application"
-        aria-label="Block puzzle. Left and right arrows move the block, down arrow drops it faster."
-        onKeyDown={onKeyDown}
-        className={`block-game__board${clearing?.kind === 'reset' ? ' is-resetting' : ''}`}
-        style={{ '--cols': COLS, '--rows': ROWS }}
-      >
-        <div className="block-game__well" aria-hidden="true">
-          {board.map((cells, r) =>
-            cells.map((shape, c) => (
-              <span
-                key={`${r}-${c}`}
-                className={`block-game__cell${clearingRows.includes(r) ? ' is-clearing' : ''}`}
-                data-shape={shape ?? undefined}
-              />
-            )),
-          )}
-          {piece && (
-            <div key={piece.id} className="block-game__piece" style={{ '--row': piece.row, '--col': piece.col }}>
-              {SHAPES[piece.shape].map(([r, c]) => (
-                <span key={`${r}-${c}`} className="block-game__cell" data-shape={piece.shape} style={{ '--r': r, '--c': c }} />
-              ))}
-            </div>
-          )}
+    <div className="block-game" style={{ '--cols': COLS, '--rows': ROWS }}>
+      <div className="block-game__window">
+        <p className="block-game__titlebar font-display" aria-hidden="true">
+          Take a break
+        </p>
+        <div
+          ref={boardRef}
+          tabIndex={0}
+          role="application"
+          aria-label="Block puzzle. Left and right arrows move the block, down arrow drops it faster."
+          onKeyDown={onKeyDown}
+          className={`block-game__board${clearing?.kind === 'reset' ? ' is-resetting' : ''}`}
+        >
+          <div className="block-game__well" aria-hidden="true">
+            {board.map((cells, r) =>
+              cells.map((shape, c) => (
+                <span
+                  key={`${r}-${c}`}
+                  className={`block-game__cell${clearingRows.includes(r) ? ' is-clearing' : ''}`}
+                  data-shape={shape ?? undefined}
+                />
+              )),
+            )}
+            {piece && (
+              <div key={piece.id} className="block-game__piece" style={{ '--row': piece.row, '--col': piece.col }}>
+                {SHAPES[piece.shape].map(([r, c]) => (
+                  <span key={`${r}-${c}`} className="block-game__cell" data-shape={piece.shape} style={{ '--r': r, '--c': c }} />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-
-      <p className="block-game__hint font-body text-xs text-muted">Click the board, then use arrow keys</p>
 
       <div className="block-game__controls">
         {controls.map(({ label, aria, action }) => (
@@ -104,6 +106,8 @@ function BlockGame() {
           </button>
         ))}
       </div>
+
+      <p className="block-game__hint font-body text-xs text-muted">Click the board, then use arrow keys</p>
     </div>
   )
 }
