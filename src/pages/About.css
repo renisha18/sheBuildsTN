@@ -73,6 +73,18 @@
   }
 }
 
+/* Below md: the character follows the intro with 16px above it (the last paragraph's margin
+   doesn't add to that), and nothing below it: Journey's 2rem top padding is the 32px before the
+   timeline. */
+@media (width < 48rem) {
+  .about__text > p:last-child {
+    margin-bottom: 0;
+  }
+  .about__top > .character-art {
+    margin: calc(var(--spacing) * 4) auto 0;
+  }
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 768px) {

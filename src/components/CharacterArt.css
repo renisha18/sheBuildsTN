@@ -21,6 +21,13 @@
   --character-art-size: clamp(260px, 30vw, 440px); /* About */
 }
 
+/* Below md: shown whole and centred at min(100%, 300px); each section sets the space around it */
+@media (width < 48rem) {
+  .character-art {
+    width: min(100%, 18.75rem); /* 300px */
+  }
+}
+
 /* lg and up: the section's grid places it; centred in its cell by default */
 @media (min-width: 64rem) {
   .character-art {

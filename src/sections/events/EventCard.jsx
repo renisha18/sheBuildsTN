@@ -16,7 +16,7 @@ export default function EventCard({ event }) {
   return (
     <article className="relative flex h-full w-full flex-col overflow-hidden rounded-md border-2 border-ink bg-surface shadow-brutal">
       {/* Image area — gray placeholder until a real photo is added in eventsData.js */}
-      <div className="relative aspect-5/2 w-full border-b-2 border-ink bg-muted/30">
+      <div className="relative aspect-5/2 w-full border-b-2 border-ink bg-muted/30 max-sm:aspect-video">
         {image ? (
           <>
             <img src={image} alt="" className="h-full w-full object-cover" />
@@ -42,14 +42,14 @@ export default function EventCard({ event }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 p-5">
+      <div className="flex flex-1 flex-col gap-3 p-5 max-sm:gap-2 max-sm:p-3">
         <span className="self-start rounded-full border-2 border-ink bg-accent-alt px-2 py-0.5 font-body text-xs font-semibold text-ink">
           {category}
         </span>
 
         <h3 className="font-display text-xl font-bold leading-tight text-ink">{title}</h3>
 
-        <p className="font-body text-sm text-muted">{description}</p>
+        <p className="font-body text-sm text-muted max-sm:line-clamp-2">{description}</p>
 
         <p className="inline-flex items-center gap-1.5 font-body text-sm text-muted">
           <svg {...iconProps}>
@@ -61,7 +61,7 @@ export default function EventCard({ event }) {
 
         <hr className="border-muted/30" />
 
-        <div className="flex flex-col items-center gap-1.5 font-body text-sm text-muted">
+        <div className="flex flex-col items-center gap-1.5 font-body text-sm text-muted max-sm:items-start">
           <span className="inline-flex items-center gap-1.5">
             <svg {...iconProps}>
               <rect x="3" y="5" width="18" height="16" rx="2" />
@@ -69,12 +69,12 @@ export default function EventCard({ event }) {
             </svg>
             {date}
           </span>
-          <span className="inline-flex items-center gap-1.5">
+          <span className="inline-flex items-center gap-1.5 max-sm:max-w-full">
             <svg {...iconProps}>
               <path d="M12 21s7-6.5 7-11.5a7 7 0 1 0-14 0C5 14.5 12 21 12 21Z" />
               <circle cx="12" cy="9.5" r="2.5" />
             </svg>
-            {location}
+            <span className="max-sm:truncate">{location}</span>
           </span>
         </div>
 

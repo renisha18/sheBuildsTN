@@ -188,6 +188,13 @@
   50% { transform: translateY(calc(-1 * var(--badge-bob))); }
 }
 
+/* ---------- Home character, below md: after the Join button, 24px above, nothing below ---------- */
+@media (width < 48rem) {
+  .hero-frame > .character-art {
+    margin-bottom: 0;
+  }
+}
+
 /* ---------- Single-page sections + scroll reveal ---------- */
 @layer components {
   /* Each anchor section fills the screen below the sticky navbar */

@@ -112,6 +112,15 @@
   outline-offset: 3px;
 }
 
+/* Below md: the character sits between the heading and the cards. The heading's 1rem bottom
+   margin is the 16px above it; its own margin is the 24px below it. */
+@media (width < 48rem) {
+  .join-us__layout > .character-art {
+    order: -1;
+    margin: 0 auto calc(var(--spacing) * 6);
+  }
+}
+
 /* ---------- Mobile: cards in a single column ---------- */
 @media (max-width: 800px) {
   .join-us__cards {

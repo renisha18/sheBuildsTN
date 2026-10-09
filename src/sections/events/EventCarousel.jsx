@@ -4,6 +4,7 @@ import { prefersReducedMotion } from '../../siteSections.js'
 
 const arrowClass = [
   'grid h-10 w-10 shrink-0 place-items-center rounded-sm border-2 border-ink bg-surface text-ink shadow-brutal-sm md:h-14 md:w-14',
+  'max-sm:hidden', // below 640px the cards are a static two-column grid: no arrows
   'transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none',
   'hover:bg-accent-alt/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink',
   // aria-disabled (not disabled) so keyboard focus stays on the arrow when it reaches the end
@@ -96,7 +97,7 @@ export default function EventCarousel({ events }) {
   // md+: arrows sit on either side of the track, dots wrap onto their own row below.
   // DOM order (track, prev, dots, next) matches the mobile visual order so Tab follows what you see.
   return (
-    <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-4 md:gap-x-6">
+    <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-4 md:gap-x-6 max-sm:mt-3">
       {/* Track: focusable so ←/→/Home/End work once it has focus */}
       <div
         id="events-track"
@@ -106,7 +107,7 @@ export default function EventCarousel({ events }) {
         aria-label="Events"
         tabIndex={0}
         onKeyDown={onKeyDown}
-        className="relative order-1 flex min-w-0 basis-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain py-2 scrollbar-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink md:order-2 md:basis-0 md:flex-1"
+        className="relative order-1 flex min-w-0 basis-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain py-2 scrollbar-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink md:order-2 md:basis-0 md:flex-1 max-sm:grid max-sm:grid-cols-2 max-sm:gap-x-2.5 max-sm:gap-y-4 max-sm:overflow-visible max-sm:snap-none"
       >
         {events.map((event, i) => (
           <div
@@ -115,7 +116,7 @@ export default function EventCarousel({ events }) {
             aria-roledescription="slide"
             aria-label={`${i + 1} of ${events.length}`}
             // Padding (not gap) spaces the cards so each slide is exactly 1/n of the track; pr leaves room for the shadow
-            className="flex w-full shrink-0 snap-start px-2 pb-2 pr-3 md:w-1/2 xl:w-1/3"
+            className="flex w-full shrink-0 snap-start px-2 pb-2 pr-3 md:w-1/2 xl:w-1/3 max-sm:w-auto max-sm:p-0"
           >
             <EventCard event={event} />
           </div>
@@ -133,7 +134,7 @@ export default function EventCarousel({ events }) {
         <Arrow direction="prev" />
       </button>
 
-      <div className="order-3 flex min-w-0 flex-1 justify-center gap-0.5 md:order-4 md:basis-full md:gap-1">
+      <div className="order-3 flex min-w-0 flex-1 justify-center gap-0.5 md:order-4 md:basis-full md:gap-1 max-sm:hidden">
         {canScroll &&
           events.map((event, i) => {
             const visible = i >= start && i < lastVisible
@@ -167,7 +168,7 @@ export default function EventCarousel({ events }) {
         <Arrow direction="next" />
       </button>
 
-      <p className="sr-only" aria-live="polite">
+      <p className="sr-only max-sm:hidden" aria-live="polite">
         Showing events {start + 1}–{lastVisible} of {events.length}
       </p>
 

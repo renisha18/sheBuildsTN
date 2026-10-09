@@ -79,7 +79,7 @@ export default function Events() {
     <section
       id="events"
       aria-labelledby="events-heading"
-      className="min-h-screen scroll-mt-24 px-6 py-24 md:px-12"
+      className="min-h-screen scroll-mt-24 px-6 py-24 md:px-12 max-sm:px-4 max-sm:pt-8"
     >
       <h2 id="events-heading" className="about__heading">
         Events
@@ -87,7 +87,7 @@ export default function Events() {
 
       {/* Search + category filters */}
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center">
-        <div className="relative w-full max-w-sm xl:flex-1">
+        <div className="relative w-full max-w-sm xl:flex-1 max-sm:max-w-none">
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
