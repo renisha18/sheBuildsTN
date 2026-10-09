@@ -1,4 +1,5 @@
 import "./JoinUsContent.css";
+import CharacterArt from "../../components/CharacterArt.jsx";
 // import character from "../../assets/join-us-character.png"; // add this later
 
 // Change `href` to real routes when those pages exist.
@@ -33,16 +34,11 @@ export default function JoinUsContent() {
           ))}
         </div>
 
-        {/* Character slot: the wrapper has a fixed size, so the image can't shift the layout */}
-        <div className="join-us-character">
-          <img
-            data-reveal
-            src="/character/podium-720.webp"
-            alt="Illustration of a woman speaking at a podium"
-            loading="lazy"
-            className="h-full w-full object-contain object-bottom"
-          />
-        </div>
+        <CharacterArt
+          data-reveal
+          src="/character/speaker-1100.webp"
+          alt="Illustration of a young woman waving beside a SheBuilds podium"
+        />
       </div>
     </section>
   );

@@ -52,43 +52,13 @@
 }
 
 /* ---------- Top row: intro text + character (About only) ----------
-   Below lg: text, then a smaller character underneath. lg and up: two columns. */
+   Below lg: text, then the character underneath (CharacterArt sets its own 24px/32px margins, so
+   no row gap here). lg and up: two columns in one row, centred; the character sits top-right.
+   The remaining ~5% between the columns is at least 48px at 1024px (min 32px required), and
+   Journey's own 3rem top padding keeps the timeline 48px below the row. */
 .about__top {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  row-gap: 1.5rem;
-}
-
-/* Fixed width + aspect ratio, so swapping the placeholder for the real <img> can't shift
-   the layout. No border/background/shadow here: the real image sits on the page as-is. */
-.about__character {
-  position: relative;
-  justify-self: center;
-  width: 100%;
-  max-width: 12.5rem;
-  aspect-ratio: 3 / 4;
-}
-.about__character > * {
-  position: absolute;
-  inset: 0;
-}
-.about__character img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* PLACEHOLDER — delete this block (and the placeholder div) once the real image is in.
-   Plain gray box, same gray as the other image placeholders (bg-muted/30). */
-.about__character-placeholder {
-  display: grid;
-  place-items: center;
-  padding: 1rem;
-  background: color-mix(in srgb, var(--color-muted) 30%, transparent);
-  color: var(--color-ink);
-  font-size: 0.85rem;
-  text-align: center;
 }
 
 @media (min-width: 64rem) {
@@ -98,8 +68,8 @@
     align-items: center;            /* character vertically centred beside the text */
   }
 
-  .about__character {
-    max-width: 21.25rem;
+  .about__top > .character-art {
+    justify-self: end;
   }
 }
 

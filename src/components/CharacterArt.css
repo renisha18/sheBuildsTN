@@ -1,0 +1,33 @@
+/* Character still. Never boxed: no border, background, shadow or radius. */
+.character-art {
+  --character-art-size: clamp(300px, 36vw, 540px); /* Home, Join us */
+
+  display: block;
+  box-sizing: border-box;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  object-fit: contain;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+
+  /* Below lg: under the text, centred, 24px above and 32px below */
+  width: min(100%, 21.25rem); /* 340px */
+  margin: calc(var(--spacing) * 6) auto calc(var(--spacing) * 8);
+}
+
+.character-art--compact {
+  --character-art-size: clamp(260px, 30vw, 440px); /* About */
+}
+
+/* lg and up: the section's grid places it; centred in its cell by default */
+@media (min-width: 64rem) {
+  .character-art {
+    width: var(--character-art-size);
+    max-width: 100%;
+    margin: 0;
+    justify-self: center;
+    align-self: center;
+  }
+}

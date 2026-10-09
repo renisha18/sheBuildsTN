@@ -1,4 +1,5 @@
 import Journey from '../sections/about/Journey.jsx'
+import CharacterArt from '../components/CharacterArt.jsx'
 import './About.css'
 // import characterImg from '../assets/character.png' // add this later
 
@@ -22,15 +23,11 @@ export default function About() {
           </p>
         </div>
 
-        {/* Character slot: fixed width + aspect ratio, so the image can't shift the layout */}
-        <div className="about__character">
-          <img
-            src="/character/teach-720.webp"
-            alt="Illustration of a woman teaching with a pointer"
-            loading="lazy"
-            className="h-full w-full object-contain object-bottom"
-          />
-        </div>
+        <CharacterArt
+          src="/character/mentor-1100.webp"
+          alt="Illustration of a young woman presenting growth charts on a SheBuilds board"
+          size="compact"
+        />
       </section>
 
       <Journey />

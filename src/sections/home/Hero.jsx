@@ -1,10 +1,11 @@
 import HeroBadges from './HeroBadges.jsx'
+import CharacterArt from '../../components/CharacterArt.jsx'
 
 function Hero() {
   return (
     // Outer padding leaves room for badges to overhang the frame without clipping
     <section aria-labelledby="hero-heading" className="px-6 py-10 md:px-12 md:py-12">
-      <div className="hero-frame grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-6 md:p-10 lg:p-14">
+      <div className="hero-frame grid grid-cols-1 lg:grid-cols-2 gap-x-8 items-center p-6 md:p-10 lg:p-14">
         <div className="flex flex-col items-start gap-4">
           <h1 id="hero-heading" className="flex flex-col gap-1" data-reveal>
             <span className="text-primary font-bold leading-none text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
@@ -27,16 +28,12 @@ function Hero() {
             </button>
           </div>
         </div>
-    <div
-      data-reveal
-      className="aspect-square w-full flex items-center justify-center overflow-hidden"
-    >
-      <img
-        src="/character/sit-1200.webp"
-        alt="Illustration of a woman typing at a laptop"
-        className="h-full w-full object-contain object-bottom"
-      />
-    </div>
+        <CharacterArt
+          data-reveal
+          src="/character/builder-1100.webp"
+          alt="Illustration of a young woman typing at a desk with a laptop, a plant and toy blocks"
+          priority
+        />
         <HeroBadges />
       </div>
     </section>
