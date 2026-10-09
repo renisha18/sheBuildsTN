@@ -1,0 +1,12 @@
+{
+  "title": "Event name (80 characters max)",
+  "category": "Workshop",
+  "description": "One or two sentences about the event. Keep it under about 160 characters.",
+  "start": "2026-11-15T10:00:00+05:30",
+  "end": "2026-11-15T13:00:00+05:30",
+  "venue": "Venue name, Chennai",
+  "attendees": null,
+  "featured": false,
+  "image": null,
+  "registerUrl": null
+}

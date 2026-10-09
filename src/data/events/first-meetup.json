@@ -1,0 +1,12 @@
+{
+  "title": "First Meetup",
+  "category": "Meetup",
+  "description": "Twenty-three people in a borrowed room. The spark that became SheBuilds Chennai.",
+  "start": "2020-02",
+  "end": null,
+  "venue": "Borrowed Room, Nungambakkam",
+  "attendees": 23,
+  "featured": false,
+  "image": null,
+  "registerUrl": null
+}

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import EventCarousel from './EventCarousel.jsx'
-import { CATEGORIES, EVENTS } from './eventsData.js'
+import { CATEGORIES } from './eventsData.js'
+import { getEvents } from './loadEvents.js'
 
 const iconProps = {
   'aria-hidden': true,
@@ -59,16 +60,19 @@ export default function Events() {
   const [query, setQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState(null) // null = all
 
+  // Ordered (upcoming, undated, past) against the browser's clock when the section first renders
+  const events = useMemo(() => getEvents(), [])
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
-    return EVENTS.filter((event) => {
+    return events.filter((event) => {
       const matchesQuery = q
-        ? `${event.title} ${event.description} ${event.category} ${event.location}`.toLowerCase().includes(q)
+        ? `${event.title} ${event.description} ${event.category} ${event.venue ?? ''}`.toLowerCase().includes(q)
         : true
       const matchesFilter = activeFilter ? event.category === activeFilter : true
       return matchesQuery && matchesFilter
     })
-  }, [query, activeFilter])
+  }, [events, query, activeFilter])
 
   const clearAll = () => {
     setQuery('')
@@ -135,7 +139,9 @@ export default function Events() {
         <div className="mx-auto mt-10 flex max-w-md flex-col items-center gap-4 rounded-xs border-4 border-ink bg-surface p-8 text-center shadow-brutal-lg">
           <p className="font-display text-xl font-bold text-ink">No events found</p>
           <p className="font-body text-sm text-muted">
-            Nothing matches that search{activeFilter ? ` in ${activeFilter}` : ''}. Try a different term or clear the filters.
+            {events.length === 0
+              ? 'There are no events to show yet.'
+              : `Nothing matches that search${activeFilter ? ` in ${activeFilter}` : ''}. Try a different term or clear the filters.`}
           </p>
           <button type="button" onClick={clearAll} className={pillClass(false)}>
             Clear filters
