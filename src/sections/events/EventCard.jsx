@@ -2,7 +2,7 @@ import { parseEventDate } from './loadEvents.js'
 
 // Shared by the register link and the plain button so both look exactly the same
 const VIEW_EVENT_CLASS =
-  'mt-auto inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-ink bg-accent px-5 py-2.5 font-body font-bold text-ink shadow-brutal-sm transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink'
+  'mt-auto inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-ink bg-accent px-5 py-2.5 font-body font-bold text-ink shadow-brutal-sm transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink max-sm:py-1.5 max-sm:text-sm'
 
 const MONTH_FMT = new Intl.DateTimeFormat('en-IN', { month: 'short', year: 'numeric', timeZone: 'UTC' })
 const DAY_FMT = new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
@@ -29,7 +29,7 @@ const iconProps = {
   strokeWidth: 2,
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
-  className: 'h-4 w-4 shrink-0',
+  className: 'h-4 w-4 shrink-0 max-sm:size-3.5',
 }
 
 export default function EventCard({ event }) {
@@ -39,7 +39,7 @@ export default function EventCard({ event }) {
   return (
     <article className="relative flex h-full w-full flex-col overflow-hidden rounded-md border-2 border-ink bg-surface shadow-brutal">
       {/* Image area — gray placeholder until the event's JSON file has an "image" */}
-      <div className="relative aspect-5/2 w-full border-b-2 border-ink bg-muted/30 max-sm:aspect-video">
+      <div className="relative aspect-5/2 w-full border-b-2 border-ink bg-muted/30 max-sm:aspect-2/1">
         {image ? (
           <>
             <img src={image} alt="" className="h-full w-full object-cover" />
@@ -53,7 +53,7 @@ export default function EventCard({ event }) {
         {/* Decorative repeat of the title; the real heading is the h3 below */}
         <p
           aria-hidden="true"
-          className="absolute left-4 right-28 top-3 font-display text-xl font-bold leading-tight text-ink line-clamp-2 md:text-2xl"
+          className="absolute left-4 right-28 top-3 font-display text-xl font-bold leading-tight text-ink line-clamp-2 md:text-2xl max-sm:hidden"
         >
           {title}
         </p>
@@ -65,16 +65,16 @@ export default function EventCard({ event }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 p-5 max-sm:gap-2 max-sm:p-3">
-        <span className="self-start rounded-full border-2 border-ink bg-accent-alt px-2 py-0.5 font-body text-xs font-semibold text-ink">
+      <div className="flex flex-1 flex-col gap-3 p-5 max-sm:gap-1.5 max-sm:p-2.5">
+        <span className="self-start rounded-full border-2 border-ink bg-accent-alt px-2 py-0.5 font-body text-xs font-semibold text-ink max-sm:sr-only">
           {category}
         </span>
 
-        <h3 className="font-display text-xl font-bold leading-tight text-ink">{title}</h3>
+        <h3 className="font-display text-xl font-bold leading-tight text-ink max-sm:line-clamp-2 max-sm:text-sm max-sm:leading-tight">{title}</h3>
 
-        <p className="font-body text-sm text-muted max-sm:line-clamp-2">{description}</p>
+        <p className="font-body text-sm text-muted max-sm:sr-only">{description}</p>
 
-        <p className="inline-flex items-center gap-1.5 font-body text-sm text-muted">
+        <p className="inline-flex items-center gap-1.5 font-body text-sm text-muted max-sm:sr-only">
           <svg {...iconProps}>
             <circle cx="9" cy="8" r="3.5" />
             <path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5" />
@@ -82,9 +82,9 @@ export default function EventCard({ event }) {
           {attendees == null ? 'Attendee count TBA' : `${attendees} attendees`}
         </p>
 
-        <hr className="border-muted/30" />
+        <hr className="border-muted/30 max-sm:hidden" />
 
-        <div className="flex flex-col items-center gap-1.5 font-body text-sm text-muted max-sm:items-start">
+        <div className="flex flex-col items-center gap-1.5 font-body text-sm text-muted max-sm:items-start max-sm:text-xs">
           <span className="inline-flex items-center gap-1.5">
             <svg {...iconProps}>
               <rect x="3" y="5" width="18" height="16" rx="2" />
@@ -97,7 +97,7 @@ export default function EventCard({ event }) {
               <path d="M12 21s7-6.5 7-11.5a7 7 0 1 0-14 0C5 14.5 12 21 12 21Z" />
               <circle cx="12" cy="9.5" r="2.5" />
             </svg>
-            <span className="max-sm:truncate">{venue ?? 'Venue TBA'}</span>
+            <span className="max-sm:line-clamp-2">{venue ?? 'Venue TBA'}</span>
           </span>
         </div>
 
