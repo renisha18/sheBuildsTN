@@ -1,0 +1,208 @@
+/* Join us puzzle. Colors come from each card (--piece-color); everything else
+   uses your design tokens, with fallbacks so it also renders on its own. */
+
+.puzzle {
+  --ink: var(--color-ink, #14100e);
+  --cream: var(--color-background, #f8f0e0);
+
+  list-style: none;
+  margin: 0 auto;
+  padding: 80px 0 0; /* room for characters poking out above the top row */
+  max-width: 880px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0; /* the seam between pieces is drawn inside each cell (see GAP in JoinPuzzle.jsx) */
+}
+
+.puzzle__item {
+  margin: 0;
+  padding: 0;
+}
+
+.puzzle__piece {
+  position: relative;
+  aspect-ratio: 380 / 320;
+  container-type: inline-size; /* text sizes scale with the piece */
+  transition: transform 0.15s ease;
+}
+
+.puzzle__piece:hover {
+  transform: translateY(-4px);
+  z-index: 2;
+}
+
+/* The piece outline */
+.puzzle__shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible; /* knobs stick out past the piece box */
+}
+
+.puzzle__shape path {
+  fill: var(--piece-color);
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Character: bottom edge sits inside the piece, the head pokes out above it */
+.puzzle__art {
+  position: absolute;
+  bottom: var(--art-bottom, 56%);
+  width: var(--art-width, 40%);
+  aspect-ratio: 4 / 5;
+  pointer-events: none;
+}
+
+.puzzle__item--art-left .puzzle__art {
+  left: 4%;
+}
+
+.puzzle__item--art-right .puzzle__art {
+  right: 4%;
+}
+
+.puzzle__art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+.puzzle__art-placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed var(--ink);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.4);
+  font-size: clamp(11px, 3.4cqw, 14px);
+  font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+}
+
+/* Text */
+.puzzle__body {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  bottom: var(--body-bottom, 9%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.2cqw;
+  color: var(--ink);
+}
+
+.puzzle__tag {
+  margin: 0;
+  padding: 0.3em 0.9em;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--cream);
+  font-size: clamp(10px, 2.9cqw, 12px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.puzzle__question {
+  margin: 0;
+  max-width: 17em;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(16px, 5.4cqw, 24px);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.puzzle__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.55em 1.1em;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: clamp(13px, 3.9cqw, 16px);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.12s ease;
+}
+
+.puzzle__cta:hover {
+  transform: translate(2px, 2px);
+}
+
+.puzzle__cta:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* No characters: the text is centred in the piece and kept clear of the
+   socket on that piece (see textLeft / textRight in JoinPuzzle.jsx). */
+.puzzle--no-art {
+  padding-top: 0;
+}
+
+.puzzle--no-art .puzzle__body {
+  top: 0;
+  bottom: 0;
+  left: var(--text-left, 8%);
+  right: var(--text-right, 8%);
+  justify-content: center;
+  gap: 2.6cqw;
+}
+
+.puzzle--no-art .puzzle__question {
+  font-size: clamp(18px, 6.2cqw, 28px);
+}
+
+/* Phones: one column of separate, flat-edged pieces. With characters, each
+   piece gets room above it for the character to poke out. */
+@media (max-width: 767px) {
+  .puzzle {
+    grid-template-columns: 1fr;
+    row-gap: 96px;
+    padding-top: 90px;
+    max-width: 440px;
+  }
+
+  .puzzle__item--art-left .puzzle__art,
+  .puzzle__item--art-right .puzzle__art {
+    left: auto;
+    right: 4%;
+  }
+
+  .puzzle__body {
+    bottom: 9%;
+  }
+
+  .puzzle--no-art {
+    row-gap: 0;
+    padding-top: 0;
+    max-width: 440px;
+  }
+
+  .puzzle--no-art .puzzle__body {
+    left: 8%;
+    right: 8%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .puzzle__piece,
+  .puzzle__cta {
+    transition: none;
+  }
+
+  .puzzle__piece:hover,
+  .puzzle__cta:hover {
+    transform: none;
+  }
+}
