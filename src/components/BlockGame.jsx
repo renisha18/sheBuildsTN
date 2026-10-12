@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { COLS, ROWS, SHAPES, useBlockGame } from './useBlockGame.js'
+import { COLS, ROWS, SHAPES, TARGET_ROWS, useBlockGame } from './useBlockGame.js'
 import './BlockGame.css'
 
 const REPEAT_DELAY_MS = 220
@@ -11,13 +11,36 @@ const btnClass = [
   'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink',
 ].join(' ')
 
-// Small falling-block Easter egg for the footer. No score, no game over.
+const startBtnClass = [
+  'inline-flex min-h-10 items-center justify-center rounded-full border-2 border-ink bg-ink px-5 font-body text-sm font-semibold text-surface shadow-brutal-sm',
+  'transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none',
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink',
+].join(' ')
+
+const OVERLAY = {
+  idle: { title: `Clear ${TARGET_ROWS} rows to win`, action: 'Start' },
+  won: { title: 'You built it!', action: 'Play again' },
+  lost: { title: 'Board full. Try again', action: 'Play again' },
+}
+
+// Short footer game: clear TARGET_ROWS rows to win; losing when a new block can't spawn.
 function BlockGame() {
   const boardRef = useRef(null)
   const repeatRef = useRef(null)
-  const { board, piece, clearing, move, drop } = useBlockGame(boardRef)
+  const actionRef = useRef(null)
+  const { board, piece, clearing, status, rowsCleared, score, best, message, move, drop, start } = useBlockGame(boardRef)
 
   useEffect(() => () => clearTimeout(repeatRef.current), [])
+
+  // Focus follows the game: board when play starts, overlay button when it ends
+  const prevStatus = useRef(status)
+  useEffect(() => {
+    const prev = prevStatus.current
+    prevStatus.current = status
+    if (prev === status) return
+    if (status === 'playing') boardRef.current?.focus({ preventScroll: true })
+    else if (status !== 'idle') actionRef.current?.focus({ preventScroll: true })
+  }, [status])
 
   const stopRepeat = () => clearTimeout(repeatRef.current)
   // Fires once, then repeats while the button is held
@@ -41,27 +64,41 @@ function BlockGame() {
 
   // Only fires while the board has focus, so page scrolling is untouched otherwise
   const onKeyDown = (e) => {
+    if (status !== 'playing') {
+      // Enter/Space on the board starts; on the overlay button they already click it
+      if ((e.key === 'Enter' || e.key === ' ') && e.target === e.currentTarget) {
+        e.preventDefault()
+        start()
+      }
+      return
+    }
     const action = { ArrowLeft: () => move(-1), ArrowRight: () => move(1), ArrowDown: drop }[e.key]
     if (!action) return
     e.preventDefault()
     action()
   }
 
-  const clearingRows = clearing?.kind === 'rows' ? clearing.rows : []
+  const clearingRows = clearing?.rows ?? []
+  const overlay = OVERLAY[status]
 
   return (
     <div className="block-game" style={{ '--cols': COLS, '--rows': ROWS }}>
       <div className="block-game__window">
+        {/* Visual HUD; screen readers get the aria-live messages below instead */}
         <p className="block-game__titlebar font-display" aria-hidden="true">
-          Take a break
+          <span>Take a break</span>
+          <span>
+            Rows {Math.min(rowsCleared, TARGET_ROWS)}/{TARGET_ROWS} · <span className="block-game__score-label">Score </span>
+            {score}
+          </span>
         </p>
         <div
           ref={boardRef}
           tabIndex={0}
           role="application"
-          aria-label="Block puzzle. Left and right arrows move the block, down arrow drops it faster."
+          aria-label={`Block puzzle: clear ${TARGET_ROWS} rows to win. Enter starts. Left and right arrows move the block, down arrow drops it faster.`}
           onKeyDown={onKeyDown}
-          className={`block-game__board${clearing?.kind === 'reset' ? ' is-resetting' : ''}`}
+          className="block-game__board"
         >
           <div className="block-game__well" aria-hidden="true">
             {board.map((cells, r) =>
@@ -81,8 +118,28 @@ function BlockGame() {
               </div>
             )}
           </div>
+
+          {overlay && (
+            <div className="block-game__overlay">
+              <div className="block-game__card">
+                <p className="block-game__card-title font-display">{overlay.title}</p>
+                {status !== 'idle' && (
+                  <p className="font-body text-sm">
+                    Score {score} · Best {best}
+                  </p>
+                )}
+                <button ref={actionRef} type="button" onClick={start} className={startBtnClass}>
+                  {overlay.action}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
+
+      <p className="sr-only" aria-live="polite">
+        {message}
+      </p>
 
       <div className="block-game__controls">
         {controls.map(({ label, aria, action }) => (
