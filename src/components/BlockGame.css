@@ -33,6 +33,11 @@
 }
 
 .block-game__titlebar {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  overflow: hidden;
+  white-space: nowrap;
   margin: 0;
   padding: 3px 10px;
   background: var(--color-ink);
@@ -45,6 +50,7 @@
 }
 
 .block-game__board {
+  position: relative;
   padding: 6px;
   cursor: pointer;
 }
@@ -96,6 +102,44 @@
   transform: translate(calc(var(--c) * var(--step)), calc(var(--r) * var(--step)));
 }
 
+/* Very small screens: keep the HUD on one line */
+@media (width < 24rem) {
+  .block-game__titlebar { letter-spacing: 0.06em; }
+  .block-game__score-label { display: none; }
+}
+
+/* Start / win / lose card, centred over the board */
+.block-game__overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  background: color-mix(in srgb, var(--color-background) 55%, transparent);
+}
+
+.block-game__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-md);
+  background: var(--color-background);
+  box-shadow: var(--shadow-brutal-sm);
+  color: var(--color-ink);
+  text-align: center;
+}
+
+.block-game__card-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
 /* Controls: touch devices only (desktop uses the keyboard), full board width */
 .block-game__controls {
   display: none;
@@ -124,10 +168,6 @@
   .block-game__cell.is-clearing {
     animation: block-game-clear 260ms ease-in forwards;
   }
-
-  .block-game__board.is-resetting .block-game__cell[data-shape] {
-    animation: block-game-reset 420ms ease-in forwards;
-  }
 }
 
 /* Flash white, then squish flat and vanish */
@@ -136,8 +176,4 @@
   20% { background: var(--color-surface); transform: scale(1.12); }
   45% { background: var(--color-surface); transform: scale(1.12); opacity: 1; }
   100% { background: var(--color-surface); transform: scale(1.25, 0.05); opacity: 0; }
-}
-
-@keyframes block-game-reset {
-  to { opacity: 0; transform: translateY(4px); }
 }
