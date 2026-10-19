@@ -8,7 +8,9 @@
   list-style: none;
   margin: 0 auto;
   padding: 80px 0 0; /* room for characters poking out above the top row */
-  max-width: 880px;
+  /* Largest size of the whole puzzle. Set --puzzle-max on a parent (or on
+     .puzzle) to change it. Text and shapes scale down with the puzzle. */
+  max-width: min(100%, var(--puzzle-max, 620px));
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0; /* the seam between pieces is drawn inside each cell (see GAP in JoinPuzzle.jsx) */
@@ -23,12 +25,6 @@
   position: relative;
   aspect-ratio: 380 / 320;
   container-type: inline-size; /* text sizes scale with the piece */
-  transition: transform 0.15s ease;
-}
-
-.puzzle__piece:hover {
-  transform: translateY(-4px);
-  z-index: 2;
 }
 
 /* The piece outline */
@@ -144,23 +140,81 @@
   outline-offset: 3px;
 }
 
-/* No characters: the text is centred in the piece and kept clear of the
-   socket on that piece (see textLeft / textRight in JoinPuzzle.jsx). */
+/* No characters: the text block sits in the solid part of each piece, away from
+   its sockets: top row pieces hold it near the top, bottom row pieces near the
+   bottom, so tags, questions and buttons line up across each row. textLeft /
+   textRight in JoinPuzzle.jsx keep it clear of a socket at the side. */
 .puzzle--no-art {
   padding-top: 0;
 }
 
 .puzzle--no-art .puzzle__body {
-  top: 0;
-  bottom: 0;
+  top: auto;
+  bottom: auto;
   left: var(--text-left, 8%);
   right: var(--text-right, 8%);
-  justify-content: center;
+  justify-content: flex-start;
   gap: 2.6cqw;
 }
 
+.puzzle--no-art .puzzle__item--top .puzzle__body {
+  top: 12%;
+}
+
+.puzzle--no-art .puzzle__item--bottom .puzzle__body {
+  bottom: 12%;
+}
+
 .puzzle--no-art .puzzle__question {
-  font-size: clamp(18px, 6.2cqw, 28px);
+  font-size: clamp(15px, 5.2cqw, 26px);
+  text-wrap: balance;
+}
+
+/* A small puzzle can't fit every question on one line. Every question then
+   reserves two lines, so each piece's tag and button still line up across a row. */
+@container (max-width: 300px) {
+  .puzzle--no-art .puzzle__question {
+    min-height: 2.2em;
+    font-size: clamp(13px, 5.2cqw, 26px);
+  }
+
+  .puzzle--no-art .puzzle__body {
+    gap: 1.8cqw;
+  }
+
+  .puzzle--no-art .puzzle__item--bottom .puzzle__body {
+    bottom: 8%;
+  }
+}
+
+/* Lifted look for the piece you point at, click or tab to: a hard shadow, and
+   nothing else. The piece doesn't move or grow, so the seam and the knobs stay
+   exactly as they are and the other pieces are untouched. Don't add transform,
+   scale or translate here: growing or moving the piece pushes its knobs into
+   the neighbours' sockets and the outlines merge. */
+.puzzle__piece {
+  pointer-events: none; /* only the drawn shape and the text catch the pointer, */
+}
+
+.puzzle__shape path,
+.puzzle__body {
+  pointer-events: auto; /* so a neighbour's knob inside this cell doesn't lift this piece */
+}
+
+@media (hover: hover) and (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .puzzle__shape {
+    transition: filter 0.18s ease-out;
+  }
+
+  .puzzle__piece:hover,
+  .puzzle__piece:has(:focus-visible) {
+    z-index: 2;
+  }
+
+  .puzzle__piece:hover .puzzle__shape,
+  .puzzle__piece:has(:focus-visible) .puzzle__shape {
+    filter: drop-shadow(3px 3px 0 var(--ink));
+  }
 }
 
 /* Phones: one column of separate, flat-edged pieces. With characters, each
@@ -189,19 +243,22 @@
     max-width: 440px;
   }
 
-  .puzzle--no-art .puzzle__body {
+  .puzzle--no-art .puzzle__body,
+  .puzzle--no-art .puzzle__item--top .puzzle__body,
+  .puzzle--no-art .puzzle__item--bottom .puzzle__body {
+    top: 0;
+    bottom: 0;
     left: 8%;
     right: 8%;
+    justify-content: center;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .puzzle__piece,
   .puzzle__cta {
     transition: none;
   }
 
-  .puzzle__piece:hover,
   .puzzle__cta:hover {
     transform: none;
   }
