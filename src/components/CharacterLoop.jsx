@@ -33,7 +33,6 @@ export default function CharacterLoop({ still, video, alt, priority = false, cla
   const wide = useMedia(DESKTOP)
   const motionOk = useMedia(MOTION_OK)
   const [failed, setFailed] = useState(false)
-  const [playing, setPlaying] = useState(false)
   const wrapRef = useRef(null)
   const videoRef = useRef(null)
 
@@ -41,10 +40,7 @@ export default function CharacterLoop({ still, video, alt, priority = false, cla
 
   // Play while the character is on screen, pause when it isn't.
   useEffect(() => {
-    if (!showVideo) {
-      setPlaying(false)
-      return undefined
-    }
+    if (!showVideo) return undefined
     const el = videoRef.current
     const wrap = wrapRef.current
     if (!el || !wrap) return undefined
@@ -60,17 +56,10 @@ export default function CharacterLoop({ still, video, alt, priority = false, cla
     return () => observer.disconnect()
   }, [showVideo])
 
+  // The video comes first so the stylesheet can hide the still image (the
+  // sibling after it) once the video is actually playing.
   return (
     <div ref={wrapRef} className={`character-loop ${className}`.trim()}>
-      <img
-        className="character-loop__still"
-        src={still}
-        alt={alt}
-        decoding="async"
-        loading={priority ? 'eager' : 'lazy'}
-        fetchPriority={priority ? 'high' : undefined}
-        style={{ visibility: playing ? 'hidden' : 'visible' }}
-      />
       {showVideo && (
         <video
           ref={videoRef}
@@ -84,10 +73,20 @@ export default function CharacterLoop({ still, video, alt, priority = false, cla
           disablePictureInPicture
           aria-hidden="true"
           tabIndex={-1}
-          onPlaying={() => setPlaying(true)}
+          onPlaying={(e) => {
+            e.currentTarget.dataset.playing = 'true'
+          }}
           onError={() => setFailed(true)}
         />
       )}
+      <img
+        className="character-loop__still"
+        src={still}
+        alt={alt}
+        decoding="async"
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : undefined}
+      />
     </div>
   )
 }

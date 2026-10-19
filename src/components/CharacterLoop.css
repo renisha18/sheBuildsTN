@@ -15,3 +15,12 @@
   height: 100%;
   object-fit: contain;
 }
+
+/* The video sits above the still. Once it is playing, the still steps aside. */
+.character-loop__video {
+  z-index: 1;
+}
+
+.character-loop__video[data-playing='true'] ~ .character-loop__still {
+  visibility: hidden;
+}
