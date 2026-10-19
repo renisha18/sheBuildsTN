@@ -1,5 +1,6 @@
 import HeroBadges from './HeroBadges.jsx'
-import CharacterArt from '../../components/CharacterArt.jsx'
+import CharacterLoop from '../../components/CharacterLoop.jsx'
+import '../../components/CharacterArt.css'
 
 function Hero() {
   return (
@@ -16,8 +17,7 @@ function Hero() {
             </span>
           </h1>
           <p className="font-body text-muted text-base md:text-lg" data-reveal>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+           
           </p>
           <div data-reveal>
             <button
@@ -28,12 +28,15 @@ function Hero() {
             </button>
           </div>
         </div>
-        <CharacterArt
-          data-reveal
-          src="/character/builder-1100.webp"
-          alt="Illustration of a young woman typing at a desk with a laptop, a plant and toy blocks"
-          priority
-        />
+        {/* character-art keeps the slot's size and spacing; CharacterLoop fills it */}
+        <div className="character-art" data-reveal>
+          <CharacterLoop
+            still="/character/builder-1100.webp"
+            video="/character/builder-loop.webm"
+            alt="Illustration of a young woman typing at a desk with a laptop, a plant and toy blocks"
+            priority
+          />
+        </div>
         <HeroBadges />
       </div>
     </section>

@@ -1,5 +1,6 @@
 import Journey from '../sections/about/Journey.jsx'
-import CharacterArt from '../components/CharacterArt.jsx'
+import CharacterLoop from '../components/CharacterLoop.jsx'
+import '../components/CharacterArt.css'
 import './About.css'
 // import characterImg from '../assets/character.png' // add this later
 
@@ -23,11 +24,14 @@ export default function About() {
           </p>
         </div>
 
-        <CharacterArt
-          src="/character/mentor-1100.webp"
-          alt="Illustration of a young woman presenting growth charts on a SheBuilds board"
-          size="compact"
-        />
+        {/* character-art keeps the slot's size and spacing; CharacterLoop fills it */}
+        <div className="character-art character-art--compact">
+          <CharacterLoop
+            still="/character/mentor-1100.webp"
+            video="/character/mentor-loop.webm"
+            alt="Illustration of a young woman presenting growth charts on a SheBuilds board"
+          />
+        </div>
       </section>
 
       <Journey />
