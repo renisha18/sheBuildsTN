@@ -9,7 +9,8 @@
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "validate:events": "node scripts/validate-events.mjs"
+    "validate:events": "node scripts/validate-events.mjs",
+    "check:blogs": "node scripts/check-blogs.mjs"
   },
   "dependencies": {
     "matter-js": "^0.20.0",

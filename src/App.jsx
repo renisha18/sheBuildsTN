@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router'
 import Layout from './components/Layout.jsx'
 import Home from './pages/Home.jsx'
+import AllBlogs from './pages/AllBlogs.jsx'
+import BlogPost from './pages/BlogPost.jsx'
 import { sections } from './siteSections.js'
 
 // Single scrolling page at "/". The old routed URLs (/about, /join, ...) redirect
@@ -15,6 +17,8 @@ function App() {
           .map((s) => (
             <Route key={s.id} path={s.id} element={<Navigate to={{ pathname: '/', hash: `#${s.id}` }} replace />} />
           ))}
+        <Route path="blogs/all" element={<AllBlogs />} />
+        <Route path="blogs/:slug" element={<BlogPost />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

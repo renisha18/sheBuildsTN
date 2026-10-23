@@ -1,0 +1,23 @@
+# Checks blog posts on every pull request that touches them (see CONTRIBUTING.md, "Writing a blog").
+# pull_request (not pull_request_target): runs with read-only access and no secrets, which is safe for forks.
+name: Check blogs
+
+on:
+  pull_request:
+    paths:
+      - 'src/content/blogs/**'
+      - 'src/sections/blogs/blogSchema.js'
+      - 'scripts/check-blogs.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  check-blogs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/check-blogs.mjs

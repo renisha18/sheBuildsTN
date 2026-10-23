@@ -14,7 +14,11 @@ export const prefersReducedMotion = () =>
 // replaces — never pushes — the URL hash, so Back doesn't step through sections.
 export function scrollToSection(id, { instant = false, focus = true } = {}) {
   const el = document.getElementById(id)
-  if (!el) return
+  if (!el) {
+    // Not on the home page (e.g. a blog page): load it at that section
+    window.location.assign(`/#${id}`)
+    return
+  }
   el.scrollIntoView({ behavior: instant || prefersReducedMotion() ? 'instant' : 'smooth', block: 'start' })
   if (focus) el.focus({ preventScroll: true })
   history.replaceState(history.state, '', `#${id}`)
