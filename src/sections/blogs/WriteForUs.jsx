@@ -2,8 +2,9 @@ import { GUIDE_URL, SUBMIT_BLOG_URL } from './blogsData.js'
 
 const NewTab = () => <span className="blogs__sr-only"> (opens in a new tab)</span>
 
+// The site only links to the written guide (CONTRIBUTING.md), never straight into GitHub's editor.
+// Falls back to the email draft if REPO_URL is ever cleared (blogsData.js).
 // "button": the black pill on its own. "strip": a cream card inviting contributions.
-// GitHub guide when REPO_URL is set (blogsData.js), otherwise the email draft.
 export default function WriteForUs({ variant = 'strip', headingLevel = 3 }) {
   const primaryHref = GUIDE_URL ?? SUBMIT_BLOG_URL
 
@@ -25,8 +26,15 @@ export default function WriteForUs({ variant = 'strip', headingLevel = 3 }) {
         <p className="blogs__write-copy">Tech, careers, marketing, work-life balance: if it helps women build, we'd love to read it.</p>
       </div>
       <div className="blogs__write-actions">
-        <a href={primaryHref} target="_blank" rel="noopener noreferrer" className="blogs__pill blogs__pill--ink">
-          {GUIDE_URL ? 'Write on GitHub' : 'Write for SheBuilds'} <span aria-hidden="true">→</span>
+        {/* Long label: allow it to wrap inside the pill on narrow phones instead of overflowing */}
+        <a
+          href={primaryHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="blogs__pill blogs__pill--ink"
+          style={{ whiteSpace: 'normal', textAlign: 'center' }}
+        >
+          {GUIDE_URL ? 'Read the guide & write for us' : 'Write for SheBuilds'} <span aria-hidden="true">→</span>
           <NewTab />
         </a>
         {GUIDE_URL && (

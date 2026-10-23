@@ -8,8 +8,8 @@ export const SUBMIT_BLOG_URL =
   'https://mail.google.com/mail/?view=cm&fs=1&to=team@shebuildschennai.in&su=Blog%20Submission%20-%20SheBuilds%20Chennai&body=Hello%20SheBuilds%20Team,%0A%0AI%20would%20like%20to%20contribute%20a%20blog.%0A%0AName:%20%0ATitle:%20%0ACategory:%20%0AShort%20summary:%20%0ALink%20to%20draft:%20%0A%0ABest%20regards,%0A'
 
 // Set to your public GitHub repo URL, no trailing slash, e.g. https://github.com/<org>/<repo>. Leave empty until then.
-export const REPO_URL = ''
-export const GUIDE_URL = REPO_URL ? `${REPO_URL}/blob/HEAD/CONTRIBUTING.md` : null
+export const REPO_URL = 'https://github.com/renisha18/sheBuildsTN'
+export const GUIDE_URL = REPO_URL ? `${REPO_URL}/blob/main/CONTRIBUTING.md#writing-a-blog` : null
 
 const files = import.meta.glob(['/src/content/blogs/*.md', '!/src/content/blogs/_*.md'], {
   query: '?raw',

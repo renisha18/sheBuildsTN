@@ -47,3 +47,11 @@ public/                    # Public static files
 index.html                 # HTML entry point
 vite.config.js             # Vite configuration
 package.json               # Dependencies and scripts
+```
+
+## ✍️ Write for SheBuilds
+
+We publish stories from women across Tamil Nadu on tech, careers, marketing and business, design, work-life balance and community.
+Every post is a Markdown file in `src/content/blogs/`, added through a pull request and reviewed by the team before it goes live.
+Read the guide: [Writing a Blog](CONTRIBUTING.md#writing-a-blog).
+No GitHub account? Email your draft to [team@shebuildschennai.in](mailto:team@shebuildschennai.in).
