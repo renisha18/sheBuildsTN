@@ -3,7 +3,7 @@
    by CharacterArt.css.
 
    Below lg: puzzle, then the character underneath (CharacterArt sets its own 24px/32px margins,
-   so no row gap here). Below md the character moves between the heading and the puzzle. */
+   so no row gap here). Below md: heading, character and puzzle on one screen (see the end). */
 .join-us__layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -37,11 +37,56 @@
   }
 }
 
-/* Below md: the character sits between the heading and the puzzle. The heading's 1rem bottom
-   margin is the 16px above it; its own margin is the 24px below it. */
+/* The character's wrapper only lays anything out on phones (below); everywhere else its
+   image is a direct grid item of .join-us__layout, as it was before the wrapper existed. */
+.join-us__character {
+  display: contents;
+}
+
+/* Phones (below md): one screen under the sticky navbar holds the heading, the character and
+   the four boxes. The section is a flex column exactly that tall (--nav-height is measured by
+   Navbar.jsx); the character takes whatever height is left, so it shrinks on short phones and
+   grows on tall ones. #join still lands with the heading just below the navbar, through
+   html { scroll-padding-top: var(--nav-height) } in index.css. */
 @media (width < 48rem) {
-  .join-us__layout > .character-art {
+  .about__intro.join-us__section {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: calc(100vh - var(--nav-height, 0px));
+    height: calc(100svh - var(--nav-height, 0px));
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  /* Heading, then the character, then the puzzle */
+  .join-us__layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+    gap: 10px;
+  }
+
+  .join-us__character {
     order: -1;
-    margin: 0 auto calc(var(--spacing) * 6);
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Overrides CharacterArt.css sizing on phones only; its classes stay for larger screens */
+  .join-us__character > .character-art {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    margin: 0;
+    object-fit: contain;
+  }
+
+  /* The boxes fill the full width (JoinPuzzle.css); lift the --puzzle-max cap set above */
+  .join-us__puzzle .puzzle {
+    max-width: none;
   }
 }

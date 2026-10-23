@@ -22,22 +22,27 @@ const cards = actions.map(({ id, tag, question, cta, href, color, external }) =>
 
 export default function JoinUsContent() {
   return (
-    <section className="about__intro" aria-labelledby="join-us-heading">
+    <section className="about__intro join-us__section" aria-labelledby="join-us-heading">
       <h2 id="join-us-heading" className="about__heading">
         Join Us
       </h2>
 
-      {/* Puzzle and character side by side from lg; stacked below (see JoinUsContent.css) */}
+      {/* Puzzle and character side by side from lg; stacked below; on phones heading, character
+          and puzzle share one screen (see JoinUsContent.css) */}
       <div className="join-us__layout">
         <div className="join-us__puzzle">
           <JoinPuzzle cards={cards} />
         </div>
 
-        <CharacterArt
-          data-reveal
-          src="/character/speaker-1100.webp"
-          alt="Illustration of a young woman waving beside a SheBuilds podium"
-        />
+        {/* Wrapper only matters on phones (it's the part that shrinks/grows); from 768px it has
+            display: contents, so the image is laid out exactly as before */}
+        <div className="join-us__character">
+          <CharacterArt
+            data-reveal
+            src="/character/speaker-1100.webp"
+            alt="Illustration of a young woman waving beside a SheBuilds podium"
+          />
+        </div>
       </div>
     </section>
   );
