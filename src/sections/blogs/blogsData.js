@@ -45,17 +45,7 @@ function loadPosts() {
     })
   }
 
-  // At most one featured post: the newest wins
-  let hasFeatured = false
-  return sortNewest(posts).map((post) => {
-    if (!post.featured) return post
-    if (!hasFeatured) {
-      hasFeatured = true
-      return post
-    }
-    devWarn(`${post.slug}.md: more than one post has featured: true; only the newest is featured`)
-    return { ...post, featured: false }
-  })
+  return sortNewest(posts)
 }
 
 export const POSTS = loadPosts()

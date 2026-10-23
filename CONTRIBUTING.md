@@ -83,7 +83,6 @@ The **most useful** thing was asking two friends to help on the day. If you want
 | `readTime` | Optional | Like `5 min`. Leave it out and it's worked out for you (200 words a minute) | `5 min` |
 | `cover` | Optional | The exact file name of an image in `src/content/blogs/images/` (see Step 3) | `first-community-meetup.jpg` |
 | `coverAlt` | Optional | Describes the cover for screen reader users, up to 120 characters | `A small group of women chatting...` |
-| `featured` | Team only | Chosen by the team. Please don't set it | |
 | `placeholder` | Sample content only | Marks the sample posts. Please don't set it | |
 
 One `key: value` per line, each value on a single line. Quotes around values are optional. Lines starting with `#` are ignored, so you can leave the optional fields commented out. Unknown keys are rejected, so typos like `catagory` fail the check.
@@ -126,7 +125,6 @@ Then open http://localhost:5173/blogs/your-title (use the port Vite prints if it
 - [ ] All links open correctly
 - [ ] It's your own writing, or you have permission to share it
 - [ ] No private information about other people
-- [ ] You didn't set `featured`
 
 ### Step 5: Submit your changes
 

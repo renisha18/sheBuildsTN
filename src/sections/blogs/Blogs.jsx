@@ -1,10 +1,9 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router'
-import { BlogMedia } from './BlogCard.jsx'
 import BlogCarousel from './BlogCarousel.jsx'
 import BlogToolbar from './BlogToolbar.jsx'
 import WriteForUs from './WriteForUs.jsx'
-import { POSTS, filterPosts, formatDate } from './blogsData.js'
+import { POSTS, filterPosts } from './blogsData.js'
 import './Blogs.css'
 
 export default function Blogs() {
@@ -13,9 +12,6 @@ export default function Blogs() {
 
   // POSTS is already newest first
   const matches = useMemo(() => filterPosts(POSTS, query, category), [query, category])
-
-  const featured = matches.find((post) => post.featured)
-  const latest = matches.filter((post) => !post.featured)
 
   const clearAll = () => {
     setQuery('')
@@ -53,39 +49,14 @@ export default function Blogs() {
         </div>
       ) : (
         <>
-          {featured && (
-            <Link to={`/blogs/${featured.slug}`} className="blogs__featured">
-              <BlogMedia post={featured} className="blogs__featured-media" />
-              <div className="blogs__featured-body">
-                <div className="blogs__featured-tags">
-                  <span className="blogs__badge">Editor's pick</span>
-                  <span className="blogs__tag">{featured.category}</span>
-                </div>
-                <h3 className="blogs__featured-title">{featured.title}</h3>
-                <p className="blogs__excerpt">{featured.excerpt}</p>
-                <p className="blogs__featured-meta">
-                  {featured.author} · {formatDate(featured.date)} · {featured.readTime} read
-                </p>
-                {/* Looks like a button; the whole block is the link */}
-                <span className="blogs__pill blogs__pill--small blogs__featured-cta">
-                  Read story <span aria-hidden="true" className="blogs__arrow">→</span>
-                </span>
-              </div>
+          <div className="blogs__latest-head">
+            <h3 className="blogs__latest-heading">Latest Articles</h3>
+            <Link to="/blogs/all" className="blogs__pill blogs__pill--small">
+              View all blogs <span aria-hidden="true">→</span>
             </Link>
-          )}
-
-          {latest.length > 0 && (
-            <>
-              <div className="blogs__latest-head">
-                <h3 className="blogs__latest-heading">Latest Articles</h3>
-                <Link to="/blogs/all" className="blogs__pill blogs__pill--small">
-                  View all blogs <span aria-hidden="true">→</span>
-                </Link>
-              </div>
-              {/* New key on every filter/search change remounts the carousel, scrolling it back to the start */}
-              <BlogCarousel key={`${category ?? 'all'}|${query.trim()}`} posts={latest} />
-            </>
-          )}
+          </div>
+          {/* New key on every filter/search change remounts the carousel, scrolling it back to the start */}
+          <BlogCarousel key={`${category ?? 'all'}|${query.trim()}`} posts={matches} />
         </>
       )}
 

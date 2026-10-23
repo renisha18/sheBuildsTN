@@ -24,7 +24,7 @@ export const MAX_WORDS = 3000
 export const WORDS_PER_MINUTE = 200
 
 const REQUIRED_KEYS = ['title', 'author', 'date', 'category', 'excerpt']
-const OPTIONAL_KEYS = ['authorLink', 'readTime', 'cover', 'coverAlt', 'featured', 'placeholder']
+const OPTIONAL_KEYS = ['authorLink', 'readTime', 'cover', 'coverAlt', 'placeholder']
 const ALLOWED_KEYS = new Set([...REQUIRED_KEYS, ...OPTIONAL_KEYS])
 
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
@@ -192,7 +192,6 @@ export function parsePost(fileName, raw, { categories = CATEGORIES, coverNames =
     if (fields[key] !== 'true' && fields[key] !== 'false') fail(`"${key}" must be true or false`)
     return fields[key] === 'true'
   }
-  const featured = flag('featured')
   const placeholder = flag('placeholder')
 
   // ---- Body ----
@@ -217,7 +216,6 @@ export function parsePost(fileName, raw, { categories = CATEGORIES, coverNames =
     readTime,
     cover: fields.cover || null,
     coverAlt: fields.coverAlt || null,
-    featured,
     placeholder,
     wordCount,
     blocks: toBlocks(body),

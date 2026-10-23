@@ -39,15 +39,10 @@ for (const file of imageFiles) {
 
 // ---- Posts ----
 const postFiles = readdirSync(DIR).filter((f) => f.endsWith('.md') && !f.startsWith('_'))
-const featured = []
 for (const file of postFiles) {
   const result = parsePost(file, readFileSync(join(DIR, file), 'utf8'), { coverNames })
   errors.push(...result.errors)
   warnings.push(...result.warnings)
-  if (result.post?.featured) featured.push(file)
-}
-if (featured.length > 1) {
-  errors.push(`${featured.join(', ')}: only one post may have featured: true (maintainers choose it)`)
 }
 
 for (const msg of errors) console.error(`ERROR    ${msg}`)

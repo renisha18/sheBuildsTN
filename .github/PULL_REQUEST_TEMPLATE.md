@@ -11,7 +11,6 @@ Delete the sections that don't apply. Title format: feat(blog): add "Your Post T
 - [ ] I'm happy for SheBuilds to publish it on the website with my name
 - [ ] No private information about other people
 - [ ] "npm run check:blogs" passes (or I used the browser upload)
-- [ ] I did not set featured
 
 ## Something else
 

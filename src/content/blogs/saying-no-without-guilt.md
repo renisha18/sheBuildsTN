@@ -5,7 +5,6 @@ date: 2026-09-08
 category: Work-Life Balance
 excerpt: Small, honest ways to protect your evenings and weekends without letting down the people who count on you.
 readTime: 5 min
-featured: true
 placeholder: true
 ---
 *Placeholder post: sample text until real stories arrive.*

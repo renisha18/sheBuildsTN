@@ -1,8 +1,5 @@
-/* Blogs section: mirrors the Events cards (2px ink border, radius-md, brutal shadows, pill chips).
-   Yellow (featured media) has no theme token yet, so it is scoped here. */
+/* Blogs section: mirrors the Events cards (2px ink border, radius-md, brutal shadows, pill chips). */
 .blogs {
-  --blogs-yellow: #f2bf5a;
-
   padding: 4rem 1.5rem; /* Events uses py-24; trimmed so the section fits about one screen */
   color: var(--color-ink);
   font-family: var(--font-body);
@@ -244,91 +241,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-/* ---------- Featured ---------- */
-.blogs__featured {
-  display: grid;
-  grid-template-columns: 1fr;
-  margin-top: 1.5rem;
-  border: 2px solid var(--color-ink);
-  border-radius: var(--radius-md);
-  background: var(--color-accent-alt);
-  box-shadow: var(--shadow-brutal);
-  color: var(--color-ink);
-  text-decoration: none;
-  overflow: hidden;
-  transition: transform 150ms, box-shadow 150ms;
-}
-
-@media (width >= 48rem) {
-  .blogs__featured {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  }
-}
-
-.blogs__featured-media {
-  --blogs-tone: var(--blogs-yellow);
-  height: 8.75rem;
-  border-bottom: 2px solid var(--color-ink);
-}
-
-@media (width >= 48rem) {
-  .blogs__featured-media {
-    height: auto;
-    border-bottom: 0;
-    border-right: 2px solid var(--color-ink);
-  }
-}
-
-.blogs__featured-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.625rem;
-  padding: 1.25rem 1.5rem;
-  min-width: 0;
-}
-
-.blogs__featured-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.blogs__badge {
-  display: inline-block;
-  padding: 0.125rem 0.625rem;
-  border: 2px solid var(--color-ink);
-  border-radius: 9999px;
-  background: var(--color-danger);
-  color: var(--color-ink);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.blogs__featured-title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2vw, 1.625rem);
-  font-weight: 700;
-  line-height: 1.2;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.blogs__featured-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0;
-  font-size: 0.875rem;
-  font-weight: 500;
 }
 
 /* ---------- Latest ---------- */
@@ -581,25 +493,21 @@
 }
 
 /* Hover/focus: lift up-left onto a bigger shadow, arrow nudges right */
-.blogs__card:hover,
-.blogs__featured:hover {
+.blogs__card:hover {
   transform: translate(-2px, -2px);
   box-shadow: var(--shadow-brutal-lg);
 }
 
-.blogs__card:hover .blogs__arrow,
-.blogs__featured:hover .blogs__arrow {
+.blogs__card:hover .blogs__arrow {
   transform: translateX(4px);
 }
 
-.blogs__card:active,
-.blogs__featured:active {
+.blogs__card:active {
   transform: translate(2px, 2px);
   box-shadow: var(--shadow-brutal-sm);
 }
 
-.blogs__card:focus-visible,
-.blogs__featured:focus-visible {
+.blogs__card:focus-visible {
   outline: 3px solid var(--color-ink);
   outline-offset: 4px;
 }
@@ -670,16 +578,6 @@
 /* Links that look like pills keep pill text styling */
 a.blogs__pill {
   text-decoration: none;
-}
-
-.blogs__featured-cta {
-  align-self: flex-start;
-  gap: 0.375rem;
-}
-
-.blogs__featured-cta .blogs__arrow {
-  margin-left: 0;
-  font-size: 1rem;
 }
 
 /* ---------- Write for us strip ---------- */
@@ -962,7 +860,6 @@ a.blogs__pill {
   .blogs__pill,
   .blogs__nav,
   .blogs__card,
-  .blogs__featured,
   .blogs__arrow {
     transition: none;
   }
@@ -971,10 +868,7 @@ a.blogs__pill {
   .blogs__nav:active,
   .blogs__card:hover,
   .blogs__card:active,
-  .blogs__featured:hover,
-  .blogs__featured:active,
-  .blogs__card:hover .blogs__arrow,
-  .blogs__featured:hover .blogs__arrow {
+  .blogs__card:hover .blogs__arrow {
     transform: none;
   }
 }
