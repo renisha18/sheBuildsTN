@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import logo from '../assets/logo.png'
 import { sections, scrollToSection } from '../siteSections.js'
 
@@ -20,6 +20,9 @@ function Navbar() {
   const sentinelRef = useRef(null)
   const buttonRef = useRef(null)
   const { pathname } = useLocation()
+  const navigate = useNavigate()
+  // On the All events page the Events pill stays active; elsewhere the scroll position decides
+  const current = pathname === '/events' ? 'events' : active
 
   // Publish the rendered navbar height as --nav-height (drives html scroll-padding-top and
   // section min-height). Measured, not hardcoded: it differs between desktop and mobile.
@@ -74,17 +77,19 @@ function Navbar() {
     return () => document.removeEventListener('keydown', onKey)
   }, [open])
 
-  // Real #anchors work without JS; with JS we smooth-scroll and replace (not push) the hash
+  // Real #anchors work without JS; with JS we smooth-scroll and replace (not push) the hash.
+  // Off the home page (All events, blogs) we go to /#id without a reload; Home then scrolls there.
   const go = (e, id) => {
     e.preventDefault()
     setOpen(false)
-    scrollToSection(id)
+    if (pathname === '/') scrollToSection(id)
+    else navigate({ pathname: '/', hash: `#${id}` })
   }
 
   const renderLinks = () =>
     sections.map(({ id, label }) => (
       <li key={id}>
-        <a href={`#${id}`} onClick={(e) => go(e, id)} aria-current={active === id ? 'true' : undefined} className={linkClass(active === id)}>
+        <a href={`/#${id}`} onClick={(e) => go(e, id)} aria-current={current === id ? 'true' : undefined} className={linkClass(current === id)}>
           {label}
         </a>
       </li>
@@ -102,7 +107,7 @@ function Navbar() {
         }`}
       >
         <div className="flex items-center justify-between px-12 py-4">
-          <a href="#home" onClick={(e) => go(e, 'home')} className="shrink-0 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+          <a href="/#home" onClick={(e) => go(e, 'home')} className="shrink-0 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             {/* Logo PNG has a white background; multiply blends it into the page color */}
             <img src={logo} alt="SheBuilds home" className="h-10 md:h-12 w-auto mix-blend-multiply" />
           </a>

@@ -9,7 +9,7 @@ import Blogs from '../sections/blogs/Blogs.jsx'
 
 // The whole site: one scrolling page, sections in nav order.
 function Home() {
-  // Deep links (/#events, or /events redirected here) land on their section
+  // Deep links (/#events, or /about redirected here) land on their section
   useEffect(() => {
     const id = window.location.hash.slice(1)
     if (sections.some((s) => s.id === id)) scrollToSection(id, { instant: true, focus: false })
