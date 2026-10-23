@@ -1,0 +1,140 @@
+/* Neo-brutalist photo strip under the Journey timeline. A pure-CSS marquee:
+   the track holds two identical lists and slides from 0 to -50%, so the
+   second copy lands exactly where the first started.
+   Shadows, radius, ink and fonts come from the @theme tokens in index.css. */
+
+.gallery {
+  /* Frame colours. Coral and teal reuse tokens; the rest have no token, so they live here. */
+  --gallery-coral: var(--color-accent);
+  --gallery-teal: var(--color-accent-alt);
+  --gallery-yellow: #f2bf5a;
+  --gallery-green: #aecc9d;
+  --gallery-lavender: #b9a6e0;
+  --gallery-orange: #f79a55;
+
+  --gallery-card-w: 380px;  /* card width; height follows from the 4:3 photo (~292px tall) */
+  --gallery-pad: 0.75rem;   /* coloured frame around the photo */
+  --gallery-gap: 1.25rem;   /* space between cards */
+
+  /* One full loop = loop length / speed, where loop length = count x (card width + gap).
+     Desktop: (380px + 20px) / 140px/s = 2.857s per card, so 10 cards = 4000px / 140 = 28.6s.
+     To retune: seconds per card = (card width + gap) / target px per second.
+     --gallery-count is set inline by Gallery.jsx from the number of images. */
+  --gallery-seconds-per-card: 2.857s;
+  --gallery-duration: calc(var(--gallery-count, 10) * var(--gallery-seconds-per-card));
+
+  padding: 0 0 3rem;
+}
+
+/* Same container and side padding as .journey, so the heading lines up */
+.gallery__head {
+  max-width: var(--about-container, 1400px);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.gallery__heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+}
+
+/* Full section width; clips the moving track so the page never scrolls sideways.
+   Only the left gap lives here: horizontal padding on the track would break the -50% maths. */
+.gallery__viewport {
+  overflow: hidden;
+  padding-left: 1rem;
+}
+
+.gallery__track {
+  display: flex;
+  width: max-content;
+  /* vertical room so the hard shadows are never clipped */
+  padding: 1rem 0 1.25rem;
+  animation: gallery-scroll var(--gallery-duration) linear infinite;
+}
+
+.gallery__viewport:hover .gallery__track,
+.gallery__viewport:focus-within .gallery__track {
+  animation-play-state: paused;
+}
+
+@keyframes gallery-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.gallery__list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* margin-right instead of flex gap, so both copies are exactly the same width */
+.gallery__card {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--gallery-card-w);
+  margin-right: var(--gallery-gap);
+  padding: var(--gallery-pad);
+  background: var(--gallery-coral);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-brutal);
+}
+
+.gallery__card:nth-child(6n + 2) { background: var(--gallery-teal); }
+.gallery__card:nth-child(6n + 3) { background: var(--gallery-yellow); }
+.gallery__card:nth-child(6n + 4) { background: var(--gallery-green); }
+.gallery__card:nth-child(6n + 5) { background: var(--gallery-lavender); }
+.gallery__card:nth-child(6n + 6) { background: var(--gallery-orange); }
+
+.gallery__img {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 2px solid var(--color-ink);
+  border-radius: 0.5rem;
+  background: var(--color-surface); /* shows while a lazy image loads */
+}
+
+/* Same breakpoint where .journey narrows its padding */
+@media (max-width: 1200px) {
+  .gallery__head {
+    padding: 0 1rem;
+  }
+}
+
+/* Smaller cards, a little slower: (280px + 20px) / 120px/s = 2.5s per card,
+   so 10 cards = 3000px / 120 = 25s. Height follows from the 4:3 photo (~216px). */
+@media (max-width: 768px) {
+  .gallery {
+    --gallery-card-w: 280px;
+    --gallery-pad: 0.625rem;
+    --gallery-seconds-per-card: 2.5s;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Reduced motion: no animation, one copy, scroll by hand */
+@media (prefers-reduced-motion: reduce) {
+  .gallery__track {
+    width: auto;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    animation: none;
+  }
+  .gallery__list[aria-hidden='true'] {
+    display: none;
+  }
+  .gallery__card {
+    scroll-snap-align: start;
+  }
+}

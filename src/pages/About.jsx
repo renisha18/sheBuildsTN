@@ -1,4 +1,5 @@
 import Journey from '../sections/about/Journey.jsx'
+import Gallery from '../sections/about/Gallery.jsx'
 import CharacterLoop from '../components/CharacterLoop.jsx'
 import '../components/CharacterArt.css'
 import './About.css'
@@ -37,6 +38,7 @@ export default function About() {
       <Journey />
       {/* Later, when the character is ready:
           <Journey character={<img src={characterImg} alt="" />} /> */}
+      <Gallery />
     </div>
   )
 }

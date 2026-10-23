@@ -158,9 +158,14 @@ export default function JoinPuzzle({ cards }) {
               <div className="puzzle__body">
                 <p className="puzzle__tag">{card.tag}</p>
                 <h3 className="puzzle__question">{card.question}</h3>
-                <a className="puzzle__cta" href={card.href}>
-                  {card.cta} <span aria-hidden="true">→</span>
-                </a>
+                <a
+  className="puzzle__cta"
+  href={card.href}
+  {...(card.external && { target: '_blank', rel: 'noopener noreferrer' })}
+>
+  {card.cta} <span aria-hidden="true">→</span>
+  {card.external && <span className="sr-only"> (opens in a new tab)</span>}
+</a>
               </div>
             </div>
           </li>

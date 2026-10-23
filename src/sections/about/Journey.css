@@ -221,7 +221,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  min-height: 260px; /* hold the space even while it is empty */
+  min-height: 80px; /* hold the space even while it is empty */
 }
 
 /* ---------- Narrow desktop: columns get tight, so give cards more height ---------- */

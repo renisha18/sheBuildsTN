@@ -2,11 +2,10 @@ import logo from '../assets/logo.png'
 import { sections, scrollToSection } from '../siteSections.js'
 import BlockGame from './BlockGame.jsx'
 
-// Verify the WhatsApp invite link: real invite URLs usually end in a random code.
 const SOCIAL_LINKS = [
-  { id: 'whatsapp',  label: 'WhatsApp',  href: 'https://chat.whatsapp.com/shebuilds' },
-  { id: 'discord',   label: 'Discord',   href: 'https://discord.gg/shebuilds' },
-  { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/shebuilds_chennai/' },
+  { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/shebuilds_chennai' },
+  { id: 'linkedin',  label: 'LinkedIn',  href: 'https://www.linkedin.com/company/shebuildsecosystem/' },
+  { id: 'mail',      label: 'Email',     href: 'mailto:team@shebuildschennai.in' },
 ]
 
 const iconProps = {
@@ -22,25 +21,24 @@ const iconProps = {
 
 // Simple line icons, keyed by SOCIAL_LINKS id
 const SOCIAL_ICONS = {
-  whatsapp: (
-    <svg {...iconProps}>
-      <path d="M3.5 20.5 4.8 16A8.5 8.5 0 1 1 8 19.2Z" />
-      <path d="M9 8.5c0 3.6 2.9 6.5 6.5 6.5l1-1.6-2-1-1 .8a4 4 0 0 1-1.7-1.7l.8-1-1-2Z" />
-    </svg>
-  ),
-  discord: (
-    <svg {...iconProps}>
-      <path d="M8 6.5a13 13 0 0 1 8 0l1.2-1.3C19 6 20.6 9.5 21 15.3c-1.4 1.4-3 2.2-4.6 2.6l-1.1-1.8M8.7 16.1l-1.1 1.8C6 17.5 4.4 16.7 3 15.3 3.4 9.5 5 6 6.8 5.2Z" />
-      <path d="M7.5 15.2c3 1.3 6 1.3 9 0" />
-      <circle cx="9" cy="11.5" r="1.2" fill="currentColor" stroke="none" />
-      <circle cx="15" cy="11.5" r="1.2" fill="currentColor" stroke="none" />
-    </svg>
-  ),
   instagram: (
     <svg {...iconProps}>
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  linkedin: (
+    <svg {...iconProps}>
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+      <path d="M10 21v-7a6 6 0 0 1 12 0v7h-4v-7a2 2 0 0 0-4 0v7Z" />
+    </svg>
+  ),
+  mail: (
+    <svg {...iconProps}>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3 7 9 6 9-6" />
     </svg>
   ),
 }
@@ -100,19 +98,22 @@ function Footer() {
           </a>
 
           <ul className="flex flex-wrap gap-3" aria-label="SheBuilds on social media">
-            {SOCIAL_LINKS.filter(({ href }) => href).map(({ id, label, href }) => (
-              <li key={id}>
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`SheBuilds on ${label} (opens in a new tab)`}
-                  className={socialClass}
-                >
-                  {SOCIAL_ICONS[id]}
-                </a>
-              </li>
-            ))}
+            {SOCIAL_LINKS.map(({ id, label, href }) => {
+              // mailto opens the mail app; a target on it would leave a blank tab behind
+              const isMail = href.startsWith('mailto:')
+              return (
+                <li key={id}>
+                  <a
+                    href={href}
+                    {...(isMail ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                    aria-label={isMail ? `${label} SheBuilds` : `SheBuilds on ${label} (opens in a new tab)`}
+                    className={socialClass}
+                  >
+                    {SOCIAL_ICONS[id]}
+                  </a>
+                </li>
+              )
+            })}
           </ul>
 
           <p className="order-last w-full border-t border-muted/30 pt-4 font-body text-sm text-muted lg:order-none">

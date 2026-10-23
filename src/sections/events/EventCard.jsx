@@ -32,31 +32,28 @@ const iconProps = {
   className: 'h-4 w-4 shrink-0 max-sm:size-3.5',
 }
 
+// Crop focus for the photo. Full class names so Tailwind can find them; anything else falls back to center.
+const IMAGE_POSITION_CLASS = {
+  top: 'object-top',
+  center: 'object-center',
+  bottom: 'object-bottom',
+}
+
 export default function EventCard({ event }) {
-  const { category, title, description, attendees, start, venue, image, featured, registerUrl } = event
+  const { category, title, description, attendees, start, venue, image, imagePosition, featured, registerUrl } = event
+  const positionClass = IMAGE_POSITION_CLASS[imagePosition] ?? IMAGE_POSITION_CLASS.center
 
   // Border, radius and shadow match .journey__card (Journey.css); overflow-hidden clips the image to the rounded top
   return (
     <article className="relative flex h-full w-full flex-col overflow-hidden rounded-md border-2 border-ink bg-surface shadow-brutal">
       {/* Image area — gray placeholder until the event's JSON file has an "image" */}
-      <div className="relative aspect-5/2 w-full border-b-2 border-ink bg-muted/30 max-sm:aspect-2/1">
+      {/* Fixed-ratio box: the photo is absolutely positioned, so it can never change the box's height */}
+      <div className="relative aspect-5/2 w-full overflow-hidden border-b-2 border-ink bg-muted/30 max-sm:aspect-2/1">
         {image ? (
-          <>
-            <img src={image} alt="" className="h-full w-full object-cover" />
-            {/* Flat tint so the overlaid title stays readable on busy photos */}
-            <div aria-hidden="true" className="absolute inset-0 bg-background/30" />
-          </>
+          <img src={image} alt="" className={`absolute inset-0 h-full w-full object-cover ${positionClass}`} />
         ) : (
           <span className="absolute bottom-2 left-4 font-body text-xs text-ink">Image placeholder</span>
         )}
-
-        {/* Decorative repeat of the title; the real heading is the h3 below */}
-        <p
-          aria-hidden="true"
-          className="absolute left-4 right-28 top-3 font-display text-xl font-bold leading-tight text-ink line-clamp-2 md:text-2xl max-sm:hidden"
-        >
-          {title}
-        </p>
 
         {featured === true && (
           <span className="absolute right-3 top-3 bg-ink px-2 py-1 font-body text-xs font-bold tracking-wide text-surface">

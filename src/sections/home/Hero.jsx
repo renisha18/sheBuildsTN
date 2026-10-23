@@ -1,6 +1,7 @@
 import HeroBadges from './HeroBadges.jsx'
 import CharacterLoop from '../../components/CharacterLoop.jsx'
 import '../../components/CharacterArt.css'
+import { scrollToSection } from '../../siteSections.js'
 
 function Hero() {
   return (
@@ -20,12 +21,16 @@ function Hero() {
            
           </p>
           <div data-reveal>
-            <button
-              type="button"
-              className="font-body font-semibold text-ink bg-accent border-2 border-ink rounded-full px-6 py-3 shadow-brutal transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-brutal-sm"
+            <a
+              href="#join"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection('join')
+              }}
+              className="inline-block font-body font-semibold text-ink bg-accent border-2 border-ink rounded-full px-6 py-3 shadow-brutal transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-brutal-sm"
             >
               Join the community <span aria-hidden="true">→</span>
-            </button>
+            </a>
           </div>
         </div>
         {/* character-art keeps the slot's size and spacing; CharacterLoop fills it */}
