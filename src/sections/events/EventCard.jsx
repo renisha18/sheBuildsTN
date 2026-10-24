@@ -1,6 +1,7 @@
-import { parseEventDate } from './loadEvents.js'
+import { eventLink, parseEventDate } from './eventDates.js'
+import { tagLabel } from './eventTags.js'
 
-// Shared by the register link and the plain button so both look exactly the same
+// The coral pill button (Register / View post)
 const VIEW_EVENT_CLASS =
   'mt-auto inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-ink bg-accent px-5 py-2.5 font-body font-bold text-ink shadow-brutal-sm transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink max-sm:py-1.5 max-sm:text-sm'
 
@@ -40,8 +41,11 @@ const IMAGE_POSITION_CLASS = {
 }
 
 export default function EventCard({ event }) {
-  const { category, title, description, attendees, start, venue, image, imagePosition, featured, registerUrl } = event
+  const { format, tags, title, description, attendees, start, venue, image, imagePosition, featured } = event
   const positionClass = IMAGE_POSITION_CLASS[imagePosition] ?? IMAGE_POSITION_CLASS.center
+  // Register / View post / no button at all, decided once in eventDates.js
+  const link = eventLink(event)
+  const shownTags = tags.slice(0, 3)
 
   // Border, radius and shadow match .journey__card (Journey.css); overflow-hidden clips the image to the rounded top
   return (
@@ -63,9 +67,19 @@ export default function EventCard({ event }) {
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5 max-sm:gap-1.5 max-sm:p-2.5">
-        <span className="self-start rounded-full border-2 border-ink bg-accent-alt px-2 py-0.5 font-body text-xs font-semibold text-ink max-sm:sr-only">
-          {category}
-        </span>
+        {/* Format and tags, 640px and up only: the phone card stays compact */}
+        {(format || shownTags.length > 0) && (
+          <div className="flex flex-wrap items-center gap-1.5 max-sm:hidden">
+            {format && (
+              <span className="rounded-full border-2 border-ink bg-accent-alt px-2 py-0.5 font-body text-xs font-semibold text-ink">{format}</span>
+            )}
+            {shownTags.map((tag) => (
+              <span key={tag} className="rounded-full border-2 border-ink bg-surface px-2 py-0.5 font-body text-xs font-semibold text-ink">
+                {tagLabel(tag)}
+              </span>
+            ))}
+          </div>
+        )}
 
         <h3 className="font-display text-xl font-bold leading-tight text-ink max-sm:line-clamp-2 max-sm:text-sm max-sm:leading-tight">{title}</h3>
 
@@ -79,9 +93,9 @@ export default function EventCard({ event }) {
           {attendees == null ? 'Attendee count TBA' : `${attendees} attendees`}
         </p>
 
-        <hr className="border-muted/30 max-sm:hidden" />
+        <hr className={`border-muted/30 max-sm:hidden ${link ? '' : 'mt-auto'}`} />
 
-        <div className="flex flex-col items-center gap-1.5 font-body text-sm text-muted max-sm:items-start max-sm:text-xs">
+        <div className={`flex flex-col items-center gap-1.5 font-body text-sm text-muted max-sm:items-start max-sm:text-xs ${link ? '' : 'max-sm:mt-auto'}`}>
           <span className="inline-flex items-center gap-1.5">
             <svg {...iconProps}>
               <rect x="3" y="5" width="18" height="16" rx="2" />
@@ -98,17 +112,14 @@ export default function EventCard({ event }) {
           </span>
         </div>
 
-        {/* With a registerUrl it's a link (new tab); without one it stays a plain button */}
-        {registerUrl ? (
-          <a href={registerUrl} target="_blank" rel="noopener noreferrer" className={VIEW_EVENT_CLASS}>
-            View Event<span className="sr-only">: {title} (opens in a new tab)</span>
-            <span aria-hidden="true">→</span>
+        {/* Only when there is somewhere to go: never a dead button. Without one, the date and venue
+            sit at the bottom of the card instead, so it stays balanced. */}
+        {link && (
+          <a href={link.href} target="_blank" rel="noopener noreferrer" className={VIEW_EVENT_CLASS}>
+            {link.label}
+            <span className="sr-only">: {title} (opens in a new tab)</span>
+            <span aria-hidden="true">↗</span>
           </a>
-        ) : (
-          <button type="button" className={VIEW_EVENT_CLASS}>
-            View Event<span className="sr-only">: {title}</span>
-            <span aria-hidden="true">→</span>
-          </button>
         )}
       </div>
     </article>

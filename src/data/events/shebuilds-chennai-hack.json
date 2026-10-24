@@ -1,7 +1,8 @@
-
 {
   "title": "SheBuilds Chennai Hack — Code & Challenge 3.0",
-  "category": "Hackathon",
+  "format": "Hackathon",
+  "tags": ["tech-skills", "collaborated"],
+  "partners": ["Intellexa REC"],
   "description": "A national-level, women-only hybrid hackathon by SheBuilds Chennai with Intellexa and REC. Teams of 2 to 4 tackled real-world problems around the Sustainable Development Goals, from an online innovation round to a 24-hour offline finale.",
   "start": "2026-08-01",
   "end": "2026-08-02",

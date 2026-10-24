@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { EVENT_TAGS, tagLabel } from './eventTags.js'
 
 // Filter state and pill styling shared by the Events section and the All events page
 // (the components that use them are in EventFilters.jsx).
@@ -12,26 +13,43 @@ export const pillClass = (isActive) =>
     isActive ? 'bg-accent-alt' : 'bg-surface hover:bg-accent-alt/20',
   ].join(' ')
 
-// Search text + one active category (null = all), applied to `events` without reordering them
+// How several selected tags combine. Narrowing: an event must have ALL of them. To show events
+// with ANY of them instead, change every() to some().
+export function matchesTags(event, selectedTags) {
+  return selectedTags.length === 0 || selectedTags.every((tag) => event.tags.includes(tag))
+}
+
+// Search text + any number of selected tags ([] = all), applied to `events` without reordering
+// them. tagCounts (tag id -> number of events) is always counted over all events.
 export function useEventFilters(events) {
   const [query, setQuery] = useState('')
-  const [activeFilter, setActiveFilter] = useState(null) // null = all
+  const [selectedTags, setSelectedTags] = useState([]) // [] = all
+
+  const tagCounts = useMemo(
+    () => Object.fromEntries(EVENT_TAGS.map(({ id }) => [id, events.filter((event) => event.tags.includes(id)).length])),
+    [events],
+  )
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     return events.filter((event) => {
-      const matchesQuery = q
-        ? `${event.title} ${event.description} ${event.category} ${event.venue ?? ''}`.toLowerCase().includes(q)
-        : true
-      const matchesFilter = activeFilter ? event.category === activeFilter : true
-      return matchesQuery && matchesFilter
+      const searchable = [event.title, event.description, event.format, event.venue, event.chapter, ...event.partners, ...event.tags.map(tagLabel)]
+      const matchesQuery = q ? searchable.filter(Boolean).join(' ').toLowerCase().includes(q) : true
+      return matchesQuery && matchesTags(event, selectedTags)
     })
-  }, [events, query, activeFilter])
+  }, [events, query, selectedTags])
+
+  // Turns one tag on or off; keeps the EVENT_TAGS order
+  const toggleTag = (id) =>
+    setSelectedTags((current) =>
+      current.includes(id) ? current.filter((t) => t !== id) : EVENT_TAGS.map((t) => t.id).filter((t) => t === id || current.includes(t)),
+    )
+  const clearTags = () => setSelectedTags([])
 
   const clearAll = () => {
     setQuery('')
-    setActiveFilter(null)
+    setSelectedTags([])
   }
 
-  return { query, setQuery, activeFilter, setActiveFilter, filtered, clearAll }
+  return { query, setQuery, selectedTags, toggleTag, clearTags, tagCounts, filtered, clearAll }
 }

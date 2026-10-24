@@ -1,6 +1,7 @@
 {
   "title": "The Product Perspective: Where Product Meets Market",
-  "category": "Meetup",
+  "format": "Meetup",
+  "tags": ["community"],
   "description": "An interactive session on the whole product: understanding users, choosing the right problem, positioning it and taking it to market. Open to developers, students, aspiring PMs, marketing enthusiasts, founders and working professionals.",
   "start": "2026-10-10",
   "end": null,

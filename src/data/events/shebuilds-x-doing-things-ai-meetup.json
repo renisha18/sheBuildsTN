@@ -1,6 +1,7 @@
 {
   "title": "SheBuilds Chennai X Doing Things AI Meetup",
-  "category": "Meetup",
+  "format": "Meetup",
+  "tags": ["community"],
   "description": "A Saturday morning reset for builders: a beach walk, a few games, good conversations and breakfast together, away from the usual setting.",
   "start": "2026-08-22",
   "end": null,

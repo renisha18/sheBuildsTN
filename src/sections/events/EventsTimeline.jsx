@@ -1,5 +1,7 @@
 import { ADD_EVENT_URL, INSTAGRAM_URL } from './eventsData.js'
-import { countLabel, dateLabel, eventLink, yearId } from './eventTimeline.js'
+import { countLabel, dateLabel, yearId } from './eventTimeline.js'
+import { eventLink } from './eventDates.js'
+import { tagLabel } from './eventTags.js'
 import './EventsTimeline.css'
 
 // Existing coral pill button (same look as the event card's View Event button)
@@ -19,11 +21,10 @@ function EventDate({ event, className }) {
 }
 
 function TimelineItem({ event, upcoming }) {
-  const { title, venue, category, description, attendees, featured } = event
-  // chapter and tags are optional and may not exist in the data at all
-  const chapter = typeof event.chapter === 'string' && event.chapter ? event.chapter : null
-  const tags = Array.isArray(event.tags) ? event.tags.filter((t) => typeof t === 'string' && t) : []
-  const href = eventLink(event)
+  const { title, venue, format, chapter, tags, description, attendees, featured } = event
+  // Register / View post / nothing, decided once in eventDates.js
+  const link = eventLink(event)
+  const hasLabels = Boolean(format || chapter || tags.length || featured === true)
 
   return (
     <li className={`tl__item ${upcoming ? 'tl__item--upcoming' : 'tl__item--past'}`}>
@@ -34,16 +35,18 @@ function TimelineItem({ event, upcoming }) {
       <article className="tl__card">
         <EventDate event={event} className="tl__card-date" />
 
-        <div className="tl__labels">
-          <span className="tl__label">{category}</span>
-          {chapter && <span className="tl__pill">{chapter}</span>}
-          {tags.map((tag) => (
-            <span key={tag} className="tl__pill">
-              {tag}
-            </span>
-          ))}
-          {featured === true && <span className="tl__featured">FEATURED</span>}
-        </div>
+        {hasLabels && (
+          <div className="tl__labels">
+            {format && <span className="tl__label">{format}</span>}
+            {chapter && <span className="tl__pill">{chapter}</span>}
+            {tags.map((tag) => (
+              <span key={tag} className="tl__pill">
+                {tagLabel(tag)}
+              </span>
+            ))}
+            {featured === true && <span className="tl__featured">FEATURED</span>}
+          </div>
+        )}
 
         <h3 className="tl__title">{title}</h3>
         {venue && <p className="tl__venue">{venue}</p>}
@@ -51,9 +54,9 @@ function TimelineItem({ event, upcoming }) {
         {typeof attendees === 'number' && <p className="tl__attendees">{attendees} attendees</p>}
 
         {/* No link, no button: never a dead control */}
-        {href && (
-          <a href={href} target="_blank" rel="noopener noreferrer" className={`${LINK_BUTTON_CLASS} tl__button`}>
-            {upcoming ? 'Register' : 'View post'}
+        {link && (
+          <a href={link.href} target="_blank" rel="noopener noreferrer" className={`${LINK_BUTTON_CLASS} tl__button`}>
+            {link.label}
             <span className="sr-only">: {title} (opens in a new tab)</span>
             <span aria-hidden="true">↗</span>
           </a>

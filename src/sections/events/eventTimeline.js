@@ -1,4 +1,4 @@
-import { parseEventDate } from './loadEvents.js'
+import { isPastEvent, parseEventDate } from './eventDates.js'
 
 // Helpers for the All events timeline. They only read events; the order always comes from
 // getEvents() (upcoming soonest first, then undated, then past newest first), so nothing is
@@ -14,23 +14,10 @@ function parts(when) {
   return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate() }
 }
 
-// Same rule as getEvents(): not over yet, or no start date at all
-export function isUpcoming(event, now = new Date()) {
-  const start = parseEventDate(event.start)
-  if (!start) return true
-  const last = parseEventDate(event.end) ?? start
-  return now.getTime() < last.until
-}
-
 // The year an event is filed under (its start)
 export function eventYear(event) {
   const start = parseEventDate(event.start)
   return start ? parts(start).year : null
-}
-
-// The one link an event card may show: a post about it, or else its registration page
-export function eventLink(event) {
-  return event.postUrl ?? event.registerUrl ?? null
 }
 
 // "1 event" / "9 events"
@@ -67,7 +54,7 @@ export function splitTimeline(events, now = new Date()) {
   const upcoming = []
   const years = new Map()
   for (const event of events) {
-    if (isUpcoming(event, now)) {
+    if (!isPastEvent(event, now)) {
       upcoming.push(event)
       continue
     }

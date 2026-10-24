@@ -1,6 +1,7 @@
 {
   "title": "Code and Connect 3.0",
-  "category": "Conference",
+  "format": "Conference",
+  "tags": ["community"],
   "description": "Tamil Nadu's biggest women in tech conference, organized by the SheBuilds ecosystem in Chennai. Community partner: Namma Flutter. Partners include Wyntrix.",
   "start": "2025-01-31",
   "end": null,

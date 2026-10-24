@@ -3,21 +3,30 @@
 // Run by hand:   npm run validate:events
 // Runs automatically before `npm run build` (see "prebuild" in package.json),
 // so a mistake in an event file fails the build instead of breaking the site.
-// Exit code 1 = at least one error.
+// Exit code 1 = at least one error. Warnings are printed but don't fail the build.
 
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
+// Shared with the site, so the tag list, formats and the past/upcoming rule exist once
+import { COLLABORATED_TAG, TAG_IDS } from '../src/sections/events/eventTags.js'
+import { EVENT_FORMATS } from '../src/sections/events/eventsData.js'
+import { isPastEvent } from '../src/sections/events/eventDates.js'
 
 const ROOT = process.env.EVENTS_ROOT || '.'
 const EVENTS_DIR = join(ROOT, 'src/data/events')
 const PUBLIC_DIR = join(ROOT, 'public')
 
-const CATEGORIES = ['Conference', 'Workshop', 'Hackathon', 'Speaker Night', 'Meetup']
 const ALLOWED_KEYS = new Set([
-  'title', 'category', 'description', 'start', 'end',
-  'venue', 'attendees', 'featured', 'image', 'registerUrl',
+  'title', 'description', 'tags', 'format', 'partners', 'chapter', 'start', 'end',
+  'venue', 'attendees', 'featured', 'image', 'registerUrl', 'postUrl',
 ])
-const REQUIRED_KEYS = ['title', 'category', 'description']
+const REQUIRED_KEYS = ['title', 'description']
+const NOW = new Date()
+
+const isText = (v) => typeof v === 'string' && v.trim() !== ''
+const isHttps = (v) => {
+  try { return new URL(v).protocol === 'https:' } catch { return false }
+}
 const MAX_IMAGE_KB = 200
 
 const errors = []
@@ -72,7 +81,7 @@ const files = readdirSync(EVENTS_DIR).sort()
 let eventCount = 0
 
 for (const file of files) {
-  if (file.endsWith('.example') || file.startsWith('.')) continue
+  if (file.endsWith('.example') || file.endsWith('.md') || file.startsWith('.')) continue
   if (!file.endsWith('.json')) {
     warn(file, 'ignored (not a .json file)')
     continue
@@ -97,7 +106,9 @@ for (const file of files) {
   }
 
   for (const key of Object.keys(data)) {
-    if (!ALLOWED_KEYS.has(key)) {
+    if (key === 'category') {
+      fail(file, '"category" is the old field: rename it to "format" (and add "tags")')
+    } else if (!ALLOWED_KEYS.has(key)) {
       fail(file, `unknown field "${key}" (typo?). Allowed: ${[...ALLOWED_KEYS].join(', ')}`)
     }
   }
@@ -114,9 +125,36 @@ for (const file of files) {
     if (data.description.length > 240) fail(file, `"description" is ${data.description.length} characters; keep it to 240 or fewer`)
     else if (data.description.length > 160) warn(file, `"description" is ${data.description.length} characters; the card may cut it off`)
   }
-  if (typeof data.category === 'string' && !CATEGORIES.includes(data.category)) {
-    fail(file, `"category" must be exactly one of: ${CATEGORIES.join(', ')} (got "${data.category}")`)
+
+  // tags: required, 1 or more known ids, no repeats
+  const tags = data.tags
+  if (tags === undefined || tags === null) {
+    fail(file, `"tags" is required: a list of 1 or more of ${TAG_IDS.join(', ')}`)
+  } else if (!Array.isArray(tags) || tags.length === 0) {
+    fail(file, `"tags" must be a list of 1 or more of ${TAG_IDS.join(', ')}, e.g. ["community"]`)
+  } else {
+    const seen = new Set()
+    for (const tag of tags) {
+      if (!TAG_IDS.includes(tag)) fail(file, `unknown tag "${tag}". Use: ${TAG_IDS.join(', ')}`)
+      else if (seen.has(tag)) fail(file, `tag "${tag}" is listed twice`)
+      seen.add(tag)
+    }
   }
+  const collaborated = Array.isArray(tags) && tags.includes(COLLABORATED_TAG)
+
+  // partners: optional list of names; at least one when tagged "collaborated"
+  const partners = data.partners
+  if (partners != null && (!Array.isArray(partners) || !partners.every(isText))) {
+    fail(file, '"partners" must be a list of names, e.g. ["GDG Chennai"]')
+  }
+  const hasPartners = Array.isArray(partners) && partners.length > 0
+  if (collaborated && !hasPartners) fail(file, `tagged "${COLLABORATED_TAG}" but "partners" lists no one (add at least one name)`)
+  if (hasPartners && Array.isArray(tags) && !collaborated) warn(file, `"partners" is set but the event isn't tagged "${COLLABORATED_TAG}"`)
+
+  if (data.format != null && !EVENT_FORMATS.includes(data.format)) {
+    fail(file, `"format" must be exactly one of: ${EVENT_FORMATS.join(', ')} (got "${data.format}")`)
+  }
+  if (data.chapter != null && !isText(data.chapter)) fail(file, '"chapter" must be text or left out')
 
   const dates = {}
   for (const key of ['start', 'end']) {
@@ -156,18 +194,22 @@ for (const file of files) {
     }
   }
 
-  if (data.registerUrl != null) {
-    let ok = false
-    try { ok = new URL(data.registerUrl).protocol === 'https:' } catch { /* invalid */ }
-    if (!ok) fail(file, '"registerUrl" must be a full https:// link or null')
+  for (const key of ['registerUrl', 'postUrl']) {
+    if (data[key] != null && !isHttps(data[key])) fail(file, `"${key}" must be a full https:// link or null`)
+  }
+
+  // Past events should link to the post about them, so they can be checked
+  if (dates.start !== undefined && data.postUrl == null && isPastEvent({ start: data.start, end: data.end }, NOW)) {
+    warn(file, 'past event with no "postUrl" (no source link)')
   }
 }
 
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`
 for (const w of warnings) console.warn(`warning  ${w}`)
 if (errors.length) {
-  console.error(`\n${errors.length} problem${errors.length === 1 ? '' : 's'} in the events data:\n`)
+  console.error(`\n${plural(errors.length, 'problem')} in the events data:\n`)
   for (const e of errors) console.error(`  error  ${e}`)
   console.error('\nFix these and run "npm run validate:events" again.')
-  process.exit(1)
 }
-console.log(`events: ${eventCount} file${eventCount === 1 ? '' : 's'} checked, all valid`)
+console.log(`\n${plural(eventCount, 'file')}: ${plural(errors.length, 'error')}, ${plural(warnings.length, 'warning')}`)
+if (errors.length) process.exit(1)

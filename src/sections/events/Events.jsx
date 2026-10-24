@@ -10,7 +10,7 @@ export default function Events() {
   // Ordered (upcoming, undated, past) against the browser's clock when the section first renders
   const events = useMemo(() => getEvents(), [])
   const filters = useEventFilters(events)
-  const { query, activeFilter, filtered } = filters
+  const { query, selectedTags, filtered } = filters
 
   return (
     <section
@@ -37,7 +37,7 @@ export default function Events() {
 
       {filtered.length > 0 ? (
         // New key on every filter/search change remounts the carousel, resetting it to the first slide
-        <EventCarousel key={`${activeFilter ?? 'all'}|${query.trim()}`} events={filtered} />
+        <EventCarousel key={`${selectedTags.join(',') || 'all'}|${query.trim()}`} events={filtered} />
       ) : (
         <EventsEmpty totalCount={events.length} {...filters} />
       )}

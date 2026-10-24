@@ -1,7 +1,8 @@
-// Event categories, in filter-pill order. Every event's "category" (src/data/events/*.json) must be
-// exactly one of these; scripts/validate-events.mjs checks that before each build.
+// Event formats (the kind of event). An event's optional "format" (src/data/events/*.json) must be
+// exactly one of these; scripts/validate-events.mjs checks that before each build. Shown as a
+// small label on cards; the filters use the tags in eventTags.js instead.
 // The events themselves are loaded by loadEvents.js.
-export const CATEGORIES = ['Conference', 'Workshop', 'Hackathon', 'Speaker Night', 'Meetup']
+export const EVENT_FORMATS = ['Conference', 'Workshop', 'Hackathon', 'Speaker Night', 'Meetup']
 
 // Where "Add it with a pull request" on the All events page points. One place to change it
 // (it will move to the CONTRIBUTING guide later).

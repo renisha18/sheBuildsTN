@@ -1,6 +1,7 @@
 {
   "title": "SheBuilds X Build2Learn - July Meetup",
-  "category": "Meetup",
+  "format": "Meetup",
+  "tags": ["community"],
   "description": "A collaborative 3-hour buildathon for working professionals to build prototypes, share ideas and showcase projects.",
   "start": "2026-07-11",
   "end": null,
