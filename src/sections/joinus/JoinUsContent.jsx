@@ -1,6 +1,7 @@
 import "./JoinUsContent.css";
 import JoinPuzzle from "./JoinPuzzle.jsx";
-import CharacterArt from "../../components/CharacterArt.jsx";
+import CharacterLoop from "../../components/CharacterLoop.jsx";
+import "../../components/CharacterArt.css";
 
 // The four Join us actions, shown as interlocking puzzle pieces (the first two are the top row).
 // Wording, links and colours are unchanged from the earlier cards. `external` marks the links
@@ -37,11 +38,14 @@ export default function JoinUsContent() {
         {/* Wrapper only matters on phones (it's the part that shrinks/grows); from 768px it has
             display: contents, so the image is laid out exactly as before */}
         <div className="join-us__character">
-          <CharacterArt
-            data-reveal
-            src="/character/speaker-1100.webp"
-            alt="Illustration of a young woman waving beside a SheBuilds podium"
-          />
+          {/* character-art keeps the slot's size and spacing; CharacterLoop fills it */}
+          <div className="character-art" data-reveal>
+            <CharacterLoop
+              still="/character/speaker-1100.webp"
+              video="/character/speaker-loop.webm"
+              alt="Illustration of a young woman waving beside a SheBuilds podium"
+            />
+          </div>
         </div>
       </div>
     </section>
