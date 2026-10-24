@@ -4,6 +4,7 @@ import EventCarousel from './EventCarousel.jsx'
 import { EventFilters, EventsEmpty } from './EventFilters.jsx'
 import { pillClass, useEventFilters } from './useEventFilters.js'
 import { getEvents } from './loadEvents.js'
+import { countLabel } from './eventTimeline.js'
 
 export default function Events() {
   // Ordered (upcoming, undated, past) against the browser's clock when the section first renders
@@ -23,12 +24,12 @@ export default function Events() {
         <h2 id="events-heading" className="about__heading">
           Events
         </h2>
+        {/* The visible text is the accessible name ("View all 9 events") */}
         <Link
           to="/events"
-          aria-label="View all events"
           className={`${pillClass(false)} shrink-0 whitespace-nowrap max-sm:gap-1 max-sm:px-3 max-sm:py-1 max-sm:text-sm`}
         >
-          View all <span aria-hidden="true">→</span>
+          {events.length > 0 ? `View all ${countLabel(events.length)}` : 'View all events'} <span aria-hidden="true">→</span>
         </Link>
       </div>
 

@@ -1,0 +1,308 @@
+/* All events timeline (/events). A 2px ink spine runs down the left; each event has its date
+   in a column left of the spine, a round marker on it, and a compact card to the right.
+   Colors come from the theme tokens in index.css (@theme), like Journey.css and About.css. */
+
+.tl {
+  --tl-date-w: 5.5rem;   /* date column */
+  --tl-rail-w: 2rem;     /* column the spine and markers sit in */
+  --tl-marker: 0.875rem; /* marker diameter */
+  --tl-card-x: calc(var(--tl-date-w) + var(--tl-rail-w)); /* where cards start */
+
+  position: relative;
+  margin-top: 2rem;
+  padding-bottom: 0.5rem;
+}
+
+/* The spine: one continuous line through every group */
+.tl::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--tl-date-w) + var(--tl-rail-w) / 2 - 1px);
+  width: 2px;
+  background: var(--color-ink);
+}
+
+.tl__group + .tl__group {
+  margin-top: 2.5rem;
+}
+
+/* "Upcoming" and the year headings sit in the card column */
+.tl__heading {
+  position: relative;
+  margin: 0 0 1rem var(--tl-card-x);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+/* Jump links land with the heading just below the navbar and the sticky filter bar.
+   (html already has scroll-padding-top for the navbar; --events-bar-h is measured on the page.) */
+.tl__heading--year {
+  scroll-margin-top: calc(var(--events-bar-h, 0px) + 1rem);
+}
+
+.tl__heading--year:focus {
+  outline: none;
+}
+
+.tl__heading--year:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+}
+
+.tl__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tl__item {
+  display: grid;
+  grid-template-columns: var(--tl-date-w) var(--tl-rail-w) minmax(0, 1fr);
+  align-items: start;
+}
+
+/* Date column, level with the marker and the top of the card */
+.tl__date {
+  padding: 1rem 0.75rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-align: right;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.tl__marker {
+  position: relative;
+  justify-self: center;
+  width: var(--tl-marker);
+  height: var(--tl-marker);
+  margin-top: 1.0625rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+  background: var(--color-ink);
+}
+
+.tl__item--upcoming .tl__marker {
+  background: var(--color-accent);
+}
+
+/* ---------- Card ---------- */
+.tl__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.375rem;
+  min-width: 0;
+  padding: 0.875rem 1rem 1rem;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-brutal-sm);
+  overflow-wrap: anywhere;
+}
+
+/* Phones only (see the end): the date as a small line at the top of the card */
+.tl__card-date {
+  display: none;
+}
+
+.tl__labels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.tl__label,
+.tl__pill {
+  padding: 0.125rem 0.5rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+.tl__label {
+  background: var(--color-accent-alt);
+}
+
+.tl__pill {
+  background: var(--color-surface);
+}
+
+.tl__featured {
+  padding: 0.25rem 0.5rem;
+  background: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  line-height: 1.2;
+  color: var(--color-surface);
+}
+
+.tl__title {
+  margin: 0.125rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-ink);
+}
+
+.tl__venue,
+.tl__attendees {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.tl__description {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+.tl__button {
+  margin-top: 0.375rem;
+}
+
+/* ---------- No upcoming events, and the "add your event" box ---------- */
+.tl__note {
+  position: relative;
+  margin: 0 0 0 var(--tl-card-x);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+}
+
+.tl__link {
+  border-radius: 0.25rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tl__link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.tl__link:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+.tl__add {
+  position: relative;
+  margin: 2.5rem 0 0 var(--tl-card-x);
+  padding: 1rem 1.25rem;
+  border: 2px dashed var(--color-ink);
+  border-radius: var(--radius-md);
+  background: var(--color-background);
+  font-family: var(--font-body);
+}
+
+.tl__add-text {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* ---------- Phones (below 640px): no date column, spine at the left edge ---------- */
+@media (width < 40rem) {
+  .tl {
+    --tl-date-w: 0px;
+    --tl-rail-w: 1.5rem;
+    --tl-marker: 0.75rem;
+  }
+
+  .tl__date {
+    display: none;
+  }
+
+  .tl__item {
+    grid-template-columns: var(--tl-rail-w) minmax(0, 1fr);
+  }
+
+  .tl__marker {
+    margin-top: 1rem;
+  }
+
+  .tl__card {
+    padding: 0.75rem;
+  }
+
+  .tl__card-date {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .tl__heading {
+    font-size: 1.25rem;
+  }
+}
+
+/* ---------- Page chrome (AllEvents.jsx): sticky filter bar and year jump links ---------- */
+.events-page__bar {
+  position: sticky;
+  top: var(--nav-height, 0px); /* measured by Navbar.jsx */
+  z-index: 40; /* under the navbar (z-50), over the timeline */
+  margin: 1rem 0 0;
+  padding: 0.75rem 0;
+  border-bottom: 2px solid var(--color-ink);
+  background: var(--color-background);
+}
+
+.events-page__years {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin-top: 0.75rem;
+}
+
+.events-page__year {
+  border-radius: 0.25rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.events-page__year:hover {
+  text-decoration-thickness: 2px;
+}
+
+.events-page__year:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
