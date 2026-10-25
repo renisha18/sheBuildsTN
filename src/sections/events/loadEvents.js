@@ -1,7 +1,7 @@
 // Events come from src/data/events/*.json (one file per event; the file name is the event id).
 // scripts/validate-events.mjs checks those files before every build (npm run validate:events).
 //
-// Fields: title, description, tags, format, partners, chapter, start, end, venue, attendees,
+// Fields: title, description, tags, format, partners, chapter, start, end, venue,
 // featured, image, registerUrl, postUrl (see src/data/events/EVENTS-README.md).
 // start/end are month-only "2024-10", date-only "2026-11-15" or a date-time
 // "2026-11-15T10:00:00+05:30". Any optional field may be null. tags and partners are always
@@ -22,7 +22,6 @@ const EVENTS = Object.entries(modules).map(([path, data]) => ({
   start: data.start ?? null,
   end: data.end ?? null,
   venue: data.venue ?? null,
-  attendees: data.attendees ?? null,
   featured: data.featured === true,
   image: data.image ?? null,
   registerUrl: data.registerUrl ?? null,

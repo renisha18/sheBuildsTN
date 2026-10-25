@@ -22,7 +22,7 @@ function EventDate({ event, className }) {
 }
 
 function TimelineItem({ event, upcoming }) {
-  const { title, venue, format, chapter, tags, description, attendees, featured } = event
+  const { title, venue, format, chapter, tags, description, featured } = event
   // Register / View post / nothing, decided once in eventDates.js
   const link = eventLink(event)
   const hasLabels = Boolean(format || chapter || tags.length || featured === true)
@@ -58,7 +58,6 @@ function TimelineItem({ event, upcoming }) {
           <h3 className="tl__title">{title}</h3>
           {venue && <p className="tl__venue">{venue}</p>}
           {description && <p className="tl__description">{description}</p>}
-          {typeof attendees === 'number' && <p className="tl__attendees">{attendees} attendees</p>}
 
           {/* No link, no button: never a dead control */}
           {link && (

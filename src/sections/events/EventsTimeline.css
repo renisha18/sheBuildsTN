@@ -197,8 +197,7 @@
   color: var(--color-ink);
 }
 
-.tl__venue,
-.tl__attendees {
+.tl__venue {
   margin: 0;
   font-family: var(--font-body);
   font-size: 0.875rem;

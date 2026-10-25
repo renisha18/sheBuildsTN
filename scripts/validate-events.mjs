@@ -18,7 +18,7 @@ const PUBLIC_DIR = join(ROOT, 'public')
 
 const ALLOWED_KEYS = new Set([
   'title', 'description', 'tags', 'format', 'partners', 'chapter', 'start', 'end',
-  'venue', 'attendees', 'featured', 'image', 'registerUrl', 'postUrl',
+  'venue', 'featured', 'image', 'registerUrl', 'postUrl',
 ])
 const REQUIRED_KEYS = ['title', 'description']
 const NOW = new Date()
@@ -172,9 +172,6 @@ for (const file of files) {
 
   if (data.venue != null && (typeof data.venue !== 'string' || data.venue.trim() === '')) {
     fail(file, '"venue" must be text or null')
-  }
-  if (data.attendees != null && !(Number.isInteger(data.attendees) && data.attendees >= 0)) {
-    fail(file, '"attendees" must be a whole number (no quotes) or null')
   }
   if (data.featured != null && typeof data.featured !== 'boolean') {
     fail(file, '"featured" must be true or false (no quotes)')

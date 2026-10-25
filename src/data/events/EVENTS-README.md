@@ -19,7 +19,6 @@ stops the build; a warning is only a reminder.
 | `start` | no | `"2024-10"` (month only), `"2026-11-15"` (a day) or `"2026-11-15T10:00:00+05:30"` (day and time). Use the most exact one you know. `null` shows "TBA". |
 | `end` | no | Same forms as `start`, for events that run over more than one day. `null` if it's a single day or unknown. |
 | `venue` | no | Where it happens, for example `"Venue name, Chennai"`, or `null`. |
-| `attendees` | no | How many people came, as a number without quotes, or `null`. |
 | `featured` | no | `true` to show the FEATURED badge, otherwise `false`. |
 | `image` | no | A photo in `public/events/`, written as `"/events/my-event.webp"` (under 200 KB), or `null`. |
 | `registerUrl` | no | The `https://` sign-up page. Shown as **Register** while the event is upcoming. |

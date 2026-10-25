@@ -41,7 +41,7 @@ const IMAGE_POSITION_CLASS = {
 }
 
 export default function EventCard({ event }) {
-  const { format, tags, title, description, attendees, start, venue, image, imagePosition, featured } = event
+  const { format, tags, title, description, start, venue, image, imagePosition, featured } = event
   const positionClass = IMAGE_POSITION_CLASS[imagePosition] ?? IMAGE_POSITION_CLASS.center
   // Register / View post / no button at all, decided once in eventDates.js
   const link = eventLink(event)
@@ -84,14 +84,6 @@ export default function EventCard({ event }) {
         <h3 className="font-display text-xl font-bold leading-tight text-ink max-sm:line-clamp-2 max-sm:text-sm max-sm:leading-tight">{title}</h3>
 
         <p className="font-body text-sm text-muted max-sm:sr-only">{description}</p>
-
-        <p className="inline-flex items-center gap-1.5 font-body text-sm text-muted max-sm:sr-only">
-          <svg {...iconProps}>
-            <circle cx="9" cy="8" r="3.5" />
-            <path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5" />
-          </svg>
-          {attendees == null ? 'Attendee count TBA' : `${attendees} attendees`}
-        </p>
 
         <hr className={`border-muted/30 max-sm:hidden ${link ? '' : 'mt-auto'}`} />
 
