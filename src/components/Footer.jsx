@@ -117,7 +117,7 @@ function Footer() {
           </ul>
 
           <p className="order-last w-full border-t border-muted/30 pt-4 font-body text-sm text-muted lg:order-none">
-            © SheBuilds Tamil Nadu
+            © SheBuilds Tamil Nadu - developed by Fathima Sameeha & Renisha Ensalaita
           </p>
         </div>
 
