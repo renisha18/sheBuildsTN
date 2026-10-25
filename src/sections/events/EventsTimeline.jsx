@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { ADD_EVENT_URL, INSTAGRAM_URL } from './eventsData.js'
 import { countLabel, dateLabel, yearId } from './eventTimeline.js'
 import { eventLink } from './eventDates.js'
@@ -25,6 +26,10 @@ function TimelineItem({ event, upcoming }) {
   // Register / View post / nothing, decided once in eventDates.js
   const link = eventLink(event)
   const hasLabels = Boolean(format || chapter || tags.length || featured === true)
+  // The photo shows only when there is one and it loads; if it fails, the whole block goes and the
+  // text takes the full width (no broken-image icon)
+  const [imageFailed, setImageFailed] = useState(false)
+  const showImage = typeof event.image === 'string' && event.image.trim() !== '' && !imageFailed
 
   return (
     <li className={`tl__item ${upcoming ? 'tl__item--upcoming' : 'tl__item--past'}`}>
@@ -32,34 +37,53 @@ function TimelineItem({ event, upcoming }) {
       <EventDate event={event} className="tl__date" />
       <span className="tl__marker" aria-hidden="true" />
 
-      <article className="tl__card">
-        <EventDate event={event} className="tl__card-date" />
+      <article className={`tl__card${showImage ? ' tl__card--image' : ''}`}>
+        {/* Text first in the HTML; the photo's place (right, or above on phones) is set in the CSS */}
+        <div className="tl__body">
+          <EventDate event={event} className="tl__card-date" />
 
-        {hasLabels && (
-          <div className="tl__labels">
-            {format && <span className="tl__label">{format}</span>}
-            {chapter && <span className="tl__pill">{chapter}</span>}
-            {tags.map((tag) => (
-              <span key={tag} className="tl__pill">
-                {tagLabel(tag)}
-              </span>
-            ))}
-            {featured === true && <span className="tl__featured">FEATURED</span>}
+          {hasLabels && (
+            <div className="tl__labels">
+              {format && <span className="tl__label">{format}</span>}
+              {chapter && <span className="tl__pill">{chapter}</span>}
+              {tags.map((tag) => (
+                <span key={tag} className="tl__pill">
+                  {tagLabel(tag)}
+                </span>
+              ))}
+              {featured === true && <span className="tl__featured">FEATURED</span>}
+            </div>
+          )}
+
+          <h3 className="tl__title">{title}</h3>
+          {venue && <p className="tl__venue">{venue}</p>}
+          {description && <p className="tl__description">{description}</p>}
+          {typeof attendees === 'number' && <p className="tl__attendees">{attendees} attendees</p>}
+
+          {/* No link, no button: never a dead control */}
+          {link && (
+            <a href={link.href} target="_blank" rel="noopener noreferrer" className={`${LINK_BUTTON_CLASS} tl__button`}>
+              {link.label}
+              <span className="sr-only">: {title} (opens in a new tab)</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+
+        {/* Not a link: the card's one button is enough */}
+        {showImage && (
+          <div className="tl__media">
+            <img
+              src={event.image}
+              alt={`Photo from ${title}`}
+              width="1200"
+              height="600"
+              loading="lazy"
+              decoding="async"
+              onError={() => setImageFailed(true)}
+              className="tl__image"
+            />
           </div>
-        )}
-
-        <h3 className="tl__title">{title}</h3>
-        {venue && <p className="tl__venue">{venue}</p>}
-        {description && <p className="tl__description">{description}</p>}
-        {typeof attendees === 'number' && <p className="tl__attendees">{attendees} attendees</p>}
-
-        {/* No link, no button: never a dead control */}
-        {link && (
-          <a href={link.href} target="_blank" rel="noopener noreferrer" className={`${LINK_BUTTON_CLASS} tl__button`}>
-            {link.label}
-            <span className="sr-only">: {title} (opens in a new tab)</span>
-            <span aria-hidden="true">↗</span>
-          </a>
         )}
       </article>
     </li>
