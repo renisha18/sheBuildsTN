@@ -4,9 +4,9 @@
 // The events themselves are loaded by loadEvents.js.
 export const EVENT_FORMATS = ['Conference', 'Workshop', 'Hackathon', 'Speaker Night', 'Meetup']
 
-// Where "Add it with a pull request" on the All events page points. One place to change it
-// (it will move to the CONTRIBUTING guide later).
-export const ADD_EVENT_URL = 'https://github.com/renisha18/sheBuildsTN'
+// Where "Add it with a pull request" on the All events page points: the Add an event guide.
+// One place to change it.
+export const ADD_EVENT_URL = 'https://github.com/renisha18/sheBuildsTN/blob/main/docs/add-event.md'
 
 // Shown when there are no upcoming events
 export const INSTAGRAM_URL = 'https://www.instagram.com/shebuilds_chennai/'

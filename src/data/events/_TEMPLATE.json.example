@@ -1,16 +1,16 @@
 {
-  "title": "Event name (80 characters max)",
+  "title": "Your event name",
   "format": "Workshop",
   "tags": ["tech-skills"],
+  "description": "One or two sentences about what happened at the event.",
+  "start": "2026-11-15",
+  "end": null,
+  "venue": "Venue name, City",
+  "chapter": "SheBuilds Chennai",
   "partners": [],
-  "chapter": null,
-  "description": "One or two sentences about the event. Keep it under about 160 characters.",
-  "start": "2026-11-15T10:00:00+05:30",
-  "end": "2026-11-15T13:00:00+05:30",
-  "venue": "Venue name, Chennai",
   "attendees": null,
   "featured": false,
   "image": null,
   "registerUrl": null,
-  "postUrl": null
+  "postUrl": "https://www.instagram.com/p/XXXXXXXX/"
 }
