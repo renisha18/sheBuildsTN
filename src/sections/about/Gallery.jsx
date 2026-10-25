@@ -49,7 +49,7 @@ export default function Gallery() {
     >
       {/* Optional sub-heading: change the text or delete this block */}
       <div className="gallery__head">
-        <h3 className="gallery__heading">Community moments</h3>
+        <h3 className="about__heading">Community moments</h3>
       </div>
 
       <div className="gallery__viewport">

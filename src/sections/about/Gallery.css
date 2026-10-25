@@ -33,13 +33,10 @@
   padding: 0 2rem;
 }
 
-.gallery__heading {
+/* The heading uses the standard section heading style (.about__heading in About.css);
+   only its spacing stays as it was */
+.gallery__head > .about__heading {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--color-primary);
 }
 
 /* Full section width; clips the moving track so the page never scrolls sideways.

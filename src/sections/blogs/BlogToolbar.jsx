@@ -1,7 +1,9 @@
 import { CATEGORIES } from './blogsData.js'
+import { SEARCH_ICON_CLASS, SEARCH_INPUT_CLASS, pillClass } from '../../components/filterStyles.js'
 
 // Search + category chips, shared by the home section and the All blogs page.
 // category null = "All Posts". idPrefix keeps the input id unique per page.
+// Styled exactly like the Events search box and filter pills (components/filterStyles.js).
 export default function BlogToolbar({ query, onQueryChange, category, onCategoryChange, idPrefix = 'blogs' }) {
   const chip = (value, label) => {
     const isActive = category === value
@@ -11,7 +13,7 @@ export default function BlogToolbar({ query, onQueryChange, category, onCategory
         type="button"
         aria-pressed={isActive}
         onClick={() => onCategoryChange(value)}
-        className={`blogs__pill blogs__chip${isActive ? (value === null ? ' is-active-all' : ' is-active') : ''}`}
+        className={`${pillClass(isActive)} shrink-0 whitespace-nowrap`}
       >
         {label}
       </button>
@@ -21,7 +23,7 @@ export default function BlogToolbar({ query, onQueryChange, category, onCategory
   return (
     <div className="blogs__toolbar">
       <div className="blogs__search">
-        <svg aria-hidden="true" viewBox="0 0 24 24" className="blogs__search-icon" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg aria-hidden="true" viewBox="0 0 24 24" className={SEARCH_ICON_CLASS} fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="11" cy="11" r="7" />
           <path d="m20 20-3.5-3.5" strokeLinecap="round" />
         </svg>
@@ -34,7 +36,7 @@ export default function BlogToolbar({ query, onQueryChange, category, onCategory
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
           placeholder="Search stories"
-          className="blogs__search-input"
+          className={SEARCH_INPUT_CLASS}
         />
       </div>
 
