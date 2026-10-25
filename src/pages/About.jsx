@@ -14,14 +14,10 @@ export default function About() {
         <div className="about__text">
           <h2 id="about-heading" className="about__heading" data-reveal>About us</h2>
           <p data-reveal>
-            SheBuilds Chennai started as a small WhatsApp group of five women who
-            wanted a space to talk code, career, and life without the noise.
-            Today we&apos;re 300+ engineers, designers, founders, and students — every
-            stage, every stack — who show up for each other online and off.
+            SheBuilds is a community-driven initiative that gives women developers a place to collaborate, learn, and push the limits of real-world technology. We believe talent is everywhere, but access is not, so we work to bridge the gap between skilled women and real industrial opportunities. Through advanced code sandboxes, continuous webinars, hackathons, and global mentorship chains, we support women software engineers, designers, and project managers in building confidently, growing steadily, and achieving real career impact.
           </p>
           <p data-reveal>
-            We run workshops, host speaker nights, organise hackathons, and keep
-            online groups where questions never go unanswered.
+             Whether you are just starting out or ready for your next big leap, SheBuilds is where ambition meets opportunity.
           </p>
         </div>
 
