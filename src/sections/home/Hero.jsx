@@ -2,6 +2,7 @@ import HeroBadges from './HeroBadges.jsx'
 import CharacterLoop from '../../components/CharacterLoop.jsx'
 import '../../components/CharacterArt.css'
 import { scrollToSection } from '../../siteSections.js'
+import SocialLinks from '../../components/SocialLinks.jsx'
 
 function Hero() {
   return (
@@ -32,6 +33,9 @@ function Hero() {
               Join the community <span aria-hidden="true">→</span>
             </a>
           </div>
+          {/* Same links as the footer. mt-4 + the column's gap-4 = the 32px between the headline
+              and the button (which has two gap-4s around the empty paragraph) */}
+          <SocialLinks nav className="mt-4" />
         </div>
         {/* character-art keeps the slot's size and spacing; CharacterLoop fills it */}
         <div className="character-art" data-reveal>
