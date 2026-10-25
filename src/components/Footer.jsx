@@ -1,4 +1,4 @@
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.jpeg'
 import { sections, scrollToSection } from '../siteSections.js'
 import BlockGame from './BlockGame.jsx'
 

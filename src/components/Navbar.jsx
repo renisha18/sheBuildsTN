@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.jpeg'
 import { sections, scrollToSection } from '../siteSections.js'
 
 // Each link is its own brutal pill button: teal when active, white otherwise; presses into its shadow
