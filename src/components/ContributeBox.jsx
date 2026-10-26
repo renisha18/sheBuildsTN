@@ -5,18 +5,21 @@ import '../sections/blogs/Blogs.css'
 const NewTab = () => <span className="blogs__sr-only"> (opens in a new tab)</span>
 
 /**
- * The "contribute" box: coral card, ink border, hard shadow, a black pill link. Used at the end of
+ * The "contribute" box: coral (or teal) card, ink border, hard shadow, a black pill link. Used at the end of
  * the All events timeline and as the Blogs "write for us" strip, so the two always match.
  * title          the box's first line
  * titleAs        its element: 'p' (default), 'h2', 'h3' ...
  * text           optional line under the title
  * linkLabel/href the pill (opens in a new tab)
  * secondaryLabel/secondaryHref  optional plain link next to the pill (opens in a new tab)
+ * tone           'community' (default): the coral of the "Join the community" button
+ *                'teal': the teal of the navbar's active pill
  * className      extra classes for placement
  */
-export default function ContributeBox({ title, titleAs: Title = 'p', text, linkLabel, href, secondaryLabel, secondaryHref, className = '' }) {
+export default function ContributeBox({ title, titleAs: Title = 'p', text, linkLabel, href, secondaryLabel, secondaryHref, tone = 'community', className = '' }) {
+  const toneClass = tone === 'teal' ? 'contribute-box--teal' : ''
   return (
-    <div className={`contribute-box ${className}`.trim()}>
+    <div className={`contribute-box ${toneClass} ${className}`.replace(/\s+/g, ' ').trim()}>
       <div className="contribute-box__text">
         <Title className="contribute-box__title">{title}</Title>
         {text && <p className="contribute-box__copy">{text}</p>}

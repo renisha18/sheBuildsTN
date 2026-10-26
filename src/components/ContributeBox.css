@@ -1,5 +1,5 @@
-/* The "contribute" box (ContributeBox.jsx): the same colour as the "Join the community" button
-   (--color-accent), ink border and text, hard shadow. Stacks on phones, one row from md. */
+/* The "contribute" box (ContributeBox.jsx): by default the same colour as the "Join the community"
+   button (--color-accent), ink border and text, hard shadow. Stacks on phones, one row from md. */
 .contribute-box {
   display: flex;
   flex-direction: column;
@@ -13,6 +13,11 @@
   box-shadow: var(--shadow-brutal);
   color: var(--color-ink);
   font-family: var(--font-body);
+}
+
+/* tone="teal": the navbar's active-pill teal (Blogs). Border, shadow and ink text stay. */
+.contribute-box--teal {
+  background: var(--color-accent-alt);
 }
 
 @media (width >= 48rem) {

@@ -27,6 +27,7 @@ export default function WriteForUs({ variant = 'strip', headingLevel = 3 }) {
       href={primaryHref}
       secondaryLabel={GUIDE_URL ? 'Prefer email? Send us your draft' : null}
       secondaryHref={GUIDE_URL ? SUBMIT_BLOG_URL : null}
+      tone="teal"
     />
   )
 }
