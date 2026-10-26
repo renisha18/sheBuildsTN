@@ -31,9 +31,13 @@ export default function About() {
         </div>
       </section>
 
-      <Journey />
-      {/* Later, when the character is ready:
-          <Journey character={<img src={characterImg} alt="" />} /> */}
+      {/* The Journey gets its own screen with a divider on top. Not a navbar link: reached by
+          scrolling (or /#journey); it stays inside #about, so "About us" stays active. */}
+      <div id="journey" className="about__journey">
+        <Journey />
+        {/* Later, when the character is ready:
+            <Journey character={<img src={characterImg} alt="" />} /> */}
+      </div>
       <Gallery />
     </div>
   )

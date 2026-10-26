@@ -18,8 +18,7 @@
 }
 
 /* Headings (shared style with Journey) */
-.about__heading,
-.about .journey__heading {
+.about__heading {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: 1;
@@ -31,11 +30,6 @@
 .about__heading {
   margin: 0 0 1rem;
   font-size: clamp(2rem, 4vw, 3rem); /* reduced slightly */
-}
-
-/* Journey heading */
-.about .journey__heading {
-  font-size: clamp(2rem, 3.5vw, 2.75rem);
 }
 
 /* Paragraph text (FIXED — smaller & cleaner) */
@@ -59,6 +53,29 @@
 .about__top {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  align-content: center; /* the content block sits in the middle of the screen */
+  /* One screen below the sticky navbar (--nav-height is measured by Navbar.jsx). min-height,
+     so a short phone can still grow instead of clipping */
+  min-height: calc(100vh - var(--nav-height, 0px));
+  min-height: calc(100svh - var(--nav-height, 0px));
+}
+
+/* ---------- Journey screen: starts like a new page under the intro ----------
+   Still inside the #about section, so the navbar keeps "About us" active while it's on screen.
+   No scroll-margin-top: html's scroll-padding-top already keeps #journey clear of the navbar,
+   and adding both would leave a double gap. */
+.about__journey {
+  display: grid;
+  align-content: center; /* the Journey sits in the middle of its screen */
+  min-height: calc(100vh - var(--nav-height, 0px));
+  min-height: calc(100svh - var(--nav-height, 0px));
+  border-top: 2px solid var(--color-ink);
+}
+
+/* .journey centres itself with auto side margins; keep it full width inside the grid */
+.about__journey > .journey {
+  width: 100%;
+  min-width: 0;
 }
 
 @media (min-width: 64rem) {

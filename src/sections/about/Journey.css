@@ -17,11 +17,10 @@
   padding: 3rem 2rem 1.5rem;
 }
 
-/* Global h2 already supplies --font-display */
-.journey__heading {
+/* Size, weight and colour come from the standard .about__heading (About.css); only the space
+   under it is set here */
+.journey > .journey__heading {
   margin: 0 0 2rem;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-  color: var(--color-primary);
 }
 
 .journey__timeline {
@@ -245,7 +244,7 @@
   .journey {
     padding: 2rem 1rem 1rem;
   }
-  .journey__heading {
+  .journey > .journey__heading {
     margin-bottom: 1.5rem;
   }
 
