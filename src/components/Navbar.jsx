@@ -109,7 +109,7 @@ function Navbar() {
         <div className="flex items-center justify-between px-12 py-4">
           <a href="/#home" onClick={(e) => go(e, 'home')} className="shrink-0 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             {/* Logo PNG has a white background; multiply blends it into the page color */}
-            <img src={logo} alt="SheBuilds home" className="h-10 md:h-12 w-auto mix-blend-multiply" />
+            <img src={logo} alt="SheBuilds home" className="h-12 md:h-14 w-auto mix-blend-multiply" />
           </a>
 
           <ul className="hidden navbar:flex items-center gap-3">{renderLinks()}</ul>
