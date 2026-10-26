@@ -3,6 +3,7 @@ import { ADD_EVENT_URL, INSTAGRAM_URL } from './eventsData.js'
 import { countLabel, dateLabel, yearId } from './eventTimeline.js'
 import { eventLink } from './eventDates.js'
 import { tagLabel } from './eventTags.js'
+import ContributeBox from '../../components/ContributeBox.jsx'
 import './EventsTimeline.css'
 
 // Existing coral pill button (same look as the event card's View Event button)
@@ -130,13 +131,13 @@ export default function EventsTimeline({ upcoming, past }) {
         </section>
       ))}
 
-      <div className="tl__add">
-        <p className="tl__add-text">Want to add your chapter’s event?</p>
-        <a href={ADD_EVENT_URL} target="_blank" rel="noopener noreferrer" className="tl__link">
-          Add it with a pull request <span aria-hidden="true">→</span>
-          <span className="sr-only"> (opens in a new tab)</span>
-        </a>
-      </div>
+      {/* Same box as the Blogs "write for us" strip; lined up with the cards */}
+      <ContributeBox
+        title="Want to add your chapter’s event?"
+        linkLabel="Add it with a pull request"
+        href={ADD_EVENT_URL}
+        className="tl__contribute"
+      />
     </div>
   )
 }

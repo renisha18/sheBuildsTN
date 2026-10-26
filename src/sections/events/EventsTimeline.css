@@ -247,20 +247,10 @@
   outline-offset: 2px;
 }
 
-.tl__add {
+/* The contribute box (components/ContributeBox) at the end, lined up with the cards */
+.tl .tl__contribute {
   position: relative;
   margin: 2.5rem 0 0 var(--tl-card-x);
-  padding: 1rem 1.25rem;
-  border: 2px dashed var(--color-ink);
-  border-radius: var(--radius-md);
-  background: var(--color-background);
-  font-family: var(--font-body);
-}
-
-.tl__add-text {
-  margin: 0 0 0.25rem;
-  font-weight: 600;
-  color: var(--color-ink);
 }
 
 /* ---------- Phones (below 640px): no date column, spine at the left edge ---------- */
