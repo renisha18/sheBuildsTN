@@ -7,11 +7,11 @@ import './JoinPuzzle.css'
 // always fits the socket on its neighbour. Edit these numbers to restyle.
 const W = 380
 const H = 320
-const GAP = 14 // cream seam between pieces, in drawing units
-const CORNER = 6 // corner radius: small = sharp, 22 = soft
+const GAP = 18 // cream seam between pieces, in drawing units
+const CORNER = 14 // corner radius: small = sharp, 22 = soft
 const HEAD = 38 // radius of a knob's round head (bigger = bolder knob)
 const NECK = 17 // half the width of the narrowest part of a knob's neck
-const FILLET = 20 // radius of the small curves where the neck meets the edge
+const FILLET = 24 // radius of the small curves where the neck meets the edge
 const MOUTH = FILLET - GAP // radius of the small rounding at the mouth of a socket
 // Distance from a knob's neck-curve centres to its middle, and from the piece
 // edge to the middle of its round head (worked out so all the curves touch
@@ -30,11 +30,50 @@ const HEAD_CENTRE = FILLET + Math.sqrt((HEAD + FILLET) ** 2 - FILLET_X ** 2)
 // 3 right socket <- 4 left knob.
 const SLOTS = [
   { edges: { top: 'flat', right: 'knob', bottom: 'socket', left: 'flat' }, art: 'left', anchor: 'top', bodyBottom: 20, artBottom: 58, artWidth: 40, textLeft: 8, textRight: 8 },
-  { edges: { top: 'flat', right: 'flat', bottom: 'knob', left: 'socket' }, art: 'right', anchor: 'top', bodyBottom: 9, artBottom: 56, artWidth: 40, textLeft: 34, textRight: 8 },
-  { edges: { top: 'knob', right: 'socket', bottom: 'flat', left: 'flat' }, art: 'left', anchor: 'bottom', bodyBottom: 9, artBottom: 56, artWidth: 36, textLeft: 8, textRight: 34 },
+  { edges: { top: 'flat', right: 'flat', bottom: 'knob', left: 'socket' }, art: 'right', anchor: 'top', bodyBottom: 9, artBottom: 56, artWidth: 40, textLeft: 37, textRight: 8 },
+  { edges: { top: 'knob', right: 'socket', bottom: 'flat', left: 'flat' }, art: 'left', anchor: 'bottom', bodyBottom: 9, artBottom: 56, artWidth: 36, textLeft: 8, textRight: 37 },
   { edges: { top: 'socket', right: 'flat', bottom: 'flat', left: 'knob' }, art: 'right', anchor: 'bottom', bodyBottom: 9, artBottom: 56, artWidth: 40, textLeft: 8, textRight: 8 },
 ]
 const FLAT = { top: 'flat', right: 'flat', bottom: 'flat', left: 'flat' }
+
+// One small decorative icon per card, by card id (inline line icons, like the footer's).
+// Shown in a round badge on each piece from 768px up (see .puzzle__badge in JoinPuzzle.css).
+const badgeIconProps = {
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: 2,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+}
+const BADGE_ICONS = {
+  speak: (
+    <svg {...badgeIconProps}>
+      <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+      <path d="M19 10v1a7 7 0 0 1-14 0v-1" />
+      <line x1="12" y1="18" x2="12" y2="22" />
+    </svg>
+  ),
+  volunteer: (
+    <svg {...badgeIconProps}>
+      <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z" />
+    </svg>
+  ),
+  sponsor: (
+    <svg {...badgeIconProps}>
+      <circle cx="8" cy="8" r="6" />
+      <path d="M18.1 10.4A6 6 0 1 1 10.4 18.1" />
+      <path d="M7 6h1v4" />
+    </svg>
+  ),
+  chapter: (
+    <svg {...badgeIconProps}>
+      <path d="M3 21h18" />
+      <path d="M5 21V7l8-4v18" />
+      <path d="M19 21V11l-6-4" />
+    </svg>
+  ),
+}
 
 // Walks the outline clockwise. Outward is always on the left of the direction
 // of travel, so a knob is a bulge to the left and a socket a dent to the right.
@@ -153,6 +192,12 @@ export default function JoinPuzzle({ cards }) {
                     <span className="puzzle__art-placeholder">Character art</span>
                   )}
                 </div>
+              )}
+
+              {BADGE_ICONS[card.id] && (
+                <span className="puzzle__badge" aria-hidden="true">
+                  {BADGE_ICONS[card.id]}
+                </span>
               )}
 
               <div className="puzzle__body">

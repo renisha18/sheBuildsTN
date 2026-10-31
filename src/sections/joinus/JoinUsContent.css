@@ -22,14 +22,32 @@
 /* lg and up: puzzle on the left, character on the right (as wide as CharacterArt's clamp
    size), vertically centred on each other; the puzzle lines up with the heading's left edge */
 @media (min-width: 64rem) {
+  /* Puzzle and character sit together from the heading's left edge, not spread to both sides */
   .join-us__layout {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: auto auto;
+    justify-content: start;
     align-items: center;
-    column-gap: clamp(32px, 4vw, 64px);
+    column-gap: clamp(3.75rem, 5vw, 5rem);
   }
 
+  /* An auto column needs a real width: the puzzle is --puzzle-max wide. Above the character, so
+     its pieces stay hoverable where the character's transparent margin overlaps them. */
   .join-us__puzzle {
-    --puzzle-max: clamp(420px, 42vw, 620px);
+    --puzzle-max: clamp(460px, 47vw, 680px);
+    position: relative;
+    z-index: 1;
+    width: var(--puzzle-max);
+    max-width: 100%;
+  }
+
+  /* The speaker image has a transparent strip down its left side: 25.27% of its width (measured
+     with sharp, alpha > 16). Pulling the box left by that much puts the figure itself one
+     column-gap from the puzzle. Decorative, so it never takes the pointer. */
+  .join-us__character > .character-art {
+    --character-art-size: clamp(340px, 40vw, 600px);
+    margin-left: calc(var(--character-art-size) * -0.2527);
+    max-width: none; /* CharacterArt's 100% would resolve against the column the margin narrowed */
+    pointer-events: none;
   }
 
   .join-us__puzzle .puzzle {

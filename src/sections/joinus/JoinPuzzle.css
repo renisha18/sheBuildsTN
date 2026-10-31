@@ -219,7 +219,54 @@
 /* Phones: four small boxes in a 2 x 2 grid, flat (no knobs), sized to fit under the
    heading and the character on one screen. The boxes are drawn with CSS, not the
    SVG outline. */
+/* Icon badge: a small round cream badge per piece, in the solid corner away from the text and
+   the knobs. Decorative (aria-hidden); it counts as part of the piece for the hover. */
+.puzzle__badge {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 17%;
+  aspect-ratio: 1;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--cream);
+  box-shadow: 2px 2px 0 var(--ink);
+  color: var(--ink);
+  pointer-events: auto;
+}
+
+.puzzle__badge svg {
+  width: 55%;
+  height: 55%;
+}
+
+.puzzle__item:nth-child(1) .puzzle__badge { left: 9%; bottom: 14%; }
+.puzzle__item:nth-child(2) .puzzle__badge { right: 9%; bottom: 14%; }
+.puzzle__item:nth-child(3) .puzzle__badge { left: 9%; top: 14%; }
+.puzzle__item:nth-child(4) .puzzle__badge { right: 9%; top: 14%; }
+
+/* A small puzzle has no room for them. 300px, not smaller: below it the text grows (see the
+   @container rule above) and, measured, piece 1's button runs into its badge (e.g. by ~13px on
+   244px pieces at a 1024px window) */
+@container (max-width: 300px) {
+  .puzzle__badge {
+    display: none;
+  }
+}
+
+/* A slight tilt per piece (768px and up only), around each piece's centre */
+@media (min-width: 768px) {
+  .puzzle__item:nth-child(1) .puzzle__piece { rotate: -1.4deg; }
+  .puzzle__item:nth-child(2) .puzzle__piece { rotate: 1.1deg; }
+  .puzzle__item:nth-child(3) .puzzle__piece { rotate: 0.9deg; }
+  .puzzle__item:nth-child(4) .puzzle__piece { rotate: -1deg; }
+}
+
 @media (max-width: 767px) {
+  .puzzle__badge {
+    display: none;
+  }
+
   .puzzle,
   .puzzle--no-art {
     grid-template-columns: 1fr 1fr;
