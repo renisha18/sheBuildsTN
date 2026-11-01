@@ -1,13 +1,13 @@
 // The event tags: the one list behind the filter pills, the tag pills on cards and the
 // timeline, and the validator (scripts/validate-events.mjs). Plain module with no imports, so
-// Node can load it too. Each event's "tags" (src/data/events/*.json) holds ids from here.
+// Node can load it too. Each event's optional "tags" (in src/data/chapters/*.json) holds ids
+// from here.
 // Rule for adding a tag to an event: only if the event's post or page supports it. When unsure,
 // leave it off.
 export const EVENT_TAGS = [
   { id: 'women-only', label: 'Women-only', description: 'Attendance is limited to women.' },
   { id: 'entrepreneurship', label: 'Entrepreneurship', description: 'Startups, founders, pitching and business.' },
   { id: 'collaborated', label: 'Collaborated', description: 'Co-organised with another community, company or college.' },
-  { id: 'tech-skills', label: 'Tech & skills', description: 'Hands-on learning, build sprints and hackathons.' },
   { id: 'community', label: 'Community', description: 'Meetups, conferences and networking.' },
 ]
 

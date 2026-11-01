@@ -1,0 +1,69 @@
+{
+  "id": "shebuilds-chennai",
+  "name": "SheBuilds Chennai",
+  "college": null,
+  "city": "Chennai",
+  "events": [
+    {
+      "title": "The Product Perspective: Where Product Meets Market",
+      "format": "Meetup",
+      "tags": ["community"],
+      "description": "An interactive session on the whole product: understanding users, choosing the right problem, positioning it and taking it to market. Open to developers, students, aspiring PMs, marketing enthusiasts, founders and working professionals.",
+      "start": "2026-10-10",
+      "end": null,
+      "venue": "Technorucs, Pallikaranai, Chennai",
+      "featured": false,
+      "image": null,
+      "registerUrl": "https://luma.com/sc9wpbri"
+    },
+    {
+      "title": "SheBuilds Chennai X Doing Things AI Meetup",
+      "format": "Meetup",
+      "tags": ["community"],
+      "description": "A Saturday morning reset for builders: a beach walk, a few games, good conversations and breakfast together, away from the usual setting.",
+      "start": "2026-08-22",
+      "end": null,
+      "venue": "Bessie Beach, Chennai",
+      "featured": false,
+      "image": "/events/shebuilds-x-doing-things-ai-meetup.webp",
+      "registerUrl": "https://luma.com/ql9t3ilh"
+    },
+    {
+      "title": "SheBuilds Chennai Hack — Code & Challenge 3.0",
+      "format": "Hackathon",
+      "tags": ["collaborated"],
+      "partners": ["Intellexa REC"],
+      "description": "A national-level, women-only hybrid hackathon by SheBuilds Chennai with Intellexa and REC. Teams of 2 to 4 tackled real-world problems around the Sustainable Development Goals, from an online innovation round to a 24-hour offline finale.",
+      "start": "2026-08-01",
+      "end": "2026-08-02",
+      "venue": "Rajalakshmi Engineering College",
+      "featured": true,
+      "image": "/events/shebuilds-chennai-hack.webp",
+      "registerUrl": "https://shebuildschennai.in/"
+    },
+    {
+      "title": "SheBuilds X Build2Learn - July Meetup",
+      "format": "Meetup",
+      "tags": ["community"],
+      "description": "A collaborative 3-hour buildathon for working professionals to build prototypes, share ideas and showcase projects.",
+      "start": "2026-07-11",
+      "end": null,
+      "venue": "Mako IT Lab - Indian Delivery Center",
+      "featured": false,
+      "image": "/events/shebuilds-x-build2learn-july-meetup.webp",
+      "registerUrl": "https://luma.com/5emrh8ce"
+    },
+    {
+      "title": "Code and Connect 3.0",
+      "format": "Conference",
+      "tags": ["community"],
+      "description": "Tamil Nadu's biggest women in tech conference, organized by the SheBuilds ecosystem in Chennai. Community partner: Namma Flutter. Partners include Wyntrix.",
+      "start": "2025-01-31",
+      "end": null,
+      "venue": "REC, Chennai",
+      "featured": true,
+      "image": "/events/code-and-connect-3.webp",
+      "registerUrl": "https://shebuilds-chennai.tech/"
+    }
+  ]
+}

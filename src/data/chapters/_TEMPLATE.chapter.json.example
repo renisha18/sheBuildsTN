@@ -1,0 +1,22 @@
+{
+  "id": "your-college-name",
+  "college": "Your College Name",
+  "city": "Chennai",
+  "events": [
+    {
+      "title": "Your event name",
+      "format": "Workshop",
+      "tags": ["community"],
+      "description": "One or two sentences about what happened at the event.",
+      "start": "2026-11-15",
+      "end": null,
+      "venue": "Venue name, City",
+      "partners": [],
+      "attendees": null,
+      "featured": false,
+      "image": null,
+      "registerUrl": null,
+      "postUrl": "https://www.instagram.com/p/XXXXXXXX/"
+    }
+  ]
+}

@@ -22,8 +22,11 @@ Fixing a bug or improving the docs counts too: see [Reporting bugs](#reporting-b
 ## Add an event
 
 For chapters adding an event (past or upcoming) to the website: no coding needed.
-The full step-by-step guide, template and tag rules are in
+Each chapter has one file in `src/data/chapters/` with all of its events; you add yours at the
+top of your chapter's file. The full step-by-step guide, template and tag rules are in
 [docs/add-event.md](https://github.com/renisha18/sheBuildsTN/blob/main/docs/add-event.md).
+If your college has no file yet, start with
+[docs/add-chapter.md](https://github.com/renisha18/sheBuildsTN/blob/main/docs/add-chapter.md).
 
 ---
 
@@ -170,7 +173,7 @@ publish it on the website with your name.
 - Every past event needs a `postUrl` so a reviewer can check it.
 - Tag only what the source supports. When unsure, leave it off.
 - No phone numbers, emails or other personal contact details in any file.
-- One event per file. Don't edit other chapters' files.
+- Each chapter edits only its own file in `src/data/chapters/`. New events go at the top.
 - Be respectful. Pull requests that don't follow these rules will be asked to change.
 
 ## Community guidelines
@@ -199,11 +202,23 @@ Please use only these types.
 
 ## For reviewers: a quick checklist
 
-- [ ] The file is named correctly and the automatic check is green.
+- [ ] Only the chapter's own file changed (or one new chapter file), and the automatic check is green.
+- [ ] A new chapter: the college and city are spelled correctly and the same way as the other
+      chapters (see [docs/add-chapter.md](https://github.com/renisha18/sheBuildsTN/blob/main/docs/add-chapter.md#for-reviewers)).
 - [ ] The `postUrl` opens and matches the title, date and venue.
 - [ ] Every tag is supported by the post (`women-only` is the one to check hardest).
 - [ ] `collaborated` lists real co-organisers, not sponsors.
 - [ ] No invented numbers, no personal contact details, and the image is allowed.
+
+**Optional: chapter reviewers.** Because each chapter has its own file, GitHub can ask that
+chapter's lead to review every change to it. To set that up, a maintainer would add a
+`.github/CODEOWNERS` file with one line per chapter, for example:
+
+```text
+/src/data/chapters/rec-chennai.json @github-user
+```
+
+There is no CODEOWNERS file yet; this is only an option.
 
 ## Reporting bugs
 
@@ -232,10 +247,10 @@ You'll need Node 20 or newer.
 ```sh
 npm install              # install dependencies
 npm run dev              # start the dev server
-npm run build            # production build (checks the event files first)
+npm run build            # production build (checks the chapter files first)
 npm run lint             # lint the code
 npm run check:blogs      # check every blog post
-npm run validate:events  # check every event file
+npm run validate:events  # check every chapter file and its events
 ```
 
 Development guidelines:

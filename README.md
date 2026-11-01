@@ -60,7 +60,7 @@ No GitHub account? Email your draft to [team@shebuildschennai.in](mailto:team@sh
 
 Chapters add their own events and blogs through pull requests, no coding needed:
 
-- **Events:** [Add an event](https://github.com/renisha18/sheBuildsTN/blob/main/docs/add-event.md) (`docs/add-event.md`)
+- **Events:** each chapter has one file in `src/data/chapters/`. [Add an event](https://github.com/renisha18/sheBuildsTN/blob/main/docs/add-event.md) (`docs/add-event.md`), or register a new college with [Add a chapter](https://github.com/renisha18/sheBuildsTN/blob/main/docs/add-chapter.md) (`docs/add-chapter.md`)
 - **Blogs:** [Add a blog](CONTRIBUTING.md#add-a-blog)
 
 Everything else (reporting bugs, development setup, the community rules) is in
