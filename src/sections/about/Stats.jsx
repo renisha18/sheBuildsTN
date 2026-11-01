@@ -58,8 +58,10 @@ export default function Stats() {
               <span className="sr-only">
                 {format(s.value)}{s.suffix} {s.label}{s.note ? `, ${s.note}` : ''}
               </span>
-              <span className="stats__label" aria-hidden="true">{s.label}</span>
-              {s.note && <span className="stats__note" aria-hidden="true">{s.note}</span>}
+              <span className="stats__meta" aria-hidden="true">
+                <span className="stats__label">{s.label}</span>
+                {s.note && <span className="stats__note">{s.note}</span>}
+              </span>
             </li>
           )
         })}

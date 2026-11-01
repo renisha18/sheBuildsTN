@@ -14,11 +14,12 @@ export default function About() {
         <div className="about__text">
           <h2 id="about-heading" className="about__heading" data-reveal>About us</h2>
           <p data-reveal>
-            SheBuilds is a community-driven initiative that gives women developers a place to collaborate, learn, and push the limits of real-world technology. We believe talent is everywhere, but access is not, so we work to bridge the gap between skilled women and real industrial opportunities. Through advanced code sandboxes, continuous webinars, hackathons, and global mentorship chains, we support women software engineers, designers, and project managers in building confidently, growing steadily, and achieving real career impact.
+SheBuilds is a community-driven initiative that gives women in tech a place to collaborate, learn, and build real-world skills. We believe talent is everywhere, but access is not, so we bridge the gap between skilled women and real opportunities through hackathons, webinars, and mentorship.
           </p>
           <p data-reveal>
              Whether you are just starting out or ready for your next big leap, SheBuilds is where ambition meets opportunity.
           </p>
+          <Stats/>          
         </div>
 
         {/* character-art keeps the slot's size and spacing; CharacterLoop fills it */}
@@ -31,18 +32,9 @@ export default function About() {
         </div>
       </section>
 
-<<<<<<< Updated upstream
-      {/* The Journey gets its own screen with a divider on top. Not a navbar link: reached by
-          scrolling (or /#journey); it stays inside #about, so "About us" stays active. */}
-      <div id="journey" className="about__journey">
-        <Journey />
-      </div>
-=======
-      <Stats />
       <Journey />
       {/* Later, when the character is ready:
           <Journey character={<img src={characterImg} alt="" />} /> */}
->>>>>>> Stashed changes
       <Gallery />
     </div>
   )

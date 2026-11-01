@@ -14,13 +14,13 @@
 
   max-width: var(--about-container, 1400px);
   margin: 0 auto;
-  padding: 3rem 2rem 1.5rem;
+  padding: 2rem 2rem 1.5rem;
 }
 
 /* Size, weight and colour come from the standard .about__heading (About.css); only the space
    under it is set here */
 .journey > .journey__heading {
-  margin: 0 0 2rem;
+  margin: 0 0 1.5rem;
 }
 
 .journey__timeline {
@@ -229,7 +229,7 @@
     --area: 290px;
     --card-w: 150%;
     --card-h: 250px;
-    padding: 3rem 1rem 1.5rem;
+    padding: 2rem 1rem 1.5rem;
   }
   .journey__card {
     padding: 0.5rem;
@@ -241,11 +241,9 @@
 
 /* ---------- Tablet / mobile: vertical timeline, rail on the left ---------- */
 @media (max-width: 1000px) {
+  /* Side padding stays 2rem down to 768px so the heading lines up with "About us" */
   .journey {
-    padding: 2rem 1rem 1rem;
-  }
-  .journey > .journey__heading {
-    margin-bottom: 1.5rem;
+    padding: 2rem 2rem 1rem;
   }
 
   .journey__list {
@@ -340,5 +338,12 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+/* Matches .about__intro's 1rem side padding at this width */
+@media (max-width: 768px) {
+  .journey {
+    padding-inline: 1rem;
   }
 }
