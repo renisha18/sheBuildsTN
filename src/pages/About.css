@@ -1,12 +1,9 @@
-/* Font must stay first */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
-
 /* Root container for About page */
 .about {
   --about-container: 1400px;
 
   /* Typography tokens (scoped only to About page) */
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-display: 'Space Grotesk Variable', system-ui, sans-serif;
 }
 
 /* ---------- Intro Section ---------- */

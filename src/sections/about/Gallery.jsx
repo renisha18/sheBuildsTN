@@ -4,9 +4,10 @@ import './Gallery.css'
 // An empty string marks the image as decorative. Index-matched to the images sorted by file name.
 const ALTS = ['', '', '', '', '', '', '', '', '', '']
 
-// Every image in src/assets/gallery/, sorted by file name, at most 10. Upper-case
-// extensions are listed too because the glob is case-sensitive (e.g. 03.JPG).
-// HEIC is left out on purpose: most browsers can't display it.
+// Every image in src/assets/gallery/, sorted by file name, at most 10. The photos there are
+// WebP made by scripts/optimize-gallery.mjs (longest side 1200px); run it after adding a JPG or
+// PNG. Upper-case extensions are listed because the glob is case-sensitive. HEIC is left out
+// on purpose: most browsers can't display it.
 const modules = import.meta.glob(
   '/src/assets/gallery/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG,WEBP,AVIF}',
   { eager: true, import: 'default' },

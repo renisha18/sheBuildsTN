@@ -110,7 +110,7 @@
 .puzzle__question {
   margin: 0;
   max-width: 17em;
-  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-family: var(--font-display, 'Space Grotesk Variable', sans-serif);
   font-size: clamp(16px, 5.4cqw, 24px);
   font-weight: 700;
   line-height: 1.1;

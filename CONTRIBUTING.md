@@ -100,7 +100,7 @@ Write your story here, in plain paragraphs with an empty line between them.
 
 One `key: value` per line, each value on one line. Lines starting with `#` are ignored, so the
 optional fields can stay commented out. Unknown fields are rejected, so a typo like
-`catagory` fails the check. Don't add `placeholder`: it only marks the sample posts.
+`catagory` fails the check. Don't add `placeholder`: it marks a sample post, which never appears on the live site.
 
 **Writing your story:** paragraphs separated by an empty line; `## Heading` and
 `### Smaller heading`; lists with `- ` at the start of each line; `**bold**`, `*italic*` and
