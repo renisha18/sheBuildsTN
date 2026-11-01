@@ -5,6 +5,7 @@ import BlogCard, { Avatar, BlogMedia } from './BlogCard.jsx'
 import WriteForUs from './WriteForUs.jsx'
 import { POSTS, formatDate } from './blogsData.js'
 import { prefersReducedMotion } from '../../siteSections.js'
+import usePageTitle from '../../components/usePageTitle.js'
 import './Blogs.css'
 
 const BACK_TO_BLOGS = { pathname: '/', hash: '#blogs' }
@@ -25,13 +26,7 @@ export default function BlogPostView({ slug }) {
     window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'instant' : 'auto' })
   }, [slug])
 
-  useEffect(() => {
-    const previous = document.title
-    document.title = `${title} | SheBuilds Chennai`
-    return () => {
-      document.title = previous
-    }
-  }, [title])
+  usePageTitle(title)
 
   if (!post) {
     return (

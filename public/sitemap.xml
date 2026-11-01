@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The static pages from src/App.jsx (not blog posts). The SITE_URL placeholders are replaced with the site
+     address (src/siteConfig.js) when building. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>%SITE_URL%/</loc></url>
+  <url><loc>%SITE_URL%/events</loc></url>
+  <url><loc>%SITE_URL%/blogs/all</loc></url>
+</urlset>

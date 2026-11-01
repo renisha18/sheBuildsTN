@@ -4,6 +4,7 @@ import Home from './pages/Home.jsx'
 import AllBlogs from './pages/AllBlogs.jsx'
 import AllEvents from './pages/AllEvents.jsx'
 import BlogPost from './pages/BlogPost.jsx'
+import NotFound from './pages/NotFound.jsx'
 import { sections } from './siteSections.js'
 
 // Single scrolling page at "/". The old routed URLs (/about, /join, ...) redirect
@@ -22,7 +23,7 @@ function App() {
         <Route path="events" element={<AllEvents />} />
         <Route path="blogs/all" element={<AllBlogs />} />
         <Route path="blogs/:slug" element={<BlogPost />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   )

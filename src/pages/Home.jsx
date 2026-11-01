@@ -6,9 +6,12 @@ import { sections, scrollToSection } from '../siteSections.js'
 import JoinUs from './JoinUs.jsx'
 import Events from '../sections/events/Events.jsx'
 import Blogs from '../sections/blogs/Blogs.jsx'
+import usePageTitle from '../components/usePageTitle.js'
 
 // The whole site: one scrolling page, sections in nav order.
 function Home() {
+  usePageTitle(null) // just "SheBuilds Tamil Nadu"
+
   // Deep links (/#events, or /about redirected here) land on their section
   useEffect(() => {
     const id = window.location.hash.slice(1)

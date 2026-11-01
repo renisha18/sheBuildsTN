@@ -5,6 +5,7 @@ import BlogToolbar from './BlogToolbar.jsx'
 import WriteForUs from './WriteForUs.jsx'
 import { POSTS, filterPosts, groupByMonth } from './blogsData.js'
 import { prefersReducedMotion } from '../../siteSections.js'
+import usePageTitle from '../../components/usePageTitle.js'
 import './Blogs.css'
 
 const stories = (n) => (n === 1 ? '1 story' : `${n} stories`)
@@ -17,12 +18,8 @@ export default function AllBlogsView() {
   // Arriving from the home page leaves us scrolled down; start at the top
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'instant' : 'auto' })
-    const previous = document.title
-    document.title = 'All blogs | SheBuilds Chennai'
-    return () => {
-      document.title = previous
-    }
   }, [])
+  usePageTitle('All blogs')
 
   const matches = useMemo(() => filterPosts(POSTS, query, category), [query, category])
   const months = useMemo(() => groupByMonth(matches), [matches])

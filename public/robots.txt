@@ -1,0 +1,5 @@
+# The SITE_URL placeholder is replaced with the site address (src/siteConfig.js) when building
+User-agent: *
+Allow: /
+
+Sitemap: %SITE_URL%/sitemap.xml

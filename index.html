@@ -2,9 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shebuilds Tamilnadu</title>
+    <!-- The SITE_URL placeholders below are filled in from src/siteConfig.js by vite.config.js -->
+    <title>SheBuilds Tamil Nadu</title>
+    <meta
+      name="description"
+      content="SheBuilds Tamil Nadu is a community for women in tech: meetups, workshops, hackathons and stories from our chapters."
+    />
+    <link rel="canonical" href="%SITE_URL%/" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <!-- The cream page colour (--color-background in src/index.css); a meta tag can't read a CSS variable -->
+    <meta name="theme-color" content="#F8F0E0" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SheBuilds Tamil Nadu" />
+    <meta property="og:title" content="SheBuilds Tamil Nadu" />
+    <meta
+      property="og:description"
+      content="SheBuilds Tamil Nadu is a community for women in tech: meetups, workshops, hackathons and stories from our chapters."
+    />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SheBuilds Tamil Nadu" />
+    <meta
+      name="twitter:description"
+      content="SheBuilds Tamil Nadu is a community for women in tech: meetups, workshops, hackathons and stories from our chapters."
+    />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.png" />
   </head>
   <body>
     <div id="root"></div>

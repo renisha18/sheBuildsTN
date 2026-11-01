@@ -6,6 +6,7 @@ import { filtersFromSearch, filtersToSearch, useEventFilters } from '../sections
 import { getEvents } from '../sections/events/loadEvents.js'
 import { resultsAnnouncement, splitTimeline, yearId } from '../sections/events/eventTimeline.js'
 import { prefersReducedMotion } from '../siteSections.js'
+import usePageTitle from '../components/usePageTitle.js'
 
 // /events, rendered inside Layout (navbar and footer stay): every event on a timeline, upcoming
 // first, then past events by year. No element here uses a section id (#events etc.), so the
@@ -27,12 +28,8 @@ export default function AllEvents() {
   // Arriving from the home page leaves us scrolled down; start at the top
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'instant' : 'auto' })
-    const previous = document.title
-    document.title = 'All events | SheBuilds Chennai'
-    return () => {
-      document.title = previous
-    }
   }, [])
+  usePageTitle('All events')
 
   // Keep the address in step with the city/chapter and tags, replacing the current entry (no new
   // history entry per click, no reload). The search text and any #year stay as they are.
