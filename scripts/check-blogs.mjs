@@ -39,10 +39,16 @@ for (const file of imageFiles) {
 
 // ---- Posts ----
 const postFiles = readdirSync(DIR).filter((f) => f.endsWith('.md') && !f.startsWith('_'))
+let placeholders = 0
 for (const file of postFiles) {
   const result = parsePost(file, readFileSync(join(DIR, file), 'utf8'), { coverNames })
   errors.push(...result.errors)
   warnings.push(...result.warnings)
+  if (result.post?.placeholder) placeholders += 1
+}
+// Sample posts are fine to keep, but the live site leaves them out (blogsData.js)
+if (placeholders > 0) {
+  warnings.push(`${placeholders} placeholder ${placeholders === 1 ? 'post is' : 'posts are'} hidden in production (placeholder: true)`)
 }
 
 for (const msg of errors) console.error(`ERROR    ${msg}`)

@@ -1,5 +1,6 @@
 import { eventLink, parseEventDate } from './eventDates.js'
 import { tagLabel } from './eventTags.js'
+import '../blogs/Blogs.css' // .blogs__media-pattern, the grid pattern blog cards use for a missing cover
 
 // The coral pill button (Register / View post)
 const VIEW_EVENT_CLASS =
@@ -50,13 +51,14 @@ export default function EventCard({ event }) {
   // Border, radius and shadow match .journey__card (Journey.css); overflow-hidden clips the image to the rounded top
   return (
     <article className="relative flex h-full w-full flex-col overflow-hidden rounded-md border-2 border-ink bg-surface shadow-brutal">
-      {/* Image area — gray placeholder until the event's JSON file has an "image" */}
+      {/* Image area: the event's photo, or the same decorative grid pattern blog cards show
+          without a cover (never any text) */}
       {/* Fixed-ratio box: the photo is absolutely positioned, so it can never change the box's height */}
       <div className="relative aspect-5/2 w-full overflow-hidden border-b-2 border-ink bg-muted/30 max-sm:aspect-2/1">
         {image ? (
           <img src={image} alt="" className={`absolute inset-0 h-full w-full object-cover ${positionClass}`} />
         ) : (
-          <span className="absolute bottom-2 left-4 font-body text-xs text-ink">Image placeholder</span>
+          <span aria-hidden="true" className="blogs__media-pattern" />
         )}
 
         {featured === true && (

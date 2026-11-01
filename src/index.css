@@ -8,6 +8,13 @@
   --color-accent-alt: #50C8C8;    /* teal — tertiary accent, used sparingly */
   --color-danger: #E03040;        /* deep red — alerts/errors only, not decoration */
 
+  /* Illustration colours (the About journey cards), for decoration only */
+  --color-yellow: #F5B942;
+  --color-lavender: #B9A6E0;
+  --color-orange: #F79A55;
+  --color-green: #9CCF8F;
+  --color-coral-red: #EE6A63;
+
   /* Neutrals */
   --color-ink: #14100E;
   --color-background: #F8F0E0;    /* cream */

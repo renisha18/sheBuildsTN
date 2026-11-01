@@ -34,29 +34,39 @@ export default function Blogs() {
         <WriteForUs variant="button" />
       </div>
 
-      <BlogToolbar query={query} onQueryChange={setQuery} category={category} onCategoryChange={setCategory} />
-
-      <p aria-live="polite" className="blogs__sr-only">
-        {matches.length === 1 ? '1 story' : `${matches.length} stories`}
-      </p>
-
-      {matches.length === 0 ? (
+      {POSTS.length === 0 ? (
+        // No published stories yet (sample posts are left out of production): no filters, no grid
         <div className="blogs__empty">
-          <p className="blogs__empty-text">No stories found. Try another search or category.</p>
-          <button type="button" onClick={clearAll} className="blogs__pill">
-            Clear filters
-          </button>
+          <h3 className="blogs__empty-text">Stories are on the way</h3>
+          <p>Be the first: share your story and we&rsquo;ll publish it here.</p>
         </div>
       ) : (
         <>
-          <div className="blogs__latest-head">
-            <h3 className="blogs__latest-heading">Latest Articles</h3>
-            <Link to="/blogs/all" className="blogs__pill blogs__pill--small">
-              View all blogs <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-          {/* New key on every filter/search change remounts the carousel, scrolling it back to the start */}
-          <BlogCarousel key={`${category ?? 'all'}|${query.trim()}`} posts={matches} />
+          <BlogToolbar query={query} onQueryChange={setQuery} category={category} onCategoryChange={setCategory} />
+
+          <p aria-live="polite" className="blogs__sr-only">
+            {matches.length === 1 ? '1 story' : `${matches.length} stories`}
+          </p>
+
+          {matches.length === 0 ? (
+            <div className="blogs__empty">
+              <p className="blogs__empty-text">No stories found. Try another search or category.</p>
+              <button type="button" onClick={clearAll} className="blogs__pill">
+                Clear filters
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="blogs__latest-head">
+                <h3 className="blogs__latest-heading">Latest Articles</h3>
+                <Link to="/blogs/all" className="blogs__pill blogs__pill--small">
+                  View all blogs <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+              {/* New key on every filter/search change remounts the carousel, scrolling it back to the start */}
+              <BlogCarousel key={`${category ?? 'all'}|${query.trim()}`} posts={matches} />
+            </>
+          )}
         </>
       )}
 

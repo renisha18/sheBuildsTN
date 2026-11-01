@@ -43,42 +43,57 @@ export default function AllBlogsView() {
           <h1 id="all-blogs-heading" className="blogs-page__title">
             All blogs
           </h1>
-          <p className="blogs-page__subtext">{stories(POSTS.length)} from women across Tamil Nadu, newest first.</p>
+          {POSTS.length > 0 && (
+            <p className="blogs-page__subtext">{stories(POSTS.length)} from women across Tamil Nadu, newest first.</p>
+          )}
         </div>
         <WriteForUs variant="button" />
       </div>
 
-      <BlogToolbar idPrefix="all-blogs" query={query} onQueryChange={setQuery} category={category} onCategoryChange={setCategory} />
-
-      <p aria-live="polite" className="blogs__sr-only">
-        {stories(matches.length)}
-      </p>
-
-      {months.length === 0 ? (
-        <div className="blogs__empty">
-          <p className="blogs__empty-text">No stories found. Try another search or category.</p>
-          <button type="button" onClick={clearAll} className="blogs__pill">
-            Clear filters
-          </button>
-        </div>
+      {POSTS.length === 0 ? (
+        // No published stories yet (sample posts are left out of production): no filters, no grid
+        <>
+          <div className="blogs__empty">
+            <h2 className="blogs__empty-text">Stories are on the way</h2>
+            <p>Be the first: share your story and we&rsquo;ll publish it here.</p>
+          </div>
+          <WriteForUs variant="strip" headingLevel={2} />
+        </>
       ) : (
-        months.map((month) => (
-          <section key={month.key} aria-labelledby={`month-${month.key}`} className="blogs-page__month">
-            <div className="blogs-page__month-head">
-              <h2 id={`month-${month.key}`} className="blogs-page__month-title">
-                {month.label}
-              </h2>
-              <span className="blogs-page__month-count">{stories(month.posts.length)}</span>
+        <>
+          <BlogToolbar idPrefix="all-blogs" query={query} onQueryChange={setQuery} category={category} onCategoryChange={setCategory} />
+
+          <p aria-live="polite" className="blogs__sr-only">
+            {stories(matches.length)}
+          </p>
+
+          {months.length === 0 ? (
+            <div className="blogs__empty">
+              <p className="blogs__empty-text">No stories found. Try another search or category.</p>
+              <button type="button" onClick={clearAll} className="blogs__pill">
+                Clear filters
+              </button>
             </div>
-            <ul className="blogs__grid">
-              {month.posts.map((post) => (
-                <li key={post.slug}>
-                  <BlogCard post={post} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))
+          ) : (
+            months.map((month) => (
+              <section key={month.key} aria-labelledby={`month-${month.key}`} className="blogs-page__month">
+                <div className="blogs-page__month-head">
+                  <h2 id={`month-${month.key}`} className="blogs-page__month-title">
+                    {month.label}
+                  </h2>
+                  <span className="blogs-page__month-count">{stories(month.posts.length)}</span>
+                </div>
+                <ul className="blogs__grid">
+                  {month.posts.map((post) => (
+                    <li key={post.slug}>
+                      <BlogCard post={post} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))
+          )}
+        </>
       )}
     </section>
   )

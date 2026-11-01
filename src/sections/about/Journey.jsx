@@ -2,24 +2,23 @@ import { useEffect, useRef, useState } from 'react'
 import TimelineItem from './TimelineItem.jsx'
 import './Journey.css'
 
-// Card colours reuse project tokens where one exists; the rest are Figma
-// illustration colours with no token equivalent.
+// Card colours are theme tokens (index.css @theme), including the illustration colours.
 const milestones = [
-  { year: '2019', title: 'The Beginning', color: '#F5B942',
+  { year: '2019', title: 'The Beginning', color: 'var(--color-yellow)',
     description: 'Five friends started a WhatsApp group to share job leads and CSS tips. Nobody expected what came next.' },
   { year: '2020', title: 'First Meetup', color: 'var(--color-accent)',
     description: 'Twenty-three women showed up to a borrowed conference room in Nungambakkam. The WiFi failed. Nobody left.' },
   { year: '2021', title: '100 Members', color: 'var(--color-accent-alt)',
     description: 'Crossed the triple digits, launched a Slack workspace, and held the first all-women hackathon.' },
-  { year: '2022', title: 'First Conference', color: '#B9A6E0',
+  { year: '2022', title: 'First Conference', color: 'var(--color-lavender)',
     description: 'SheBuilds Conf 2022 — 200 attendees, 14 speakers, one legendary after-party at the Marina beachfront' },
-  { year: '2023', title: '300 Members', color: '#F79A55',
+  { year: '2023', title: '300 Members', color: 'var(--color-orange)',
     description: 'Added mentorship tracks, a job board, and a monthly newsletter read by 1,200+ subscribers.' },
-  { year: '2024', title: 'Growing Together', color: '#9CCF8F',
+  { year: '2024', title: 'Growing Together', color: 'var(--color-green)',
     description: 'Partnered with 12 companies for hiring pipelines, launched a scholarship fund, and kept growing.' },
-  { year: '2025', title: 'Scaling Impact', color: '#EE6A63',
+  { year: '2025', title: 'Scaling Impact', color: 'var(--color-coral-red)',
     description: 'Paving the way to grow across Chennai — more chapters, more cities, more women who build.' },
-  { year: '2026', title: "What's Next", color: '#F5B942',
+  { year: '2026', title: "What's Next", color: 'var(--color-yellow)',
     description: 'More women, more builders, more impact. The journey continues.' },
 ]
 

@@ -3,7 +3,6 @@ import Gallery from '../sections/about/Gallery.jsx'
 import CharacterLoop from '../components/CharacterLoop.jsx'
 import '../components/CharacterArt.css'
 import './About.css'
-// import characterImg from '../assets/character.png' // add this later
 
 export default function About() {
   // Layout.jsx already renders the page inside <main>, so this is a plain div.
@@ -35,8 +34,6 @@ export default function About() {
           scrolling (or /#journey); it stays inside #about, so "About us" stays active. */}
       <div id="journey" className="about__journey">
         <Journey />
-        {/* Later, when the character is ready:
-            <Journey character={<img src={characterImg} alt="" />} /> */}
       </div>
       <Gallery />
     </div>
