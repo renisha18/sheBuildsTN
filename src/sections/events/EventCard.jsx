@@ -41,7 +41,7 @@ const IMAGE_POSITION_CLASS = {
 }
 
 export default function EventCard({ event }) {
-  const { format, tags, title, description, start, venue, image, imagePosition, featured } = event
+  const { format, tags, title, description, start, venue, locationLabel, image, imagePosition, featured } = event
   const positionClass = IMAGE_POSITION_CLASS[imagePosition] ?? IMAGE_POSITION_CLASS.center
   // Register / View post / no button at all, decided once in eventDates.js
   const link = eventLink(event)
@@ -102,6 +102,8 @@ export default function EventCard({ event }) {
             </svg>
             <span className="max-sm:line-clamp-2">{venue ?? 'Venue TBA'}</span>
           </span>
+          {/* Which chapter ran it, 640px and up only: the phone card doesn't change */}
+          {locationLabel && <span className="text-xs text-muted max-sm:hidden">{locationLabel}</span>}
         </div>
 
         {/* Only when there is somewhere to go: never a dead button. Without one, the date and venue

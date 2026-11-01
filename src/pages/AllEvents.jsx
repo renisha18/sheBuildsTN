@@ -1,8 +1,8 @@
-import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
-import { Link } from 'react-router'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { Link, useLocation } from 'react-router'
 import EventsTimeline from '../sections/events/EventsTimeline.jsx'
 import { EventFilters, EventsEmpty } from '../sections/events/EventFilters.jsx'
-import { useEventFilters } from '../sections/events/useEventFilters.js'
+import { filtersFromSearch, filtersToSearch, useEventFilters } from '../sections/events/useEventFilters.js'
 import { getEvents } from '../sections/events/loadEvents.js'
 import { countLabel, splitTimeline, yearId } from '../sections/events/eventTimeline.js'
 import { prefersReducedMotion } from '../siteSections.js'
@@ -14,8 +14,11 @@ export default function AllEvents() {
   // One clock for both the loader's order and the upcoming/past split
   const now = useMemo(() => new Date(), [])
   const events = useMemo(() => getEvents(now), [now])
-  const filters = useEventFilters(events)
-  const { filtered } = filters
+  // ?city= / ?chapter= / ?tag= in the address apply on arrival (unknown values are ignored)
+  const { search } = useLocation()
+  const [initialFilters] = useState(() => filtersFromSearch(search))
+  const filters = useEventFilters(events, initialFilters)
+  const { filtered, location, selectedTags } = filters
   const { upcoming, past } = useMemo(() => splitTimeline(filtered, now), [filtered, now])
 
   const pageRef = useRef(null)
@@ -30,6 +33,14 @@ export default function AllEvents() {
       document.title = previous
     }
   }, [])
+
+  // Keep the address in step with the location and tags, replacing the current entry (no new
+  // history entry per click, no reload). The search text and any #year stay as they are.
+  useEffect(() => {
+    const next = filtersToSearch({ location, selectedTags })
+    if (next === window.location.search) return
+    history.replaceState(history.state, '', `${window.location.pathname}${next}${window.location.hash}`)
+  }, [location, selectedTags])
 
   // The sticky filter bar's real height (it wraps on narrow screens), so year headings
   // reached by a jump link land below it

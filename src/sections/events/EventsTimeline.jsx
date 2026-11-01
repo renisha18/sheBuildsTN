@@ -23,10 +23,10 @@ function EventDate({ event, className }) {
 }
 
 function TimelineItem({ event, upcoming }) {
-  const { title, venue, format, chapter, tags, description, featured } = event
+  const { title, venue, format, locationLabel, tags, description, featured } = event
   // Register / View post / nothing, decided once in eventDates.js
   const link = eventLink(event)
-  const hasLabels = Boolean(format || chapter || tags.length || featured === true)
+  const hasLabels = Boolean(format || locationLabel || tags.length || featured === true)
   // The photo shows only when there is one and it loads; if it fails, the whole block goes and the
   // text takes the full width (no broken-image icon)
   const [imageFailed, setImageFailed] = useState(false)
@@ -46,7 +46,8 @@ function TimelineItem({ event, upcoming }) {
           {hasLabels && (
             <div className="tl__labels">
               {format && <span className="tl__label">{format}</span>}
-              {chapter && <span className="tl__pill">{chapter}</span>}
+              {/* "College · City", or just the name for a team that isn't a college */}
+              {locationLabel && <span className="tl__pill">{locationLabel}</span>}
               {tags.map((tag) => (
                 <span key={tag} className="tl__pill">
                   {tagLabel(tag)}

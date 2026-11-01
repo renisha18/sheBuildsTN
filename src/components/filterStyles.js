@@ -15,3 +15,9 @@ export const SEARCH_INPUT_CLASS =
   'w-full rounded-full border-2 border-ink bg-surface py-2.5 pl-11 pr-4 font-body text-ink placeholder:text-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink'
 
 export const SEARCH_ICON_CLASS = 'pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted'
+
+// A native <select> that looks like the search box; its parent must be `relative` for the arrow
+export const SELECT_CLASS =
+  'w-full cursor-pointer appearance-none rounded-full border-2 border-ink bg-surface py-2.5 pl-4 pr-11 font-body text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink'
+
+export const SELECT_ARROW_CLASS = 'pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink'

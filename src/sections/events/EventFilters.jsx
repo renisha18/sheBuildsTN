@@ -1,12 +1,52 @@
+import { useId } from 'react'
 import { EVENT_TAGS, tagLabel } from './eventTags.js'
-import { SEARCH_ICON_CLASS, SEARCH_INPUT_CLASS, pillClass } from '../../components/filterStyles.js'
+import { SEARCH_ICON_CLASS, SEARCH_INPUT_CLASS, SELECT_ARROW_CLASS, SELECT_CLASS, pillClass } from '../../components/filterStyles.js'
 
 // Search, tag pills and the empty state, shared by the Events section and the All events page.
 // The filter state lives in useEventFilters.js; the pill and search styles in filterStyles.js.
 
-// Pills: All, then one per tag that has events ("Collaborated"). Several can be on at once;
-// All turns them all off. A pill's tooltip is the tag's description.
-export function EventFilters({ query, setQuery, selectedTags, toggleTag, clearTags, availableTags }) {
+// Location: "All locations", then per city "All of <city>" and its chapters (from getChapters()).
+// Shown even with a single chapter. The visible label is for phones; elsewhere the aria-label
+// names it.
+function LocationSelect({ chapters, location, setLocation }) {
+  const id = useId()
+  return (
+    <div className="flex w-full max-w-sm flex-col gap-1 xl:w-64 xl:shrink-0 max-sm:max-w-none">
+      <label htmlFor={id} className="font-body text-sm font-bold text-ink sm:sr-only">
+        Location
+      </label>
+      <div className="relative">
+        <select
+          id={id}
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          aria-label="Filter by location"
+          className={SELECT_CLASS}
+        >
+          <option value="">All locations</option>
+          {chapters.map(({ city, cityId, chapters: list }) => (
+            <optgroup key={cityId} label={city}>
+              <option value={`city:${cityId}`}>All of {city}</option>
+              {list.map(({ id: chapterId, name }) => (
+                <option key={chapterId} value={`chapter:${chapterId}`}>
+                  {name}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+        <svg aria-hidden="true" viewBox="0 0 24 24" className={SELECT_ARROW_CLASS} fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+    </div>
+  )
+}
+
+// Search, then Location, then the pills: All, then one per tag that has events ("Collaborated").
+// Several pills can be on at once; All turns them all off. A pill's tooltip is the tag's
+// description. Search, location and tags narrow together.
+export function EventFilters({ query, setQuery, selectedTags, toggleTag, clearTags, availableTags, chapters, location, setLocation }) {
   return (
     <div className="flex flex-col gap-4 xl:flex-row xl:items-center">
       <div className="relative w-full max-w-sm xl:flex-1 max-sm:max-w-none">
@@ -30,6 +70,8 @@ export function EventFilters({ query, setQuery, selectedTags, toggleTag, clearTa
           className={SEARCH_INPUT_CLASS}
         />
       </div>
+
+      <LocationSelect chapters={chapters} location={location} setLocation={setLocation} />
 
       <div className="flex flex-wrap gap-3" role="group" aria-label="Filter events by tag">
         <button type="button" aria-pressed={selectedTags.length === 0} onClick={clearTags} className={pillClass(selectedTags.length === 0)}>
