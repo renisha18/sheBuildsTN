@@ -4,7 +4,7 @@ import EventsTimeline from '../sections/events/EventsTimeline.jsx'
 import { EventFilters, EventsEmpty } from '../sections/events/EventFilters.jsx'
 import { filtersFromSearch, filtersToSearch, useEventFilters } from '../sections/events/useEventFilters.js'
 import { getEvents } from '../sections/events/loadEvents.js'
-import { countLabel, splitTimeline, yearId } from '../sections/events/eventTimeline.js'
+import { resultsAnnouncement, splitTimeline, yearId } from '../sections/events/eventTimeline.js'
 import { prefersReducedMotion } from '../siteSections.js'
 
 // /events, rendered inside Layout (navbar and footer stay): every event on a timeline, upcoming
@@ -76,8 +76,9 @@ export default function AllEvents() {
       <h1 id="all-events-heading" className="about__heading">
         All events
       </h1>
-      <p aria-live="polite" className="-mt-2 font-body text-muted">
-        {countLabel(filtered.length)}
+      {/* Screen readers only: announced when the filters change */}
+      <p aria-live="polite" className="sr-only">
+        {resultsAnnouncement(filtered.length)}
       </p>
 
       {/* Sticky just below the navbar; opaque, so the timeline scrolls underneath it */}

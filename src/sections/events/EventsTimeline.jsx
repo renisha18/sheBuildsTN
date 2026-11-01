@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ADD_EVENT_URL, INSTAGRAM_URL } from './eventsData.js'
-import { countLabel, dateLabel, yearId } from './eventTimeline.js'
+import { dateLabel, yearId } from './eventTimeline.js'
 import { eventLink } from './eventDates.js'
 import { tagLabel } from './eventTags.js'
 import ContributeBox from '../../components/ContributeBox.jsx'
@@ -122,7 +122,7 @@ export default function EventsTimeline({ upcoming, past }) {
       {past.map(({ year, events }) => (
         <section key={year} aria-labelledby={yearId(year)} className="tl__group">
           <h2 id={yearId(year)} tabIndex={-1} className="tl__heading tl__heading--year">
-            {year} · {countLabel(events.length)}
+            {year}
           </h2>
           <ol className="tl__list">
             {events.map((event) => (

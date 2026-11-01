@@ -4,7 +4,7 @@ import EventCarousel from './EventCarousel.jsx'
 import { EventFilters, EventsEmpty } from './EventFilters.jsx'
 import { filtersToSearch, pillClass, useEventFilters } from './useEventFilters.js'
 import { getEvents } from './loadEvents.js'
-import { countLabel } from './eventTimeline.js'
+import { resultsAnnouncement } from './eventTimeline.js'
 
 export default function Events() {
   // Ordered (upcoming, undated, past) against the browser's clock when the section first renders
@@ -24,17 +24,22 @@ export default function Events() {
         <h2 id="events-heading" className="about__heading">
           Events
         </h2>
-        {/* The visible text is the accessible name ("View all 9 events": always the total). It
-            carries the active city or chapter and tags, so /events opens with the same filters. */}
+        {/* Carries the active city or chapter and tags, so /events opens with the same filters */}
         <Link
+          aria-label="View all events"
           to={`/events${filtersToSearch({ selection, selectedTags })}`}
           className={`${pillClass(false)} shrink-0 whitespace-nowrap max-sm:gap-1 max-sm:px-3 max-sm:py-1 max-sm:text-sm`}
         >
-          {events.length > 0 ? `View all ${countLabel(events.length)}` : 'View all events'} <span aria-hidden="true">→</span>
+          View all events <span aria-hidden="true">→</span>
         </Link>
       </div>
 
       <EventFilters {...filters} />
+
+      {/* Screen readers only: announced when the filters change */}
+      <p aria-live="polite" className="sr-only">
+        {resultsAnnouncement(filtered.length)}
+      </p>
 
       {filtered.length > 0 ? (
         // New key on every filter/search change remounts the carousel, resetting it to the first slide

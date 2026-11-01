@@ -20,8 +20,9 @@ export function eventYear(event) {
   return start ? parts(start).year : null
 }
 
-// "1 event" / "9 events"
-export const countLabel = (n) => (n === 1 ? '1 event' : `${n} events`)
+// What the hidden live region on the Events section and /events says after filtering. The only
+// place the site gives a number of events, and only to screen readers.
+export const resultsAnnouncement = (n) => (n === 0 ? 'No events match' : `Showing ${n} ${n === 1 ? 'event' : 'events'}`)
 
 // id of a year's heading (jump-link target)
 export const yearId = (year) => `events-year-${year}`
