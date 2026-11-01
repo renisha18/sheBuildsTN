@@ -18,23 +18,25 @@ export default function Events() {
       aria-labelledby="events-heading"
       className="min-h-screen scroll-mt-24 px-6 py-24 md:px-12 max-sm:px-4 max-sm:pt-8"
     >
-      {/* Heading with "View all" on the same row at every width (baseline-aligned, so the
-          heading's own bottom margin doesn't shift the pill) */}
-      <div className="flex items-baseline justify-between gap-4">
-        <h2 id="events-heading" className="about__heading">
-          Events
-        </h2>
-        {/* Carries the active city or chapter and tags, so /events opens with the same filters */}
-        <Link
-          aria-label="View all events"
-          to={`/events${filtersToSearch({ selection, selectedTags })}`}
-          className={`${pillClass(false)} shrink-0 whitespace-nowrap max-sm:gap-1 max-sm:px-3 max-sm:py-1 max-sm:text-sm`}
-        >
-          View all events <span aria-hidden="true">→</span>
-        </Link>
-      </div>
+      <h2 id="events-heading" className="about__heading">
+        Events
+      </h2>
 
-      <EventFilters {...filters} />
+      {/* "View all events" sits at the end of the tag pills' row, same height as the pills
+          (44px, also the phone tap target). It carries the active city or chapter and tags, so
+          /events opens with the same filters. */}
+      <EventFilters
+        {...filters}
+        action={
+          <Link
+            aria-label="View all events"
+            to={`/events${filtersToSearch({ selection, selectedTags })}`}
+            className={`${pillClass(false)} shrink-0 whitespace-nowrap`}
+          >
+            View all events <span aria-hidden="true">→</span>
+          </Link>
+        }
+      />
 
       {/* Screen readers only: announced when the filters change */}
       <p aria-live="polite" className="sr-only">

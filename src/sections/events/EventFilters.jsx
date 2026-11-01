@@ -12,7 +12,33 @@ import { SEARCH_ICON_CLASS, SEARCH_INPUT_CLASS, pillClass } from '../../componen
 // 640px and up everything wraps onto as many rows as it needs; below that search, City and
 // Chapter stack full width (ThemedSelect.css), then the pills. --tsel-height = the search box's
 // height (py-2.5 + a 1.5rem line + 2px borders), so all the pills line up.
-export function EventFilters({ query, setQuery, selectedTags, toggleTag, clearTags, availableTags, cities, selection, setCity, setChapter }) {
+// action (optional): one more element, e.g. the home page's "View all events" link, shown at the
+// right-hand end of the pills' row (its own line below them on phones). Without it the pills
+// render exactly as before (the All events page).
+export function EventFilters({ query, setQuery, selectedTags, toggleTag, clearTags, availableTags, cities, selection, setCity, setChapter, action }) {
+  const chips = (
+    <>
+      <button type="button" aria-pressed={selectedTags.length === 0} onClick={clearTags} className={pillClass(selectedTags.length === 0)}>
+        All
+      </button>
+      {EVENT_TAGS.filter(({ id }) => availableTags.includes(id)).map(({ id, label, description }) => {
+        const isActive = selectedTags.includes(id)
+        return (
+          <button
+            key={id}
+            type="button"
+            aria-pressed={isActive}
+            title={description}
+            onClick={() => toggleTag(id)}
+            className={pillClass(isActive)}
+          >
+            {label}
+          </button>
+        )
+      })}
+    </>
+  )
+
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center" style={{ '--tsel-height': '3rem' }}>
       <div className="relative w-full max-w-sm sm:min-w-48 sm:flex-1 max-sm:max-w-none">
@@ -40,26 +66,23 @@ export function EventFilters({ query, setQuery, selectedTags, toggleTag, clearTa
       <ThemedSelect label="City" value={selection.city} onChange={setCity} options={cityChoices(cities)} />
       <ThemedSelect label="Chapter" value={selection.chapter} onChange={setChapter} options={chapterChoices(cities, selection.city)} />
 
-      <div className="flex flex-wrap gap-3" role="group" aria-label="Filter events by tag">
-        <button type="button" aria-pressed={selectedTags.length === 0} onClick={clearTags} className={pillClass(selectedTags.length === 0)}>
-          All
-        </button>
-        {EVENT_TAGS.filter(({ id }) => availableTags.includes(id)).map(({ id, label, description }) => {
-          const isActive = selectedTags.includes(id)
-          return (
-            <button
-              key={id}
-              type="button"
-              aria-pressed={isActive}
-              title={description}
-              onClick={() => toggleTag(id)}
-              className={pillClass(isActive)}
-            >
-              {label}
-            </button>
-          )
-        })}
-      </div>
+      {action ? (
+        // One wrapping row for the pills and the action. The pill group is display: contents so
+        // its pills are items of this row: the action then follows the last pill line, pushed
+        // right by ml-auto (on phones it takes a line of its own, left-aligned). flex-auto, not
+        // flex-1: the row keeps its natural width, so when it doesn't fit beside the dropdowns it
+        // moves to a line of its own (and fills it) instead of squeezing the link onto a second line.
+        <div className="flex flex-wrap items-center gap-3 sm:flex-auto">
+          <div className="contents" role="group" aria-label="Filter events by tag">
+            {chips}
+          </div>
+          <div className="ml-auto max-sm:ml-0 max-sm:basis-full">{action}</div>
+        </div>
+      ) : (
+        <div className="flex flex-wrap gap-3" role="group" aria-label="Filter events by tag">
+          {chips}
+        </div>
+      )}
     </div>
   )
 }
