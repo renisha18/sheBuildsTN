@@ -37,7 +37,7 @@ function loadPosts() {
     errors.forEach((msg) => devWarn(`skipped: ${msg}`))
     warnings.forEach(devWarn)
     if (!post) continue
-    // Sample posts (placeholder: true) show while developing but never in the production build
+    // A sample post (frontmatter "placeholder" set to true) may show while developing, never in production
     if (import.meta.env.PROD && post.placeholder) continue
     posts.push({
       ...post,

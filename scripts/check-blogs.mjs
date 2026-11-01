@@ -46,7 +46,7 @@ for (const file of postFiles) {
   warnings.push(...result.warnings)
   if (result.post?.placeholder) placeholders += 1
 }
-// Sample posts are fine to keep, but the live site leaves them out (blogsData.js)
+// A sample post is never shown on the live site (blogsData.js), so flag any that sneak in
 if (placeholders > 0) {
   warnings.push(`${placeholders} placeholder ${placeholders === 1 ? 'post is' : 'posts are'} hidden in production (placeholder: true)`)
 }

@@ -51,11 +51,11 @@ export default function AllBlogsView() {
       </div>
 
       {POSTS.length === 0 ? (
-        // No published stories yet (sample posts are left out of production): no filters, no grid
+        // No published stories yet: no filters, no grid
         <>
           <div className="blogs__empty">
-            <h2 className="blogs__empty-text">Stories are on the way</h2>
-            <p>Be the first: share your story and we&rsquo;ll publish it here.</p>
+            <h2 className="blogs__empty-text">Blogs will be added soon</h2>
+            <p>Our community&rsquo;s first stories are on the way.</p>
           </div>
           <WriteForUs variant="strip" headingLevel={2} />
         </>

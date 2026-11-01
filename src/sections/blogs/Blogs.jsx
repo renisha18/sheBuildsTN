@@ -35,10 +35,10 @@ export default function Blogs() {
       </div>
 
       {POSTS.length === 0 ? (
-        // No published stories yet (sample posts are left out of production): no filters, no grid
+        // No published stories yet: no filters, no grid
         <div className="blogs__empty">
-          <h3 className="blogs__empty-text">Stories are on the way</h3>
-          <p>Be the first: share your story and we&rsquo;ll publish it here.</p>
+          <h3 className="blogs__empty-text">Blogs will be added soon</h3>
+          <p>Our community&rsquo;s first stories are on the way.</p>
         </div>
       ) : (
         <>
