@@ -1,0 +1,87 @@
+/* Stats strip between the About intro and the Journey timeline.
+   Width and side padding match .about__intro; Journey's own top padding supplies the space below. */
+
+.stats {
+  /* No yellow token in @theme, so it is scoped here */
+  --stats-yellow: #f2bf5a;
+
+  max-width: var(--about-container, 1400px);
+  margin: 0 auto;
+  padding: 2.5rem 2rem 0;
+}
+
+.stats__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stats__block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  container-type: inline-size; /* lets the number cap itself to the block width */
+  padding: 1.75rem;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-brutal);
+  color: var(--color-ink);
+}
+
+.stats__block--coral { background: var(--color-accent); }
+.stats__block--teal { background: var(--color-accent-alt); }
+.stats__block--yellow { background: var(--stats-yellow); }
+
+.stats__number {
+  font-family: var(--font-display);
+  /* 26cqi keeps "1,500+" inside the narrow 3-up blocks around 640-800px */
+  font-size: min(clamp(3rem, 7vw, 5rem), 26cqi);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stats__label {
+  margin-top: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.stats__note {
+  margin-top: 0.75rem;
+  padding: 0.2rem 0.65rem;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 9999px;
+  background: var(--color-surface);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .stats {
+    padding: 2rem 1rem 0;
+  }
+
+  .stats__list {
+    gap: 1.25rem;
+  }
+
+  .stats__block {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .stats__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

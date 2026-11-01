@@ -1,3 +1,4 @@
+import Stats from '../sections/about/Stats.jsx'
 import Journey from '../sections/about/Journey.jsx'
 import Gallery from '../sections/about/Gallery.jsx'
 import CharacterLoop from '../components/CharacterLoop.jsx'
@@ -30,11 +31,18 @@ export default function About() {
         </div>
       </section>
 
+<<<<<<< Updated upstream
       {/* The Journey gets its own screen with a divider on top. Not a navbar link: reached by
           scrolling (or /#journey); it stays inside #about, so "About us" stays active. */}
       <div id="journey" className="about__journey">
         <Journey />
       </div>
+=======
+      <Stats />
+      <Journey />
+      {/* Later, when the character is ready:
+          <Journey character={<img src={characterImg} alt="" />} /> */}
+>>>>>>> Stashed changes
       <Gallery />
     </div>
   )
