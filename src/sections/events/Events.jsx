@@ -10,7 +10,7 @@ export default function Events() {
   // Ordered (upcoming, undated, past) against the browser's clock when the section first renders
   const events = useMemo(() => getEvents(), [])
   const filters = useEventFilters(events)
-  const { query, selectedTags, location, filtered } = filters
+  const { query, selectedTags, selection, filtered } = filters
 
   return (
     <section
@@ -25,9 +25,9 @@ export default function Events() {
           Events
         </h2>
         {/* The visible text is the accessible name ("View all 9 events": always the total). It
-            carries the active location and tags, so /events opens with the same filters. */}
+            carries the active city or chapter and tags, so /events opens with the same filters. */}
         <Link
-          to={`/events${filtersToSearch({ location, selectedTags })}`}
+          to={`/events${filtersToSearch({ selection, selectedTags })}`}
           className={`${pillClass(false)} shrink-0 whitespace-nowrap max-sm:gap-1 max-sm:px-3 max-sm:py-1 max-sm:text-sm`}
         >
           {events.length > 0 ? `View all ${countLabel(events.length)}` : 'View all events'} <span aria-hidden="true">→</span>
@@ -38,7 +38,7 @@ export default function Events() {
 
       {filtered.length > 0 ? (
         // New key on every filter/search change remounts the carousel, resetting it to the first slide
-        <EventCarousel key={`${selectedTags.join(',') || 'all'}|${location}|${query.trim()}`} events={filtered} />
+        <EventCarousel key={`${selectedTags.join(',') || 'all'}|${selection.city}|${selection.chapter}|${query.trim()}`} events={filtered} />
       ) : (
         <EventsEmpty totalCount={events.length} {...filters} />
       )}

@@ -18,7 +18,7 @@ export default function AllEvents() {
   const { search } = useLocation()
   const [initialFilters] = useState(() => filtersFromSearch(search))
   const filters = useEventFilters(events, initialFilters)
-  const { filtered, location, selectedTags } = filters
+  const { filtered, selection, selectedTags } = filters
   const { upcoming, past } = useMemo(() => splitTimeline(filtered, now), [filtered, now])
 
   const pageRef = useRef(null)
@@ -34,13 +34,13 @@ export default function AllEvents() {
     }
   }, [])
 
-  // Keep the address in step with the location and tags, replacing the current entry (no new
+  // Keep the address in step with the city/chapter and tags, replacing the current entry (no new
   // history entry per click, no reload). The search text and any #year stay as they are.
   useEffect(() => {
-    const next = filtersToSearch({ location, selectedTags })
+    const next = filtersToSearch({ selection, selectedTags })
     if (next === window.location.search) return
     history.replaceState(history.state, '', `${window.location.pathname}${next}${window.location.hash}`)
-  }, [location, selectedTags])
+  }, [selection, selectedTags])
 
   // The sticky filter bar's real height (it wraps on narrow screens), so year headings
   // reached by a jump link land below it
