@@ -28,8 +28,8 @@ export default function JoinUsContent() {
         Join Us
       </h2>
 
-      {/* Puzzle and character side by side from lg; stacked below; on phones heading, character
-          and puzzle share one screen (see JoinUsContent.css) */}
+      {/* Puzzle and character side by side from md; on phones heading, puzzle and character
+          share one screen (see JoinUsContent.css) */}
       <div className="join-us__layout">
         <div className="join-us__puzzle">
           <JoinPuzzle cards={cards} />

@@ -7,24 +7,44 @@ import './JoinPuzzle.css'
 // always fits the socket on its neighbour. Edit these numbers to restyle.
 const W = 380
 const H = 320
-const GAP = 18 // cream seam between pieces, in drawing units
-const CORNER = 14 // corner radius: small = sharp, 22 = soft
-const HEAD = 38 // radius of a knob's round head (bigger = bolder knob)
-const NECK = 17 // half the width of the narrowest part of a knob's neck
-const FILLET = 24 // radius of the small curves where the neck meets the edge
-const MOUTH = FILLET - GAP // radius of the small rounding at the mouth of a socket
-// Distance from a knob's neck-curve centres to its middle, and from the piece
-// edge to the middle of its round head (worked out so all the curves touch
-// exactly, which is what keeps the shapes crisp).
-const INSET = GAP / 2
-const FILLET_X = NECK + FILLET
-const HEAD_CENTRE = FILLET + Math.sqrt((HEAD + FILLET) ** 2 - FILLET_X ** 2)
+
+// Two sets of knob numbers: desktop, and compact for the small pieces on phones (below 768px).
+//   GAP     cream seam between pieces, in drawing units
+//   CORNER  corner radius: small = sharp, 22 = soft
+//   HEAD    radius of a knob's round head (bigger = bolder knob)
+//   NECK    half the width of the narrowest part of a knob's neck
+//   FILLET  radius of the small curves where the neck meets the edge (must stay bigger than GAP)
+const DESKTOP_PARAMS = { GAP: 18, CORNER: 14, HEAD: 38, NECK: 17, FILLET: 24 }
+const COMPACT_PARAMS = { GAP: 12, CORNER: 14, HEAD: 25, NECK: 10, FILLET: 15 }
+
+// MOUTH: radius of the small rounding at the mouth of a socket. INSET: the piece's
+// distance from its cell edge. FILLET_X / HEAD_CENTRE: distance from a knob's neck-curve
+// centres to its middle, and from the piece edge to the middle of its round head (worked
+// out so all the curves touch exactly, which is what keeps the shapes crisp).
+function geometry({ GAP, CORNER, HEAD, NECK, FILLET }) {
+  const FILLET_X = NECK + FILLET
+  return {
+    GAP,
+    CORNER,
+    HEAD,
+    FILLET,
+    MOUTH: FILLET - GAP,
+    INSET: GAP / 2,
+    FILLET_X,
+    HEAD_CENTRE: FILLET + Math.sqrt((HEAD + FILLET) ** 2 - FILLET_X ** 2),
+  }
+}
+const DESKTOP = geometry(DESKTOP_PARAMS)
+const COMPACT = geometry(COMPACT_PARAMS)
+// Text insets of 37% were sized to clear the big desktop knobs; the compact sockets reach about
+// 20% in, so 24% keeps the text clear of them
+const COMPACT_TEXT_INSET = { 37: 24 }
 
 // Each edge is 'flat', 'knob' (bulges out) or 'socket' (dents in).
 // The four pieces of the 2 x 2 puzzle, in reading order. bodyBottom, artBottom
 // and artWidth (percent of the piece) place the text and the character when
 // there is character art. Without art the text is centred in the piece, and
-// textLeft / textRight keep it clear of that piece's socket. Knobs and sockets
+// textLeft / textRight keep it clear of that piece's socket (37 becomes 24 in compact mode). Knobs and sockets
 // are paired so neighbours lock together: 1 right knob -> 2 left socket,
 // 1 bottom socket <- 3 top knob, 2 bottom knob -> 4 top socket,
 // 3 right socket <- 4 left knob.
@@ -34,10 +54,9 @@ const SLOTS = [
   { edges: { top: 'knob', right: 'socket', bottom: 'flat', left: 'flat' }, art: 'left', anchor: 'bottom', bodyBottom: 9, artBottom: 56, artWidth: 36, textLeft: 8, textRight: 37 },
   { edges: { top: 'socket', right: 'flat', bottom: 'flat', left: 'knob' }, art: 'right', anchor: 'bottom', bodyBottom: 9, artBottom: 56, artWidth: 40, textLeft: 8, textRight: 8 },
 ]
-const FLAT = { top: 'flat', right: 'flat', bottom: 'flat', left: 'flat' }
 
 // One small decorative icon per card, by card id (inline line icons, like the footer's).
-// Shown in a round badge on each piece from 768px up (see .puzzle__badge in JoinPuzzle.css).
+// Shown in a round badge on pieces wider than 300px (see .puzzle__badge in JoinPuzzle.css).
 const badgeIconProps = {
   viewBox: '0 0 24 24',
   fill: 'none',
@@ -80,7 +99,7 @@ const BADGE_ICONS = {
 // A knob is a round head on a narrow neck, joined to the edge by two small
 // curves that touch the head and the edge exactly. A socket is the neighbour's
 // knob made GAP bigger all round, so the seam between the two has an even width.
-function piecePath({ top, right, bottom, left }) {
+function piecePath({ top, right, bottom, left }, { GAP, CORNER, HEAD, FILLET, MOUTH, INSET, FILLET_X, HEAD_CENTRE }) {
   const w = W - 2 * INSET // the piece itself, inside its cell
   const h = H - 2 * INSET
   const edges = [
@@ -131,9 +150,9 @@ function piecePath({ top, right, bottom, left }) {
   return `${d} Z`
 }
 
-// True from 768px up, where the pieces interlock in a 2 x 2 grid. Below that
-// they stack as separate, flat-edged pieces.
-function useInterlock() {
+// True from 768px up (desktop knobs). Below that the pieces still interlock, with
+// the compact knobs.
+function useWide() {
   const query = '(min-width: 768px)'
   const [wide, setWide] = useState(() => window.matchMedia(query).matches)
   useEffect(() => {
@@ -153,14 +172,14 @@ function useInterlock() {
  *          space is reserved at all.
  */
 export default function JoinPuzzle({ cards }) {
-  const interlock = useInterlock()
+  const geo = useWide() ? DESKTOP : COMPACT
+  const textInset = (v) => (geo === COMPACT ? COMPACT_TEXT_INSET[v] ?? v : v)
   const hasArt = cards.some((card) => card.art)
 
   return (
     <ul className={hasArt ? 'puzzle' : 'puzzle puzzle--no-art'}>
       {cards.map((card, i) => {
         const slot = SLOTS[i % SLOTS.length]
-        const edges = interlock ? slot.edges : FLAT
         return (
           <li
             key={card.id}
@@ -170,8 +189,8 @@ export default function JoinPuzzle({ cards }) {
               '--body-bottom': `${slot.bodyBottom}%`,
               '--art-bottom': `${slot.artBottom}%`,
               '--art-width': `${slot.artWidth}%`,
-              '--text-left': `${slot.textLeft}%`,
-              '--text-right': `${slot.textRight}%`,
+              '--text-left': `${textInset(slot.textLeft)}%`,
+              '--text-right': `${textInset(slot.textRight)}%`,
             }}
           >
             <div className="puzzle__piece">
@@ -181,7 +200,7 @@ export default function JoinPuzzle({ cards }) {
                 aria-hidden="true"
                 focusable="false"
               >
-                <path d={piecePath(edges)} transform={`translate(${INSET} ${INSET})`} />
+                <path d={piecePath(slot.edges, geo)} transform={`translate(${geo.INSET} ${geo.INSET})`} />
               </svg>
 
               {hasArt && (

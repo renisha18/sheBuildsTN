@@ -3,7 +3,7 @@
    by CharacterArt.css.
 
    md and up: puzzle and Speaker side by side, sized to fit the screen (below). Below md: heading,
-   character and puzzle on one screen (see the end). */
+   puzzle and character on one screen (see the end). */
 .join-us__layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -111,50 +111,92 @@
   display: contents;
 }
 
-/* Phones (below md): one screen under the sticky navbar holds the heading, the character and
-   the four boxes. The section is a flex column exactly that tall (--nav-height is measured by
-   Navbar.jsx); the character takes whatever height is left, so it shrinks on short phones and
-   grows on tall ones. #join still lands with the heading just below the navbar, through
-   html { scroll-padding-top: var(--nav-height) } in index.css. */
+/* Phones (below md): heading, then the interlocking puzzle as large as the screen allows (up to
+   440px), then the Speaker filling only the height that is left, all in one screen under the
+   sticky navbar (--nav-height is measured by Navbar.jsx). #join still lands with the heading just
+   below the navbar, through html { scroll-padding-top: var(--nav-height) } in index.css.
+     --join-h        the visible screen below the navbar (100vh first; 100svh where supported)
+     --head-block    the heading line plus its 12px top and 8px bottom margins
+     --char-min      the smallest the Speaker may get
+     --puzzle-ratio  puzzle height / width (0.8421: a 2 x 2 grid of 380 x 320 cells) plus a margin
+     --pw            the puzzle's width: whatever the height leaves after the heading, the Speaker's
+                     minimum, its 12px top margin and the 8px bottom padding, between 300 and 440px
+     --char-h        the Speaker's height: what is left below the puzzle as drawn (never wider than
+                     the screen less the 16px side padding), between --char-min and 340px
+   If even a 300px puzzle and a 120px Speaker don't fit, the section grows and the page scrolls;
+   nothing is clipped. */
 @media (width < 48rem) {
   .about__intro.join-us__section {
+    --join-h: calc(100vh - var(--nav-height, 0px));
+    --head-block: 56px;
+    --char-min: 120px;
+    --puzzle-ratio: 0.86;
+    --pw: clamp(300px, calc((var(--join-h) - var(--head-block) - var(--char-min) - 20px) / var(--puzzle-ratio)), 440px);
+    --char-h: clamp(
+      var(--char-min),
+      calc(var(--join-h) - var(--head-block) - min(var(--pw), 100vw - 2rem) * var(--puzzle-ratio) - 20px),
+      340px
+    );
+
     display: flex;
     flex-direction: column;
+    align-items: center;
     box-sizing: border-box;
-    height: calc(100vh - var(--nav-height, 0px));
-    height: calc(100svh - var(--nav-height, 0px));
-    padding: 12px 16px;
-    gap: 10px;
+    min-height: var(--join-h);
+    padding: 0 16px 8px;
   }
 
-  /* Heading, then the character, then the puzzle */
+  @supports (height: 100svh) {
+    .about__intro.join-us__section {
+      --join-h: calc(100svh - var(--nav-height, 0px));
+    }
+  }
+
+  .about__intro.join-us__section .about__heading {
+    align-self: stretch;
+    margin: 12px 0 8px;
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    line-height: 1.1;
+    text-align: left;
+  }
+
+  /* Puzzle, then the Speaker in whatever height is left */
   .join-us__layout {
     display: flex;
     flex-direction: column;
-    flex: 1 1 0;
+    align-items: center;
+    flex: 1 1 auto;
+    width: 100%;
     min-height: 0;
-    gap: 10px;
+  }
+
+  .join-us__puzzle {
+    --puzzle-max: var(--pw);
+    width: min(100%, var(--pw));
+  }
+
+  /* Full width of the wrapper; no room above for character art (the cards have none) */
+  .join-us__puzzle .puzzle {
+    max-width: none;
+    padding-top: 0;
   }
 
   .join-us__character {
-    order: -1;
-    flex: 1 1 0;
-    min-height: 0;
     display: flex;
     justify-content: center;
+    flex: none;
+    width: 100%;
+    height: var(--char-h);
+    margin-top: 12px;
   }
 
-  /* Overrides CharacterArt.css sizing on phones only; its classes stay for larger screens */
+  /* Overrides CharacterArt.css sizing on phones only: the square still image is as tall as the
+     wrapper, so the whole figure always shows */
   .join-us__character > .character-art {
     width: auto;
     height: 100%;
     max-width: 100%;
     margin: 0;
     object-fit: contain;
-  }
-
-  /* The boxes fill the full width (JoinPuzzle.css); lift the --puzzle-max cap set above */
-  .join-us__puzzle .puzzle {
-    max-width: none;
   }
 }
