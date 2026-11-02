@@ -2,8 +2,8 @@
    (.about__intro in About.css); the puzzle itself is styled by JoinPuzzle.css and the character
    by CharacterArt.css.
 
-   Below lg: puzzle, then the character underneath (CharacterArt sets its own 24px/32px margins,
-   so no row gap here). Below md: heading, character and puzzle on one screen (see the end). */
+   md and up: puzzle and Speaker side by side, sized to fit the screen (below). Below md: heading,
+   character and puzzle on one screen (see the end). */
 .join-us__layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -19,39 +19,89 @@
   max-width: var(--puzzle-max);
 }
 
-/* lg and up: puzzle on the left, character on the right (as wide as CharacterArt's clamp
-   size), vertically centred on each other; the puzzle lines up with the heading's left edge */
-@media (min-width: 64rem) {
-  /* Puzzle and character sit together from the heading's left edge, not spread to both sides */
-  .join-us__layout {
-    grid-template-columns: auto auto;
-    justify-content: start;
-    align-items: center;
-    column-gap: clamp(3.75rem, 5vw, 5rem);
+/* md and up (768px+): puzzle on the left at the heading's edge, Speaker at the right edge of the
+   same content box as About's Mentor (.about__intro, justify-self: end), vertically centred on
+   each other, and the whole section fits the screen below the navbar.
+
+   --puzzle-w is the one size everything else follows. It is the smallest of:
+     width limit    clamp(460px, 46vw, 760px)
+     height limit   96% of the free height / 0.845
+                    free height = screen below the navbar - top padding - heading block;
+                    0.845 = the puzzle's height per unit of width as it looks, tilt and knobs
+                    included (measured; 0.8421 untilted, a 2 x 2 grid of 380 x 320 cells)
+     row limit      100cqw / 1.79: the puzzle plus the Speaker's box (0.79 x the puzzle) must fit
+                    side by side in the content box, so nothing overlaps or scrolls sideways
+   The height limit never takes it below 420px (the section grows and the page scrolls instead);
+   only the row limit can, between 768px and about 890px wide. */
+@media (min-width: 48rem) {
+  .about__intro.join-us__section {
+    container-type: inline-size; /* 100cqw = this content box's width, for the row limit */
+    --join-pad-top: calc(var(--spacing) * 24);      /* 96px, the Events heading's py-24 */
+    --join-heading-size: clamp(2rem, 4vw, 3rem);    /* .about__heading's font-size (About.css) */
+    --join-heading-h: calc(var(--join-heading-size) + 1rem); /* line-height 1 + its 1rem margin */
+    /* A custom property can't fall back by repeating it (an old browser keeps the svh value and
+       the calc then fails), so 100vh is the default and 100svh replaces it where supported */
+    --join-avail-h: calc(100vh - var(--nav-height, 0px));
+    --puzzle-w: min(
+      calc(100cqw / 1.79),
+      max(
+        420px,
+        min(
+          clamp(460px, 46vw, 760px),
+          calc((var(--join-avail-h) - var(--join-pad-top) - var(--join-heading-h)) * 0.96 / 0.845)
+        )
+      )
+    );
+
+    padding-top: var(--join-pad-top);
+    padding-bottom: 0;
   }
 
-  /* An auto column needs a real width: the puzzle is --puzzle-max wide. Above the character, so
-     its pieces stay hoverable where the character's transparent margin overlaps them. */
+  @supports (height: 100svh) {
+    .about__intro.join-us__section {
+      --join-avail-h: calc(100svh - var(--nav-height, 0px));
+    }
+  }
+
+  .about__intro.join-us__section .about__heading {
+    font-size: var(--join-heading-size);
+  }
+
+  /* Puzzle column, then the rest of the row for the Speaker, which sits at its right end */
+  .join-us__layout {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 0; /* the Speaker's own transparent strip keeps it clear of the puzzle (below) */
+  }
+
+  /* Above the Speaker, so every piece stays hoverable and clickable */
   .join-us__puzzle {
-    --puzzle-max: clamp(460px, 47vw, 680px);
+    --puzzle-max: var(--puzzle-w);
     position: relative;
     z-index: 1;
-    width: var(--puzzle-max);
+    width: var(--puzzle-w);
     max-width: 100%;
-  }
-
-  /* The speaker image has a transparent strip down its left side: 25.27% of its width (measured
-     with sharp, alpha > 16). Pulling the box left by that much puts the figure itself one
-     column-gap from the puzzle. Decorative, so it never takes the pointer. */
-  .join-us__character > .character-art {
-    --character-art-size: clamp(340px, 40vw, 600px);
-    margin-left: calc(var(--character-art-size) * -0.2527);
-    max-width: none; /* CharacterArt's 100% would resolve against the column the margin narrowed */
-    pointer-events: none;
   }
 
   .join-us__puzzle .puzzle {
     margin-inline: 0;
+  }
+
+  /* The Speaker's box is 0.79 x --puzzle-w. Its visible height is 93.45% of the image (sharp,
+     alpha > 16) and the puzzle is 0.8421 x its width tall: 0.79 x 0.9345 / 0.8421 = 0.877, so the
+     figure is ~88% as tall as the puzzle.
+     The figure's visible left edge is 25.27% of the box in from its left edge. Even with the box
+     right up against the puzzle (the row limit) that strip is at least 82px, so the 48px minimum
+     space always holds; the max() keeps the 48px guarantee written down should the size change.
+     Decorative, so it never takes the pointer. */
+  .join-us__character > .character-art {
+    --speaker-w: calc(var(--puzzle-w) * 0.79);
+    width: var(--speaker-w);
+    max-width: none;
+    margin: 0 0 0 max(0px, calc(3rem - var(--speaker-w) * 0.2527));
+    justify-self: end;
+    align-self: center;
+    pointer-events: none;
   }
 }
 

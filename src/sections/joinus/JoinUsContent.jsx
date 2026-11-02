@@ -36,9 +36,10 @@ export default function JoinUsContent() {
         </div>
 
         {/* Wrapper only matters on phones (it's the part that shrinks/grows); from 768px it has
-            display: contents, so the image is laid out exactly as before */}
+            display: contents, so the image is a grid item of the layout */}
         <div className="join-us__character">
-          {/* character-art keeps the slot's size and spacing; CharacterLoop fills it */}
+          {/* character-art keeps the slot's spacing; JoinUsContent.css sizes it from the puzzle.
+              CharacterLoop fills it. */}
           <div className="character-art" data-reveal>
             <CharacterLoop
               still="/character/speaker-1100.webp"
