@@ -4,9 +4,11 @@ import logo from '../assets/logo.jpeg'
 import { sections, scrollToSection } from '../siteSections.js'
 
 // Each link is its own brutal pill button: teal when active, white otherwise; presses into its shadow
-const linkClass = (isActive) =>
+// In the mobile menu every pill is the same full-width (capped), 44px+ tall box with centred text
+const linkClass = (isActive, mobile) =>
   [
-    'inline-block rounded-full border-2 border-ink px-5 py-2 font-body text-ink shadow-brutal-sm',
+    mobile ? 'flex w-full min-h-11 items-center justify-center text-center' : 'inline-block',
+    'rounded-full border-2 border-ink px-5 py-2 font-body text-ink shadow-brutal-sm',
     'transition motion-reduce:transition-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none',
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink',
     isActive ? 'bg-accent-alt' : 'bg-surface hover:bg-accent-alt/20 focus-visible:bg-accent-alt/20',
@@ -86,10 +88,10 @@ function Navbar() {
     else navigate({ pathname: '/', hash: `#${id}` })
   }
 
-  const renderLinks = () =>
+  const renderLinks = (mobile = false) =>
     sections.map(({ id, label }) => (
-      <li key={id}>
-        <a href={`/#${id}`} onClick={(e) => go(e, id)} aria-current={current === id ? 'true' : undefined} className={linkClass(current === id)}>
+      <li key={id} className={mobile ? 'w-full max-w-xs' : undefined}>
+        <a href={`/#${id}`} onClick={(e) => go(e, id)} aria-current={current === id ? 'true' : undefined} className={linkClass(current === id, mobile)}>
           {label}
         </a>
       </li>
@@ -131,9 +133,9 @@ function Navbar() {
         {open && (
           <ul
             id="mobile-nav"
-            className="navbar:hidden absolute inset-x-0 top-full flex flex-col items-start gap-3 bg-surface border-y border-ink px-12 py-6"
+            className="navbar:hidden absolute inset-x-0 top-full flex flex-col items-center gap-3 bg-surface border-y border-ink px-12 py-6"
           >
-            {renderLinks()}
+            {renderLinks(true)}
           </ul>
         )}
       </nav>
