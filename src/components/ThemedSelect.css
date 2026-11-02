@@ -137,9 +137,11 @@
   color: var(--color-ink, #14100e);
 }
 
-/* On phones the box fills the width it is given. */
+/* On phones the box fills the width it is given and is 40px tall. The open list may be wider
+   than its button but stays on screen; add .tsel--end to open it from the button's right edge. */
 @media (max-width: 639px) {
   .tsel {
+    --tsel-height: 2.5rem;
     display: block;
     width: 100%;
     min-width: 0;
@@ -147,7 +149,16 @@
 
   .tsel__list {
     min-width: 100%;
-    max-width: 100%;
+    max-width: min(20rem, 100vw - 2rem);
+  }
+
+  .tsel--end .tsel__list {
+    left: auto;
+    right: 0;
+  }
+
+  .tsel__text {
+    overflow-wrap: anywhere;
   }
 }
 

@@ -97,7 +97,7 @@ export default function EventCarousel({ events }) {
   // md+: arrows sit on either side of the track, dots wrap onto their own row below.
   // DOM order (track, prev, dots, next) matches the mobile visual order so Tab follows what you see.
   return (
-    <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-4 md:gap-x-6 max-sm:mt-3">
+    <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-4 md:gap-x-6 max-sm:mt-2">
       {/* Track: focusable so ←/→/Home/End work once it has focus */}
       <div
         id="events-track"

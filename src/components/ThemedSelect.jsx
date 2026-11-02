@@ -9,7 +9,7 @@ import './ThemedSelect.css'
  *   Down/Up open it and move, Home/End jump, Enter/Space choose, Esc closes,
  *   typing a letter jumps to the matching option, Tab leaves.
  *
- * label     small text shown in the button before the value, for example "City"
+ * label     small text shown in the button before the value, for example "City" (screen readers only on phones)
  * value     the selected option's value ("" is usually the "All ..." choice)
  * onChange  called with the new value
  * options   [{ value, label, hint? }]   hint is small muted text on the right
@@ -137,7 +137,7 @@ export default function ThemedSelect({ label, value, onChange, options, disabled
         onClick={() => (open ? closeMenu() : openMenu())}
         onKeyDown={onKeyDown}
       >
-        <span id={prefixId} className="tsel__prefix">{label}</span>
+        <span id={prefixId} className="tsel__prefix max-sm:sr-only">{label}</span>
         <span className="tsel__value">{selected?.label}</span>
         <svg className="tsel__chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="m6 9 6 6 6-6" />

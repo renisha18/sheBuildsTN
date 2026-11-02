@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router'
 import EventCarousel from './EventCarousel.jsx'
-import { EventFilters, EventsEmpty } from './EventFilters.jsx'
+import { EventFilters, EventsEmpty, PHONE_PILL_CLASS } from './EventFilters.jsx'
 import { filtersToSearch, pillClass, useEventFilters } from './useEventFilters.js'
 import { getEvents } from './loadEvents.js'
 import { resultsAnnouncement } from './eventTimeline.js'
@@ -23,7 +23,7 @@ export default function Events() {
       </h2>
 
       {/* "View all events" sits at the end of the tag pills' row, same height as the pills
-          (44px, also the phone tap target). It carries the active city or chapter and tags, so
+          (44px; 36px on phones, where its visible label shortens to "View all"). It carries the active city or chapter and tags, so
           /events opens with the same filters. */}
       <EventFilters
         {...filters}
@@ -31,9 +31,9 @@ export default function Events() {
           <Link
             aria-label="View all events"
             to={`/events${filtersToSearch({ selection, selectedTags })}`}
-            className={`${pillClass(false)} shrink-0 whitespace-nowrap`}
+            className={`${pillClass(false)} shrink-0 whitespace-nowrap ${PHONE_PILL_CLASS}`}
           >
-            View all events <span aria-hidden="true">→</span>
+            View all<span className="max-sm:hidden"> events</span> <span aria-hidden="true">→</span>
           </Link>
         }
       />

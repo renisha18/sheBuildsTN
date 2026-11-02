@@ -259,6 +259,8 @@
     --tl-date-w: 0px;
     --tl-rail-w: 1.5rem;
     --tl-marker: 0.75rem;
+
+    margin-top: 1rem;
   }
 
   .tl__date {
@@ -310,6 +312,14 @@
   padding: 0.75rem 0;
   border-bottom: 2px solid var(--color-ink);
   background: var(--color-background);
+}
+
+/* Phones: a tighter bar so the timeline starts higher */
+@media (width < 40rem) {
+  .events-page__bar {
+    margin-top: 0.75rem;
+    padding: 0.5rem 0;
+  }
 }
 
 .events-page__years {
