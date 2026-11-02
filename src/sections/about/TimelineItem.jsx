@@ -9,7 +9,7 @@ export default function TimelineItem({ data, isRevealed, position }) {
       style={{ '--card-color': color }}
     >
       <article className="journey__card">
-        <p className="journey__card-year">{year} —</p>
+        <p className="journey__card-year">{year}<span className="journey__card-dash"> —</span></p>
         <h3 className="journey__card-title">{title}</h3>
         <p className="journey__card-text">{description}</p>
        

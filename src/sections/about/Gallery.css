@@ -135,3 +135,21 @@
     scroll-snap-align: start;
   }
 }
+
+/* Phones (below md): same marquee, compact strip. Each frame is clamp(150px, 26svh, 240px) tall
+   and the photo keeps its 4:3 ratio, so the frame width follows from the height. */
+@media (width < 48rem) {
+  .gallery {
+    --strip-h: clamp(150px, 26svh, 240px);
+  }
+
+  .gallery__card {
+    width: auto;
+    height: var(--strip-h);
+  }
+
+  .gallery__img {
+    width: auto;
+    height: 100%;
+  }
+}

@@ -90,3 +90,39 @@
     padding: 1rem 1.2rem;
   }
 }
+
+/* Phones (below md): the three blocks stay in one row, compact and centred, down to 320px */
+@media (width < 48rem) {
+  .stats__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: calc(var(--spacing) * 2);
+  }
+
+  .stats__block {
+    justify-content: center;
+    align-items: center;
+    padding: calc(var(--spacing) * 2);
+    box-shadow: var(--shadow-brutal-sm);
+    text-align: center;
+  }
+
+  /* text-lg, bold, leading-none */
+  .stats__number {
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .stats__meta {
+    justify-content: center;
+    gap: calc(var(--spacing) * 1);
+    margin-top: calc(var(--spacing) * 1);
+  }
+
+  /* text-xs, leading-tight */
+  .stats__label {
+    font-size: 0.75rem;
+    line-height: 1.25;
+  }
+}
